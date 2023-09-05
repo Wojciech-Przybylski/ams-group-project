@@ -53,3 +53,8 @@ def login():
         else:
             print('not validated')
     return render_template('/login.html', title='Login', form=form, message=message)
+
+@app.route('/movies')
+def movies():
+    movies = Movies.query.order_by(Movies.title).all()
+    return render_template('movies.html', title='Movies', movies=movies)
