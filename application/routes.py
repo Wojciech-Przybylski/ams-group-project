@@ -53,3 +53,9 @@ def login():
         else:
             print('not validated')
     return render_template('/login.html', title='Login', form=form, message=message)
+
+@app.route('/logout')
+def clear_variable():
+    session.pop('user_id', None)  # Remove 'user_id' from session
+    print("Session variable cleared!")
+    return redirect(url_for('home'))
