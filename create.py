@@ -57,5 +57,64 @@ with app.app_context():
     actress11 = Actors(actor="Natalie Portman")
     actress12 = Actors(actor="Meryl Streep")
 
+    # create a movie director
+    director1 = Actors(actor="Steven Spielberg")
+
     # create a movie
-    movie1 = Movies(title="Mission Impossible", )
+    movie1 = Movies(title="Mission Impossible", description="A secret agent is sent to Sydney, to find and destroy a genetically modified disease called 'Chimera'.", genre=1)
+
+    # add everything to the database
+    db.session.add(genre1)
+    db.session.add(genre2)
+    db.session.add(genre3)
+    db.session.add(genre4)
+    db.session.add(genre5)
+    db.session.add(genre6)
+    db.session.add(genre7)
+    db.session.add(genre8)
+    db.session.add(genre9)
+    db.session.add(genre10)
+    db.session.add(genre11)
+    db.session.add(genre12)
+    db.session.add(genre13)
+    db.session.add(genre14)
+    db.session.add(genre15)
+    db.session.add(genre16)
+    db.session.add(genre17)
+    db.session.add(genre18)
+    db.session.add(genre19)
+    db.session.add(genre20)
+    db.session.add(genre21)
+
+    db.session.add(actor1)
+    db.session.add(actor2)
+    db.session.add(actor3)
+    db.session.add(actor4)
+    db.session.add(actor5)
+    db.session.add(actor6)
+    db.session.add(actor7)
+    db.session.add(actor8)
+    db.session.add(actor9)
+    db.session.add(actor10)
+    db.session.add(actor11)
+    db.session.add(actor12)
+    
+    db.session.add(actress1)
+    db.session.add(actress2)
+    db.session.add(actress3)
+    db.session.add(actress4)
+    db.session.add(actress5)
+    db.session.add(actress6)
+    db.session.add(actress7)
+    db.session.add(actress8)
+    db.session.add(actress9)
+    db.session.add(actress10)
+    db.session.add(actress11)
+    db.session.add(actress12)
+    
+    db.session.add(director1)
+
+    db.session.add(movie1)
+
+    db.session.commit()
+    
