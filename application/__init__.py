@@ -14,4 +14,5 @@ app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
 bcrypt = Bcrypt(app)
 
 
+
 from application import routes
