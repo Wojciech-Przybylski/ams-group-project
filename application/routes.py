@@ -54,7 +54,15 @@ def login():
             print('not validated')
     return render_template('/login.html', title='Login', form=form, message=message)
 
+<<<<<<< HEAD
 @app.route('/movies')
 def movies():
     movies = Movies.query.order_by(Movies.title).all()
     return render_template('movies.html', title='Movies', movies=movies)
+=======
+@app.route('/logout')
+def clear_variable():
+    session.pop('user_id', None)  # Remove 'user_id' from session
+    print("Session variable cleared!")
+    return redirect(url_for('home'))
+>>>>>>> main
