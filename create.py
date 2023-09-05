@@ -61,7 +61,11 @@ with app.app_context():
     director1 = Actors(actor="Steven Spielberg")
 
     # create a movie
-    movie1 = Movies(title="Mission Impossible", description="A secret agent is sent to Sydney, to find and destroy a genetically modified disease called 'Chimera'.", genre=1)
+    movie1 = Movies(title="Mission Impossible", description="A secret agent is sent to Sydney, to find and destroy a genetically modified disease called 'Chimera'.", genre=1, image="images/mission_impossible.jpeg")
+    movie2 = Movies(title="The Matrix", description="A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.", genre=5, image="images/the_matrix.jpg")
+    movie3 = Movies(title="The Dark Knight", description="When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", genre=1, image="images/the_dark_knight.jpg")
+    movie4 = Movies(title="The Godfather", description="The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", genre=10, image="images/the_godfather.jpg")
+
 
     # add everything to the database
     db.session.add(genre1)
@@ -115,6 +119,9 @@ with app.app_context():
     db.session.add(director1)
 
     db.session.add(movie1)
+    db.session.add(movie2)
+    db.session.add(movie3)
+    db.session.add(movie4)
 
     db.session.commit()
     
