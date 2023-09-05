@@ -3,5 +3,5 @@ WORKDIR /app
 COPY . .
 ENV MY_VAR=helloWorld
 RUN pip3 install -r requirements.txt
-EXPOSE 5001
+EXPOSE 5000
 ENTRYPOINT python3 -m pytest
