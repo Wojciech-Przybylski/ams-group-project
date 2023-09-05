@@ -5,7 +5,7 @@ from datetime import datetime
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), nullable=False, unique=True, index=True)
+    name = db.Column(db.String(30), nullable=False, unique=True, index=True)
     password = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True, index=True)
     bookings = db.relationship('Bookings', backref='user', lazy=True)
@@ -80,3 +80,12 @@ class Bookings(db.Model):
     price = db.Column(db.Integer, nullable=False)
     showing = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False, index=True)
 
+class BannedChars(object):
+    def __init__(self, message=None):
+        self.message = message
+
+    def __call__(self, form, field):
+        regex = re.compile('[^a-zA-Z0-9]')
+        if regex.search(field.data):
+            raise ValidationError('Please only use alphanumeric characters.')
+        
