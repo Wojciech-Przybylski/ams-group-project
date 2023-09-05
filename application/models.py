@@ -18,11 +18,22 @@ class PaymentDetails(db.Model):
     expiry_date = db.Column(db.String(5), nullable=False)
     security_code = db.Column(db.String(3), nullable=False)
 
+class CommentThread(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False, index=True)
+    comments = db.relationship('Comments', backref='comment_thread', lazy=True)
+
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    comment_thread_id = db.Column(db.Integer, db.ForeignKey('comment_thread.id'), nullable=False, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
+    comment = db.Column(db.String(200), nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
 class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), nullable=False, unique=True, index=True)
-    actors = db.Column(db.Integer, db.ForeignKey('actors.id'), nullable=False, index=True)
-    director = db.Column(db.String(30), nullable=False)
+    director = db.Column(db.Integer, db.ForeignKey('directors.id'), nullable=False, index=True)
     description = db.Column(db.String(100), nullable=False)
     genre = db.Column(db.Integer, db.ForeignKey('genres.id'), nullable=False, index=True)
 
@@ -43,6 +54,10 @@ class MovieActors(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False, index=True)
     actor_id = db.Column(db.Integer, db.ForeignKey('actors.id'), nullable=False, index=True)
+
+class Directors(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    director = db.Column(db.String(30), nullable=False, unique=True, index=True)
 
 
 class Showings(db.Model):
