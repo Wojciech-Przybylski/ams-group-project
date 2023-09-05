@@ -12,6 +12,6 @@ db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
 
 bcrypt = Bcrypt(app)
-
+# this is for pipeline testing!
 
 from application import routes
