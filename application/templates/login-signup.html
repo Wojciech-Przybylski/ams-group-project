@@ -5,7 +5,52 @@
 {% if session['user_id'] %}
     <h2>Hello, {{ session['user_name'] }}!</h2>
 {% else %}
-    
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form class="form" action="" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-control") }}
+                    {% for error in form.name.errors %}
+                        <div class="alert alert-danger">
+                            <span class="text-danger">{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control") }}
+                    {% for error in form.email.errors %}
+                        <div class="alert alert-danger">
+                            <span class="text-danger">{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    {{ form.password.label(class="form-label") }}
+                    {{ form.password(class="form-control") }}
+                    {% for error in form.password.errors %}
+                        <div class="alert alert-danger">
+                            <span class="text-danger">{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    {{ form.confirm_password.label(class="form-label") }}
+                    {{ form.confirm_password(class="form-control") }}
+                    {% for error in form.confirm_password.errors %}
+                        <div class="alert alert-danger">
+                            <span class="text-danger">{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endif %}
 
 {% endblock %}
