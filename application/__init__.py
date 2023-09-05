@@ -12,6 +12,6 @@ db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
 
 bcrypt = Bcrypt(app)
-
+# this is the homepage branch!
 
 from application import routes
