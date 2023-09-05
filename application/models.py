@@ -36,6 +36,7 @@ class Movies(db.Model):
     description = db.Column(db.String(2048), nullable=False)
     genre = db.Column(db.Integer, db.ForeignKey('genres.id'), nullable=False, index=True)
     image = db.Column(db.String(30), nullable=False)
+    release_date = db.Column(db.DateTime, nullable=False)
 
 class Genres(db.Model):
     id = db.Column(db.Integer, primary_key=True)
