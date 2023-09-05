@@ -1,0 +1,120 @@
+from app import app
+from application import db, bcrypt
+from application.models import User, Movies, MovieGenres, Genres, MovieActors, Actors, PaymentDetails, Showings, Bookings, Comments, CommentThread
+
+with app.app_context():
+    db.drop_all()
+    db.create_all()
+
+    # create a movie genre
+    genre1 = Genres(genre="Action")
+    genre2 = Genres(genre="Comedy")
+    genre3 = Genres(genre="Horror")
+    genre4 = Genres(genre="Romance")
+    genre5 = Genres(genre="Sci-Fi")
+    genre6 = Genres(genre="Thriller")
+    genre7 = Genres(genre="Western")
+    genre8 = Genres(genre="Drama")
+    genre9 = Genres(genre="Fantasy")
+    genre10 = Genres(genre="Crime")
+    genre11 = Genres(genre="Adventure")
+    genre12 = Genres(genre="Animation")
+    genre13 = Genres(genre="Biography")
+    genre14 = Genres(genre="Documentary")
+    genre15 = Genres(genre="Family")
+    genre16 = Genres(genre="History")
+    genre17 = Genres(genre="Music")
+    genre18 = Genres(genre="Musical")
+    genre19 = Genres(genre="Mystery")
+    genre20 = Genres(genre="Sport")
+    genre21 = Genres(genre="War")
+
+    # create a movie actor
+    actor1 = Actors(actor="Tom Cruise")
+    actor2 = Actors(actor="Brad Pitt")
+    actor3 = Actors(actor="Leonardo DiCaprio")
+    actor4 = Actors(actor="Will Smith")
+    actor5 = Actors(actor="Robert Downey Jr.")
+    actor6 = Actors(actor="Tom Hanks")
+    actor7 = Actors(actor="Dwayne Johnson")
+    actor8 = Actors(actor="Samuel L. Jackson")
+    actor9 = Actors(actor="Johnny Depp")
+    actor10 = Actors(actor="Matt Damon")
+    actor11 = Actors(actor="Harrison Ford")
+    actor12 = Actors(actor="Morgan Freeman")
+
+    #  create a movie actress
+    actress1 = Actors(actor="Scarlett Johansson")
+    actress2 = Actors(actor="Jennifer Lawrence")
+    actress3 = Actors(actor="Jennifer Aniston")
+    actress4 = Actors(actor="Angelina Jolie")
+    actress5 = Actors(actor="Emma Stone")
+    actress6 = Actors(actor="Anne Hathaway")
+    actress7 = Actors(actor="Sandra Bullock")
+    actress8 = Actors(actor="Julia Roberts")
+    actress9 = Actors(actor="Mila Kunis")
+    actress10 = Actors(actor="Charlize Theron")
+    actress11 = Actors(actor="Natalie Portman")
+    actress12 = Actors(actor="Meryl Streep")
+
+    # create a movie director
+    director1 = Actors(actor="Steven Spielberg")
+
+    # create a movie
+    movie1 = Movies(title="Mission Impossible", description="A secret agent is sent to Sydney, to find and destroy a genetically modified disease called 'Chimera'.", genre=1)
+
+    # add everything to the database
+    db.session.add(genre1)
+    db.session.add(genre2)
+    db.session.add(genre3)
+    db.session.add(genre4)
+    db.session.add(genre5)
+    db.session.add(genre6)
+    db.session.add(genre7)
+    db.session.add(genre8)
+    db.session.add(genre9)
+    db.session.add(genre10)
+    db.session.add(genre11)
+    db.session.add(genre12)
+    db.session.add(genre13)
+    db.session.add(genre14)
+    db.session.add(genre15)
+    db.session.add(genre16)
+    db.session.add(genre17)
+    db.session.add(genre18)
+    db.session.add(genre19)
+    db.session.add(genre20)
+    db.session.add(genre21)
+
+    db.session.add(actor1)
+    db.session.add(actor2)
+    db.session.add(actor3)
+    db.session.add(actor4)
+    db.session.add(actor5)
+    db.session.add(actor6)
+    db.session.add(actor7)
+    db.session.add(actor8)
+    db.session.add(actor9)
+    db.session.add(actor10)
+    db.session.add(actor11)
+    db.session.add(actor12)
+    
+    db.session.add(actress1)
+    db.session.add(actress2)
+    db.session.add(actress3)
+    db.session.add(actress4)
+    db.session.add(actress5)
+    db.session.add(actress6)
+    db.session.add(actress7)
+    db.session.add(actress8)
+    db.session.add(actress9)
+    db.session.add(actress10)
+    db.session.add(actress11)
+    db.session.add(actress12)
+    
+    db.session.add(director1)
+
+    db.session.add(movie1)
+
+    db.session.commit()
+    
