@@ -1,6 +1,21 @@
 {% extends 'nav.html' %}
 {% block content %}
+{% for movie in movies %}
+<img src="{{ url_for('static', filename=movie.image) }}" alt="{{ movie.title }}"" class="img-fluid" width="300px">
+<h2>{{ movie.title }}</h2>
+<h3>{{  movie.release_date }}</h3>
+<br>
+{% endfor %}
 
-
+<script>
+    dates = document.querySelectorAll('h3');
+    for (let i = 0; i < dates.length; i++) {
+        let dateText = dates[i].innerText;  // Corrected variable name
+        // remove all but first 4 chars from date
+        dateText = dateText.substring(0, 4);
+        // update date value
+        dates[i].innerText = dateText;  // Corrected variable name
+    }
+</script>
 
 {% endblock %}
