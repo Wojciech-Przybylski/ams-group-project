@@ -1,7 +1,8 @@
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import desc
 from application import app, db, bcrypt
-from application.models import User, Movie, Comment, Genre, MovieGenre, Actor, MovieActor, Director, MovieDirector, SignUpForm
+from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors
+from application.forms import SignUpForm
 
 @app.route('/')
 @app.route('/home')
@@ -16,8 +17,8 @@ def signup():
         user = User(
             name=form.name.data,
             email=form.email.data,
-            password=bcrypt.generate_password_hash(form.password.data),
-            phone=form.phone.data)
+            password=bcrypt.generate_password_hash(form.password.data)
+        )
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('home'))
