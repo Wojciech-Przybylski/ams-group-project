@@ -6,18 +6,18 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
-    - type: volume
-    - source: cinema-vol
-    - target: var/lib/mysql
+      - type: volume
+        source: cinema-vol
+        target: /var/lib/mysql
     networks:
-    - cinema-net
+      - cinema-net
   cinema-app:
     image: cinema-app:v1
     build: ./
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
-    - cinema-net
+      - cinema-net
     deploy:
       replicas: 5
 networks:
