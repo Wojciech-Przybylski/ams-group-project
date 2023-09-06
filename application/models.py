@@ -8,6 +8,7 @@ class User(db.Model):
     name = db.Column(db.String(30), nullable=False, unique=True, index=True)
     password = db.Column(db.String(512), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True, index=True)
+    admin = db.Column(db.Boolean, nullable=False, default=False)
     bookings = db.relationship('Bookings', backref='user', lazy=True)
 
 class PaymentDetails(db.Model):
@@ -135,7 +136,8 @@ class Cart(db.Model):
 #         self.image = image
 
 class CommentView:
-    def __init__(self, user_name, comment, time) -> None:
+    def __init__(self, id, user_name, comment, time) -> None:
+        self.id = id
         self.user_name = user_name
         self.comment= comment
         self.time = time
