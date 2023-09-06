@@ -1,0 +1,35 @@
+{% extends 'nav.html' %}
+{% block content %}
+<img src="{{ url_for('static', filename=movie.image) }}" alt="{{ movie.name }}" class="img-fluid" width="300px">
+<h2>{{ movie.name }}</h2>
+<h3 class="date">{{ movie.release_date }}</h3>
+<h3>Genres:</h3>
+<ul>
+    {% for genre in genre_names %}
+    <li>{{ genre }}</li>
+    {% endfor %}
+</ul>
+<h3>Director:</h3>
+<ul>
+    {% for director in director_names %}
+    <li>{{ director }}</li>
+    {% endfor %}
+</ul>
+<h3>Actors:</h3>
+<ul>
+    {% for actor in actor_names %}
+    <li>{{ actor }}</li>
+{% endfor %}
+</ul>
+<script>
+    dates = document.querySelectorAll('h3.date');
+    for (let i = 0; i < dates.length; i++) {
+        let dateText = dates[i].innerText;  // Corrected variable name
+        // remove all but first 4 chars from date
+        dateText = dateText.substring(0, 4);
+        // update date value
+        dates[i].innerText = dateText;  // Corrected variable name
+    }
+</script>
+{% endblock %}
+
