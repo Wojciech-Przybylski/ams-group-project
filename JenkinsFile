@@ -33,14 +33,31 @@ pipeline {
         }
         stage('Pull newest Docker image') {
             steps {
-                sh "docker pull wojciechprzybylski/cinema-db:latest && docker pull wojciechprzybylski/cinema-app:latest"
+                script {
+                    // Define the image name from Docker Hub
+                    def imageName1 = 'wojciechprzybylski/cinema-db:latest'
+                    def imageName2 = 'wojciechprzybylski/cinema-app:latest'
+
+                    // Pull the Docker image from Docker Hub
+                    def dockerImage1 = docker.image(imageName1).pull()
+                    def dockerImage2 = docker.image(imageName2).pull()
+
+                    // Run a container from the pulled image
+                    def container1 = dockerImage1.run()
+                    def container2 = dockerImage2.run()
+
+                    container1.stop()
+                    container2.stop()
+                    container1.remove()
+                    container2.remove()
+                }
             }
         }
-        stage('Deploy through docker-compose') {
-            steps {
-                sh "docker-compose up"
-            }
-        }
+        // stage('Deploy through docker-compose') {
+        //     steps {
+        //         sh "docker-compose up"
+        //     }
+        // }
         
     }   
 }
