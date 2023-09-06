@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  mysql:
+    image: cinema-db:v1
+    build: ./db
+    enviroment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+    - type: volume
+    - source: cinema-vol
+    - target: var/lib/mysql
+    networks:
+    - cinema-net
+  flask-app:
+    image: cinema-app:v1
+    build: ./
+    enviroment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    networks:
+    - cinema-net
+    deploy:
+      replicas: 5
+networks:
+  cinema-net:
+volumes:
+  cinema-vol:
