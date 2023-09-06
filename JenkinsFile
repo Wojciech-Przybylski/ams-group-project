@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS=credentials('Docker_Login')
+        DB_PASSWORD=credentials('DB_PASSWORD')
     }
 
     stages {
@@ -25,36 +26,13 @@ pipeline {
                 }
             }
         }
-        stage('Pull and Run Newest Docker Images') {
+        stage('Deploy through docker-compose') {
             steps {
                 script {
-                    // Define the image names from Docker Hub
-                    def imageName1 = 'wojciechprzybylski/cinema-db:latest'
-                    def imageName2 = 'wojciechprzybylski/cinema-app:latest'
-
-                    // Pull the Docker images from Docker Hub
-                    def dockerImage1 = docker.image(imageName1).pull()
-                    def dockerImage2 = docker.image(imageName2).pull()
-
-                    // Run containers from the pulled images
-                    def container1 = dockerImage1.run()
-                    def container2 = dockerImage2.run()
-
-                    // Add any additional commands inside the containers if needed
-
-                    // Stop and remove the containers when done
-                    container1.stop()
-                    container2.stop()
-                    container1.remove()
-                    container2.remove()
+                    sh "docker pull wojciechprzybylski/cinema-db:latest && docker pull wojciechprzybylski/cinema-app:latest"
+                    sh "docker-compose up"
                 }
             }
         }
-        // Uncomment and modify the following stage if you want to deploy through docker-compose
-        // stage('Deploy through docker-compose') {
-        //     steps {
-        //         sh "docker-compose up"
-        //     }
-        // }
     }   
 }

@@ -1,8 +1,8 @@
 version: "3.8"
 services:
   mysql:
-    image: cinema-db:v1
-    build: ./db
+    image: cinema-db:latest
+    build: wojciechprzybylski/cinema-db:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
@@ -12,8 +12,8 @@ services:
     networks:
       - cinema-net
   cinema-app:
-    image: cinema-app:v1
-    build: ./
+    image: cinema-app:latest
+    build: wojciechprzybylski/cinema-app:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
