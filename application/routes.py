@@ -59,6 +59,29 @@ def movies():
     movies = Movies.query.order_by(Movies.title).all()
     return render_template('movies.html', title='Movies', movies=movies)
 
+@app.route('/movie/<int:movie_id>')
+def movie(movie_id):
+    movie = Movies.query.get(movie_id)
+    #  get genre from movie_genres
+    genres = MovieGenres.query.filter_by(movie_id=movie_id).all()
+    #  get genre name from genres
+    genre_names = []
+    for genre in genres:
+        genre_names.append(Genres.query.get(genre.genre_id).genre)
+    #  get actor from movie_actors
+    actors = MovieActors.query.filter_by(movie_id=movie_id).all()
+    #  get actor name from actors
+    actor_names = []
+    for actor in actors:
+        actor_names.append(Actors.query.get(actor.actor_id).actor)
+    #  get director from movie_directors
+    directors = MovieDirectors.query.filter_by(movie_id=movie_id).all()
+    #  get director name from directors
+    director_names = []
+    for director in directors:
+        director_names.append(Directors.query.get(director.director_id).director)
+    return render_template('movie.html', title=movie.title, movie=movie, genre_names=genre_names, actor_names=actor_names, director_names=director_names)
+
 @app.route('/logout')
 def clear_variable():
     session.pop('user_id', None)  # Remove 'user_id' from session
