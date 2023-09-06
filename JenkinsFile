@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     sh "docker pull wojciechprzybylski/cinema-db:latest && docker pull wojciechprzybylski/cinema-app:latest"
-                    sh "docker-compose up"
+                    sh "docker-compose up -d"
                 }
             }
         }
