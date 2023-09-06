@@ -1,6 +1,6 @@
 from app import app
 from application import db, bcrypt
-from application.models import User, Movies, MovieGenres, Genres, MovieActors, Actors, PaymentDetails, Showings, Bookings, Comments, CommentThread
+from application.models import User, Movies, MovieGenres, Genres, MovieActors, Actors, PaymentDetails, Showings, Bookings, Comments, CommentThread, MovieDirectors, Directors
 
 with app.app_context():
     db.drop_all()
@@ -58,13 +58,29 @@ with app.app_context():
     actress12 = Actors(actor="Meryl Streep")
 
     # create a movie director
-    director1 = Actors(actor="Steven Spielberg")
+    director1 = Directors(director="Christopher Nolan")
+    director2 = Directors(director="Steven Spielberg")
+    director3 = Directors(director="Martin Scorsese")
+    director4 = Directors(director="Quentin Tarantino")
+    director5 = Directors(director="James Cameron")
+    director6 = Directors(director="David Fincher")
+    director7 = Directors(director="Ridley Scott")
+    director8 = Directors(director="Tim Burton")
+    director9 = Directors(director="Clint Eastwood")
+    director10 = Directors(director="Peter Jackson")
+    director11 = Directors(director="Guy Ritchie")
+    director12 = Directors(director="Ron Howard")
 
     # create a movie
-    movie1 = Movies(title="Mission Impossible", description="A secret agent is sent to Sydney, to find and destroy a genetically modified disease called 'Chimera'.", genre=1, image="images/mission_impossible.jpeg", release_date="1996-05-22")
-    movie2 = Movies(title="The Matrix", description="A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.", genre=5, image="images/the_matrix.jpg", release_date="1999-03-31")
-    movie3 = Movies(title="The Dark Knight", description="When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", genre=1, image="images/the_dark_knight.jpg", release_date="2008-07-14")
-    movie4 = Movies(title="The Godfather", description="The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", genre=10, image="images/the_godfather.jpg", release_date="1972-03-24")
+    movie1 = Movies(title="Mission Impossible", description="A secret agent is sent to Sydney, to find and destroy a genetically modified disease called 'Chimera'.", image="images/mission_impossible.jpeg", release_date="1996-05-22")
+    movie1_genre = MovieGenres(movie_id=1, genre_id=1)
+    movie1_actor_1 = MovieActors(movie_id=1, actor_id=1)
+    movie1_actor_2 = MovieActors(movie_id=1, actor_id=2)
+    movie1_actor_3 = MovieActors(movie_id=1, actor_id=3)
+    movie1_director = MovieDirectors(movie_id=1, director_id=1)
+    movie2 = Movies(title="The Matrix", description="A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",  image="images/the_matrix.jpg", release_date="1999-03-31")
+    movie3 = Movies(title="The Dark Knight", description="When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", image="images/the_dark_knight.jpg", release_date="2008-07-14")
+    movie4 = Movies(title="The Godfather", description="The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", image="images/the_godfather.jpg", release_date="1972-03-24")
 
 
     # add everything to the database
@@ -122,6 +138,13 @@ with app.app_context():
     db.session.add(movie2)
     db.session.add(movie3)
     db.session.add(movie4)
+    db.session.commit()
+
+    db.session.add(movie1_genre)
+    db.session.add(movie1_actor_1)
+    db.session.add(movie1_actor_2)
+    db.session.add(movie1_actor_3)
+    db.session.add(movie1_director)
 
     db.session.commit()
     
