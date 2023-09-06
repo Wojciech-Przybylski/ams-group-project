@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Create Docker Image for db'){
             steps {
-                sh "cd ./db && docker build -t cinema-db:v1 ."
+                sh "docker build -t cinema-db:v1 -f ./db/Dockerfile ./db"
             }
         }
         stage('Deploy') {
