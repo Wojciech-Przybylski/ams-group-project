@@ -82,6 +82,8 @@ with app.app_context():
     movie3 = Movies(title="The Dark Knight", description="When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", image="images/the_dark_knight.jpg", release_date="2008-07-14")
     movie4 = Movies(title="The Godfather", description="The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", image="images/the_godfather.jpg", release_date="1972-03-24")
 
+    new_release1 = Movies(title="Oppenheimer", description="A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.", image="images/oppenheimer.jpeg", release_date="2023-07-21")
+
 
     # add everything to the database
     db.session.add(genre1)
@@ -145,6 +147,20 @@ with app.app_context():
     db.session.add(movie1_actor_2)
     db.session.add(movie1_actor_3)
     db.session.add(movie1_director)
+
+    db.session.add(director2)
+    db.session.add(director3)
+    db.session.add(director4)
+    db.session.add(director5)
+    db.session.add(director6)
+    db.session.add(director7)
+    db.session.add(director8)
+    db.session.add(director9)
+    db.session.add(director10)
+    db.session.add(director11)
+    db.session.add(director12)
+
+    db.session.add(new_release1)
 
     db.session.commit()
     
