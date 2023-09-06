@@ -23,21 +23,24 @@ pipeline {
                 }
             }
         }
-        stage('Login'){
+        stage('Login-to DockerHub and push'){
             steps {
+                script {
                 sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-            }
-        }
-        stage('push'){
-            steps {
                 sh "docker push wojciechprzybylski/cinema-db:latest && docker push wojciechprzybylski/cinema-app:latest"
+                }
             }
         }
-        // stage('Deploy through docker-compose') {
-        //     steps {
-        //         sh "docker-compose up"
-        //     }
-        // }
+        stage('Pull newest Docker image') {
+            steps {
+                sh "docker-compose up"
+            }
+        }
+        stage('Deploy through docker-compose') {
+            steps {
+                sh "docker-compose up"
+            }
+        }
         
     }   
 }
