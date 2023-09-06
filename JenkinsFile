@@ -33,7 +33,7 @@ pipeline {
         }
         stage('Pull newest Docker image') {
             steps {
-                sh "docker-compose up"
+                sh "docker pull wojciechprzybylski/cinema-db:latest && docker pull wojciechprzybylski/cinema-app:latest"
             }
         }
         stage('Deploy through docker-compose') {
