@@ -20,7 +20,7 @@ class PaymentDetails(db.Model):
 
 class CommentThread(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False, index=True)
+    title = db.Column(db.String(128), nullable=False, unique=True, index=True)
     comments = db.relationship('Comments', backref='comment_thread', lazy=True)
 
 class Comments(db.Model):
@@ -133,6 +133,12 @@ class Cart(db.Model):
 #         self.price = price
 #         self.quantity = quantity
 #         self.image = image
+
+class CommentView:
+    def __init__(self, user_name, comment, time) -> None:
+        self.user_name = user_name
+        self.comment= comment
+        self.time = time
 
 class BannedChars(object):
     def __init__(self, message=None):
