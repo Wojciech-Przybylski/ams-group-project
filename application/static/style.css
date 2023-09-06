@@ -1,0 +1,25 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.footer-container {
+    background-color: gray;
+    padding-bottom: 4rem;
+}
+
+.footer {
+    width: 100%;
+    height: 20vh;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.footer-heading {
+    display: flex;
+    flex-direction: column;
+    margin-right: 4rem;
+}
