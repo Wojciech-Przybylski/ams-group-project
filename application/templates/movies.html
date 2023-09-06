@@ -3,7 +3,7 @@
 <div class="row">
     {% for movie in movies %}
       <div class="col-md-6">
-        <a href="{{ url_for('movie', movie_id=movie.id) }}">
+        <a href="{{ url_for('movie', movie_id=movie.id) }}" style="text-decoration: none;">
             <div class="card mb-4">
             <img src="{{ url_for('static', filename=movie.image) }}" alt="{{ movie.title }}" class="card-img-top" width="300px">
             <div class="card-body">
