@@ -6,46 +6,42 @@ pipeline {
     }
 
     stages {
-        // stage('Install Docker'){
-        //     steps {
-        //         script{
-        //             sh "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo usermod -aG docker jenkins"
-        //             sh "sudo apt-get -y install docker-compose"
-        //         }
-        //     }
-        // }
         stage('Docker Build'){
             steps {
-                script{
+                script {
+                    // Build Docker images
                     sh "docker build -t wojciechprzybylski/cinema-app:latest ."
-                    sh "cd ./db"
-                    sh "docker build -t wojciechprzybylski/cinema-db:latest ."
+                    sh "cd ./db && docker build -t wojciechprzybylski/cinema-db:latest ."
                 }
             }
         }
-        stage('Login-to DockerHub and push'){
+        stage('Login to DockerHub and Push'){
             steps {
                 script {
-                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-                sh "docker push wojciechprzybylski/cinema-db:latest && docker push wojciechprzybylski/cinema-app:latest"
+                    sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    sh "docker push wojciechprzybylski/cinema-db:latest"
+                    sh "docker push wojciechprzybylski/cinema-app:latest"
                 }
             }
         }
-        stage('Pull newest Docker image') {
+        stage('Pull and Run Newest Docker Images') {
             steps {
                 script {
-                    // Define the image name from Docker Hub
+                    // Define the image names from Docker Hub
                     def imageName1 = 'wojciechprzybylski/cinema-db:latest'
                     def imageName2 = 'wojciechprzybylski/cinema-app:latest'
 
-                    // Pull the Docker image from Docker Hub
+                    // Pull the Docker images from Docker Hub
                     def dockerImage1 = docker.image(imageName1).pull()
                     def dockerImage2 = docker.image(imageName2).pull()
 
-                    // Run a container from the pulled image
+                    // Run containers from the pulled images
                     def container1 = dockerImage1.run()
                     def container2 = dockerImage2.run()
 
+                    // Add any additional commands inside the containers if needed
+
+                    // Stop and remove the containers when done
                     container1.stop()
                     container2.stop()
                     container1.remove()
@@ -53,11 +49,11 @@ pipeline {
                 }
             }
         }
+        // Uncomment and modify the following stage if you want to deploy through docker-compose
         // stage('Deploy through docker-compose') {
         //     steps {
         //         sh "docker-compose up"
         //     }
         // }
-        
     }   
 }
