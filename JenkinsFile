@@ -16,12 +16,9 @@ pipeline {
                 sh "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo usermod -aG docker jenkins"
             }
         }
-        stage('Create Docker Image for db') {
+        stage('docker compose up') {
             steps {
-                script {
-                    sh "cd ./db"
-                    sh "docker build -t cinema-db:v1 ."
-                }
+                sh "docker-compose up"
             }
         }
         stage('Create Docker Image for cinema-app:v1') {
