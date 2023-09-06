@@ -21,7 +21,7 @@ services:
   nginx:
     image: nginx:alpine
     volumes:
-      - type: bind
+      - type: volume
         source: ./nginx.conf
         target: /etc/nginx/nginx.conf
     ports:
