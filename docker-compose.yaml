@@ -25,8 +25,8 @@ services:
         source: ./nginx/nginx.conf
         target: /etc/nginx/nginx.conf
     ports:
-      - target: 80
-        published: 80
+      - published: 80
+        target: 80
     networks:
       - cinema-net
 networks:
