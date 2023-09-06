@@ -96,6 +96,7 @@ def new_releases():
 @app.route('/logout')
 def clear_variable():
     session.pop('user_id', None)  # Remove 'user_id' from session
+    session.pop('admin', None)  # Remove 'admin' from session
     print("Session variable cleared!")
     return redirect(url_for('home'))
 
