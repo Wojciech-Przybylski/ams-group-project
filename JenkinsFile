@@ -19,6 +19,7 @@ pipeline {
         stage('Create Docker Image for db'){
             steps {
                 sh "ls ./db"
+            }
         }
         stage('Deploy') {
             steps {
