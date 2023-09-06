@@ -29,4 +29,55 @@ git pull
 
 ```
 
-## The MVP
+## The MVP (The Minimum Viable Product) 
+
+- Home Page:
+    - Should describe QA Cinemas as a brand as well as this the home page needs to be well-designed and aesthetically   pleasing/accessible. 
+    - Home page must be the default for the entire site and other pages should be accessible from here.
+- Login Page:
+    - Login page should be accessible from the home page at the very minimum. 
+    - Should be accessible at the top right of the screen on all pages.
+    - existing accounts should be able to login and new accounts created via a signup form.
+- Listing Gallery:
+    - Gallery should be accessible via overall site navigation.
+    - It must feature at least 4 different movie images.
+    - Each Image should appear on its own page with information regarding the movie - Title, actors, director and showing times.
+- Opening Times:
+    - Must be part of overall site navigation.
+    - Page must have details of the opening times of the cinema.
+- New Releases Gallery:
+    - New release gallery must be part of overall navigation.
+    - Must confine to the same image and information rules as the listing gallery.
+- Classification: 
+    - Part of the overall site navigation. 
+    - Must follow standard film classifications and icons.
+    - page must include any other relevant facts to classification system.
+- Screens:
+    - Should include seating plan and decor of both standard and deluxe screens.
+- Ticket Bookings:
+    - When booking a ticket bookings should include, movie title, screening date, time, number of seats, name of booker and ticket type, as well as concession 
+- Payment:
+    - Payment page should gather - card holder name, card number, expiry date, CVC.
+- Cinema Services:
+    - Part of overall site navigation. 
+    - Should include prices for food and drink. 
+    - feature upcoming cafe and arcade.
+- Discussion Board:
+    - Users can comment on a forum part of the sites navigation. 
+    - content of the forum must be moderated for innappropriate content.
+- Search:
+    - Search bar allowing users to search keywords - with relevant links being returned. 
+- About Page:
+    - Part of overall site navigation.
+    - The name and a small paragraph on all the team members.
+    - Basic contact information and information on who QA cinemas are.
+
+### General Design Asks
+
+- Background colour of site should not be white on any of the pages.
+- Site navigation should be user friendly and availble on all pages of the site.
+
+### Website Wishlist
+
+- Page header and footer, available on all pages.
+- A custom logo for QA Cinemas.
