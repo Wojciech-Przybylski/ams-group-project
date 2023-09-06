@@ -1,0 +1,42 @@
+{% extends 'nav.html' %}
+{% block content %}
+<div class="container">
+        <h1>Thread Titles</h1>
+        <button id="show-hide" class="btn btn-primary">New Thread</button>
+        <form class="form" action="" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.title.label(class="form-label") }}
+                {{ form.title(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Thread Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for thread in comment_threads %}
+                <tr>
+                    <td><a href="#">{{ thread.title }}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const showHide = document.getElementById('show-hide');
+        const form = document.querySelector('form');
+        form.style.display = 'none';
+        showHide.addEventListener('click', () => {
+            form.style.display = 'block';
+            showHide.style.display = 'none';
+        });
+    </script>
+
+
+
+{% endblock %}
