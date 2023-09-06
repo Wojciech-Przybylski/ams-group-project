@@ -8,6 +8,7 @@ with app.app_context():
 
     # create a user
     user1 = User(name="james", email="james@qa.com", password=bcrypt.generate_password_hash("123"))
+    admin1 = User(name="admin", email="admin@qa.com", password=bcrypt.generate_password_hash("123"), admin=True)
 
     # create a movie genre
     genre1 = Genres(genre="Action")
@@ -188,6 +189,7 @@ with app.app_context():
 
 
     db.session.add(user1)
+    db.session.add(admin1)
 
 
     db.session.commit()
