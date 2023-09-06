@@ -21,7 +21,7 @@
             <tbody>
                 {% for thread in comment_threads %}
                 <tr>
-                    <td><a href="#">{{ thread.title }}</a></td>
+                    <td><a href="{{ url_for('thread', thread_id=thread.id) }}">{{ thread.title }}</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
