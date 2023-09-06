@@ -11,14 +11,12 @@ pipeline {
                 sh "pip install -r requirements.txt"
             }
         }
-        stage('Install Docker'){
+        stage('Create Docker Image for db') {
             steps {
-                sh "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo usermod -aG docker jenkins"
-            }
-        }
-        stage('Create Docker Image for db'){
-            steps {
-                sh "docker build -t cinema-db:v1 -f ./db/Dockerfile ./db"
+                script {
+                    def dockerImage = docker.build("cinema-db:v1", "./db")
+                    dockerImage.push()
+                }
             }
         }
         stage('Deploy') {
