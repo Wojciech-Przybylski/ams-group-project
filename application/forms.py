@@ -19,3 +19,11 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=2, max=30)])
     submit = SubmitField('Login')
+
+class CreateThreadForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(min=2, max=30)])
+    submit = SubmitField('Create Thread')
+
+class CreateCommentForm(FlaskForm):
+    comment = StringField('Comment', validators=[DataRequired(), Length(min=2, max=100)])
+    submit = SubmitField('Create Comment')

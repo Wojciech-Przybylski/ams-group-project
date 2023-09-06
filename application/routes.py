@@ -1,8 +1,8 @@
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import desc
 from application import app, db, bcrypt
-from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart
-from application.forms import SignUpForm, LoginForm
+from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView
+from application.forms import CreateThreadForm, SignUpForm, LoginForm, CreateCommentForm
 from datetime import datetime, timedelta
 
 @app.route('/')
@@ -95,3 +95,47 @@ def clear_variable():
     session.pop('user_id', None)  # Remove 'user_id' from session
     print("Session variable cleared!")
     return redirect(url_for('home'))
+
+@app.route('/discussion-board', methods=['GET', 'POST'])
+def discussion_board():
+    # if method is post, add thread to db
+    if request.method == 'POST':
+        title = request.form.get('title')
+        comment_thread = CommentThread(title=title)
+        db.session.add(comment_thread)
+        db.session.commit()
+        return redirect(url_for('discussion_board'))
+    # if user is not logged in, redirect to login page
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    new_thread_form = CreateThreadForm()
+    comment_threads = CommentThread.query.order_by(desc(CommentThread.id)).all()
+    return render_template('discussion-board.html', title='Discussion Board', comment_threads=comment_threads, form=new_thread_form)
+
+@app.route('/discussion-board/<int:thread_id>', methods=['GET', 'POST'])
+def thread(thread_id):
+
+    # if method is post, add comment to db
+    if request.method == 'POST':
+        comment = request.form.get('comment')
+        user_id = session['user_id']
+        new_comment = Comments(comment_thread_id=thread_id, user_id=user_id, comment=comment, date=datetime.utcnow())
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect(url_for('thread', thread_id=thread_id))
+    # if user is not logged in, redirect to login page
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    # create comment form
+    form = CreateCommentForm()
+    # get thread from db
+    thread = CommentThread.query.get(thread_id)
+    # get comments from db
+    comments = Comments.query.filter_by(comment_thread_id=thread_id).order_by(desc(Comments.id)).all()
+    comment_view_list = []
+    for comment in comments:
+        comment_view = CommentView(comment=comment.comment, user_name=User.query.get(comment.user_id).name, time=comment.date.strftime("%d/%m/%Y %H:%M:%S"))
+        comment_view_list.append(comment_view)
+
+    return render_template('thread.html', thread=thread, comments=comment_view_list, form=form)
