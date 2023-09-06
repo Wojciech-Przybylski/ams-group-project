@@ -11,7 +11,7 @@ pipeline {
                 sh "pip install -r requirements.txt"
             }
         }
-        stage('Create Docker Image for db'){
+        stage('Install Docker'){
             steps {
                 sh "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh"
             }
