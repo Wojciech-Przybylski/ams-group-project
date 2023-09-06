@@ -6,6 +6,9 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
+    # create a user
+    user1 = User(name="james", email="james@qa.com", password=bcrypt.generate_password_hash("123"))
+
     # create a movie genre
     genre1 = Genres(genre="Action")
     genre2 = Genres(genre="Comedy")
@@ -78,12 +81,24 @@ with app.app_context():
     movie1_actor_2 = MovieActors(movie_id=1, actor_id=2)
     movie1_actor_3 = MovieActors(movie_id=1, actor_id=3)
     movie1_director = MovieDirectors(movie_id=1, director_id=1)
+
+
     movie2 = Movies(title="The Matrix", description="A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",  image="images/the_matrix.jpg", release_date="1999-03-31")
     movie3 = Movies(title="The Dark Knight", description="When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", image="images/the_dark_knight.jpg", release_date="2008-07-14")
     movie4 = Movies(title="The Godfather", description="The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", image="images/the_godfather.jpg", release_date="1972-03-24")
 
     new_release1 = Movies(title="Oppenheimer", description="A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.", image="images/oppenheimer.jpeg", release_date="2023-07-21")
 
+
+    # create a comment thread
+    comment_thread1 = CommentThread(title="Mission Impossible")
+    comment_thread2 = CommentThread(title="The Matrix")
+    comment_thread3 = CommentThread(title="The Dark Knight")
+    comment_thread4 = CommentThread(title="The Godfather")
+
+    comment1 = Comments(comment_thread_id=1, user_id=1, comment="This is a comment")
+    comment2 = Comments(comment_thread_id=1, user_id=1, comment="This is another comment")
+    comment3 = Comments(comment_thread_id=1, user_id=1, comment="This is a third comment")
 
     # add everything to the database
     db.session.add(genre1)
@@ -161,6 +176,19 @@ with app.app_context():
     db.session.add(director12)
 
     db.session.add(new_release1)
+
+    db.session.add(comment_thread1)
+    db.session.add(comment_thread2)
+    db.session.add(comment_thread3)
+    db.session.add(comment_thread4)
+
+    db.session.add(comment1)
+    db.session.add(comment2)
+    db.session.add(comment3)
+
+
+    db.session.add(user1)
+
 
     db.session.commit()
     
