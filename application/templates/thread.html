@@ -1,0 +1,29 @@
+{% extends 'nav.html' %}
+{% block content %}
+
+<table>
+    <thead>
+        <th>Comment</th>
+        <th>User</th>
+        <th>Time</th>
+    </thead>
+    <tbody>
+        {% for comment in comments %}
+        <tr>
+            <td>{{ comment.comment }}</td>
+            <td>{{ comment.user_name }}</td>
+            <td>{{ comment.time }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <form class="form" action="" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.comment.label(class="form-label") }}
+            {{ form.comment(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
+</table>
+
+{% endblock %}
