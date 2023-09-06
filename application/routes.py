@@ -139,3 +139,7 @@ def thread(thread_id):
         comment_view_list.append(comment_view)
 
     return render_template('thread.html', thread=thread, comments=comment_view_list, form=form)
+
+@app.route('/opening-times')
+def opening_times():
+    return render_template('opening-times.html', title='Opening Times')
