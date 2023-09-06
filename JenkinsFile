@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Install Docker'){
             steps {
-                sh "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo usermod -aG docker jenkins && sudo systemctl restart jenkins"
+                sh "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo usermod -aG docker jenkins"
             }
         }
         stage('Create Docker Image for db'){
