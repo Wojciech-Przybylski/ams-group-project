@@ -3,6 +3,7 @@ from sqlalchemy import desc
 from application import app, db, bcrypt
 from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart
 from application.forms import SignUpForm, LoginForm
+from datetime import datetime, timedelta
 
 @app.route('/')
 @app.route('/home')
@@ -81,6 +82,13 @@ def movie(movie_id):
     for director in directors:
         director_names.append(Directors.query.get(director.director_id).director)
     return render_template('movie.html', title=movie.title, movie=movie, genre_names=genre_names, actor_names=actor_names, director_names=director_names)
+
+@app.route('/new-releases')
+def new_releases():
+    # movies = Movies.query.order_by(Movies.title).all()
+    # get all movies from db if they are less than 3 months old
+    movies = Movies.query.filter(Movies.release_date >= datetime.utcnow() - timedelta(days=90)).order_by(Movies.release_date).all()
+    return render_template('movies.html', title='Movies', movies=movies)
 
 @app.route('/logout')
 def clear_variable():
