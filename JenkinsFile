@@ -13,7 +13,12 @@ pipeline {
         }
         stage('Create Docker Image for db'){
             steps {
-                sh "docker build ./db -t cinema-db:v1 /"
+                sh "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh"
+            }
+        }
+        stage('Create Docker Image for db'){
+            steps {
+                sh "docker build ./db -t cinema-db:v1"
             }
         }
         stage('Deploy') {
