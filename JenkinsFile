@@ -24,13 +24,6 @@ pipeline {
                 sh "docker-compose up"
             }
         }
-        stage('Create Docker Image for cinema-app:v1') {
-            steps {
-                script {
-                    sh "ls"
-                }
-            }
-        }
         stage('Deploy') {
             steps {
                 sh "python3 app.py"
