@@ -1,16 +1,11 @@
 pipeline {
     agent any
+
+    enviroment {
+        DOCKERHUB_CREDENTIALS=credentials('Docker_Login')
+    }
+
     stages {
-        stage('Build') {
-            steps {
-                sh "sudo apt install -y python3-pip"
-            }
-        }
-        stage('Dependencies'){
-            steps {
-                sh "pip install -r requirements.txt"
-            }
-        }
         stage('Install Docker'){
             steps {
                 script{
@@ -19,15 +14,30 @@ pipeline {
                 }
             }
         }
-        stage('docker compose up') {
+        stage('Docker Build'){
             steps {
-                sh "docker-compose up"
+                script{
+                    sh "docker build -t wojciechprzybylski/cinema-app:latest ."
+                    sh "cd ./db"
+                    sh "docker build -t wojciechprzybylski/cinema-db:latest ."
+                }
             }
         }
-        stage('Deploy') {
+        stage('Login'){
             steps {
-                sh "python3 app.py"
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
             }
         }
+        stage('push'){
+            steps {
+                sh "docker push wojciechprzybylski/cinema-db:latest && docker push wojciechprzybylski/cinema-app:latest"
+            }
+        }
+        // stage('Deploy through docker-compose') {
+        //     steps {
+        //         sh "docker-compose up"
+        //     }
+        // }
+        
     }   
 }
