@@ -70,7 +70,7 @@ class Showings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False, index=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    seats = db.Column(db.Integer, nullable=False)
+    seats_available = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
 
 class Bookings(db.Model):
@@ -95,44 +95,50 @@ class Cart(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     
-    # def set_quantity(self, product_id, quantity):
-    #     cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
-    #     if cart_item:
-    #         if quantity > 0:
-    #             cart_item.quantity = quantity
-    #             db.session.commit()
-    #         else:
-    #             db.session.delete(cart_item)
-    #             db.session.commit()
+    def set_quantity(self, product_id, quantity):
+        cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
+        if cart_item:
+            if quantity > 0:
+                cart_item.quantity = quantity
+                db.session.commit()
+            else:
+                db.session.delete(cart_item)
+                db.session.commit()
     
-    # def add_item(self, product_id):
-    #     cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
-    #     if cart_item:
-    #         cart_item.quantity += 1
-    #         db.session.commit()
-    #     else:
-    #         new_cart_item = CartItem(product_id=product_id, quantity=1, cart_id=self.id)
-    #         db.session.add(new_cart_item)
-    #         db.session.commit()
+    def add_item(self, product_id):
+        cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
+        if cart_item:
+            cart_item.quantity += 1
+            db.session.commit()
+        else:
+            new_cart_item = CartItem(product_id=product_id, quantity=1, cart_id=self.id)
+            db.session.add(new_cart_item)
+            db.session.commit()
     
-    # def remove_item(self, product_id):
-    #     cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
-    #     if cart_item:
-    #         db.session.delete(cart_item)
-    #         db.session.commit()
+    def remove_item(self, product_id):
+        cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
+        if cart_item:
+            db.session.delete(cart_item)
+            db.session.commit()
 
-    # def empty_cart(self):
-    #     cart_items = CartItem.query.filter_by(cart_id=self.id).all()
-    #     for item in cart_items:
-    #         db.session.delete(item)
-    #         db.session.commit()
+    def empty_cart(self):
+        cart_items = CartItem.query.filter_by(cart_id=self.id).all()
+        for item in cart_items:
+            db.session.delete(item)
+            db.session.commit()
         
     
-# class CartItem(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
-#     quantity = db.Column(db.Integer, nullable=False)
-#     cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'), nullable=False)
+class CartItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    showing_id = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False)
+    ticket_type_id = db.Column(db.Integer, db.ForeignKey('ticket_type.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'), nullable=False)
+
+class TicketType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ticket_type = db.Column(db.String(30), nullable=False, unique=True, index=True)
+    price = db.Column(db.Integer, nullable=False)
 
     
 # class CartDisplay():
