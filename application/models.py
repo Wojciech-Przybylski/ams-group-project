@@ -78,17 +78,12 @@ class Bookings(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, index=True)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False, index=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    seat = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    showing = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False, index=True)
 
 class BookingsItems(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False, index=True)
     showing_id = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False, index=True)
     ticket_type_id = db.Column(db.Integer, db.ForeignKey('ticket_type.id'), nullable=False, index=True)
-    seat = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
 
 
 class Cart(db.Model):
