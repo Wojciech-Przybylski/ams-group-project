@@ -9,4 +9,4 @@ ENV MYSQL_DATABASE cinema
 # Add the content of the .sql file to your image
 # All scripts copied to docker-entrypoint-initdb.d/ are automatically
 # executed during container startup
-COPY db.sql /docker-entrypoint-initdb.d/
+COPY ./db/db.sql /docker-entrypoint-initdb.d/
