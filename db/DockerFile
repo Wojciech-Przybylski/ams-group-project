@@ -1,4 +1,4 @@
 FROM mysql:5.7
-ENV MYSQL_DATABASE=cinema
+ENV MYSQL_DATABASE=cinema.db
 COPY . .
 ENTRYPOINT python3 create.py
