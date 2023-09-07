@@ -4,6 +4,8 @@ services:
     image: wojciechprzybylski/cinema-db:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 8083:3306
     volumes:
       - type: volume
         source: cinema-vol
@@ -25,3 +27,4 @@ networks:
   cinema-net:
 volumes:
   cinema-vol:
+  - ./db.sql:/docker-entrypoint-initdb.d
