@@ -1,4 +1,4 @@
 FROM mysql:5.7
 ENV MYSQL_DATABASE=cinema
-COPY db.sql docker-entrypoint-initdb.d/
+COPY . .
 ENTRYPOINT python3 create.py
