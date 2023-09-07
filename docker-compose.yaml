@@ -21,14 +21,6 @@ services:
         target: 5001
     deploy:
       replicas: 1
-  # nginx:
-  #   image: nginx:alpine
-  #   volumes:
-  #     - type: volume
-  #       source: ./nginx.conf
-  #       target: /etc/nginx/nginx.conf
-  #   networks:
-  #     - cinema-net
 networks:
   cinema-net:
 volumes:
