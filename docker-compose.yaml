@@ -16,6 +16,9 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
       - cinema-net
+    ports:
+      - published: 80
+        target: 5001
     deploy:
       replicas: 5
   # nginx:
@@ -24,9 +27,6 @@ services:
   #     - type: volume
   #       source: ./nginx.conf
   #       target: /etc/nginx/nginx.conf
-  #   ports:
-  #     - published: 80
-  #       target: 80
   #   networks:
   #     - cinema-net
 networks:
