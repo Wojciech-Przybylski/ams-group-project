@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import desc
 from application import app, db, bcrypt
-from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView
+from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView, Showings
 from application.forms import CreateThreadForm, SignUpForm, LoginForm, CreateCommentForm
 from datetime import datetime, timedelta
 
@@ -159,3 +159,17 @@ def delete_comment(comment_id):
 @app.route('/opening-times')
 def opening_times():
     return render_template('opening-times.html', title='Opening Times')
+
+@app.route('/book/<int:movie_id>')
+def book_tickets(movie_id):
+    # if user is not logged in, redirect to login page
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    else:
+        # get movie info
+        movie = Movies.query.get(movie_id)
+        # get users cart
+        cart = Cart.query.filter_by(user_id=session['user_id']).first()
+        # get all showings for movie
+        showings = Showings.query.filter_by(movie_id=movie_id).all()
+        return render_template('book.html', title='Book Tickets', movie=movie)
