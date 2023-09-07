@@ -27,3 +27,10 @@ class CreateThreadForm(FlaskForm):
 class CreateCommentForm(FlaskForm):
     comment = StringField('Comment', validators=[DataRequired(), Length(min=2, max=100)])
     submit = SubmitField('Create Comment')
+
+class BookingForm(FlaskForm):
+    showing_id = SelectField('Showing', coerce=int, validators=[DataRequired()])
+    child_tieckts = IntegerField('Child Tickets', validators=[DataRequired()])
+    adult_tickets = IntegerField('Adult Tickets', validators=[DataRequired()])
+    quantity = IntegerField('Quantity', validators=[DataRequired()])
+    submit = SubmitField('Add to Cart')
