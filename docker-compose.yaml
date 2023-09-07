@@ -18,17 +18,17 @@ services:
       - cinema-net
     deploy:
       replicas: 5
-  nginx:
-    image: nginx:alpine
-    volumes:
-      - type: volume
-        source: ./nginx.conf
-        target: /etc/nginx/nginx.conf
-    ports:
-      - published: 80
-        target: 80
-    networks:
-      - cinema-net
+  # nginx:
+  #   image: nginx:alpine
+  #   volumes:
+  #     - type: volume
+  #       source: ./nginx.conf
+  #       target: /etc/nginx/nginx.conf
+  #   ports:
+  #     - published: 80
+  #       target: 80
+  #   networks:
+  #     - cinema-net
 networks:
   cinema-net:
 volumes:
