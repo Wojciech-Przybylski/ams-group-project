@@ -32,7 +32,6 @@ class BookingForm(FlaskForm):
     showing_id = SelectField('Showing Times', coerce=int, validators=[DataRequired()])
     child_tickets = IntegerField('Child Tickets', validators=[DataRequired()])
     adult_tickets = IntegerField('Adult Tickets', validators=[DataRequired()])
-    quantity = IntegerField('Quantity', validators=[DataRequired()])
     submit = SubmitField('Add to Cart')
 
 class PaymentForm(FlaskForm):
