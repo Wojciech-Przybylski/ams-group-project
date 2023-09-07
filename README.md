@@ -81,3 +81,11 @@ git pull
 
 - Page header and footer, available on all pages.
 - A custom logo for QA Cinemas.
+
+## Problems Faced
+
+### 05/09/2023
+- One group member had an emergency that meant that they had to leave early. This is something we accounted for in the risk assessment for this project. In order to tackle this issue, the group member who had to leave prepared a short handover to inform the rest of the group of the work that they had been doing, so that a seamless transfer of work could be made.
+
+### 06/09/2023
+- One Group member had a differing password for MySQL this meant that when running the app this member was considered unauthorised and could not get into the website. The current solution for this is for the group member to manually input their password to the __init__.py file and then run the create.py file. This then gave the group member access to the site. However, it is also vital that this password change is not pushed to Github as this will mean all other members will no longer have site access.
