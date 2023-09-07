@@ -21,6 +21,7 @@
     <li>{{ actor }}</li>
 {% endfor %}
 </ul>
+<a href="{{ url_for('book_tickets', movie_id=movie.id) }}"><button class="btn btn-primary">Book Tickets</button></a>
 <script>
     dates = document.querySelectorAll('h3.date');
     for (let i = 0; i < dates.length; i++) {

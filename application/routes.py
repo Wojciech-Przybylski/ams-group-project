@@ -1,8 +1,8 @@
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import desc
 from application import app, db, bcrypt
-from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView, Showings, CartItem, TicketType
-from application.forms import CreateThreadForm, SignUpForm, LoginForm, CreateCommentForm, BookingForm
+from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView, Showings, CartItem, TicketType, PaymentDetails, Bookings, BookingsItems
+from application.forms import CreateThreadForm, SignUpForm, LoginForm, CreateCommentForm, BookingForm, PaymentForm
 from datetime import datetime, timedelta
 
 @app.route('/')
@@ -166,6 +166,8 @@ def book_tickets(movie_id):
     if 'user_id' not in session:
         return redirect(url_for('login'))
     else:
+        # get users name
+        user = User.query.get(session['user_id'])
         # get users cart
         cart = Cart.query.filter_by(user_id=session['user_id']).first()
         # create booking form
@@ -192,7 +194,68 @@ def book_tickets(movie_id):
             db.session.add(adult_cart_item)
             db.session.commit()
             # redirect to cart
-            return redirect(url_for('home'))
-        return render_template('book.html', title='Book Tickets', movie=movie, showings=showings, cart=cart, form=form)
+            return redirect(url_for('payment'))
+        return render_template('book.html', title='Book Tickets', movie=movie, showings=showings, cart=cart, form=form, name=user.name)
+    
+@app.route('/payment', methods=['GET', 'POST'])
+def payment():
+    cart = Cart.query.filter_by(user_id=session['user_id']).first()
+    cart_items = CartItem.query.filter_by(cart_id=cart.id).all()
+    # if user is logged in
+    if 'user_id' in session:
+        # if method is post
+        if request.method == 'POST':
+            if PaymentDetails.query.filter_by(user_id=session['user_id'], card_number=request.form['card_number']).first():
+                # retrieve payment details record
+                payment_details = PaymentDetails.query.filter_by(user_id=session['user_id'], card_number=request.form['card_number']).first()
+            else:
+                # create payment details record
+                payment_details = PaymentDetails(
+                    user_id = session['user_id'],
+                    card_name = request.form['cardholder_name'],
+                    card_number = request.form['card_number'],
+                    expiry_date = request.form['expiry_date'],
+                    security_code = request.form['security_code'])
+            db.session.add(payment_details)
+            db.session.commit()
+            # get showing id from cart
+            showing_id = cart_items[0].showing_id
+            # get movie id from showing
+            movie_id = Showings.query.get(showing_id).movie_id
+            booking = Bookings(user_id=session['user_id'], movie_id=movie_id, date=datetime.utcnow())
+            db.session.add(booking)
+            db.session.commit()
+            # get the booking id for the booking just created
+            booking = Bookings.query.filter_by(user_id=session['user_id']).order_by(desc(Bookings.id)).first()
+            for item in cart_items:
+                # create booking item
+                booking_item = BookingsItems(
+                    booking_id = booking.id,
+                    showing_id = item.showing_id,
+                    ticket_type_id = item.ticket_type_id,
+                )
+                db.session.add(booking_item)
+                db.session.commit()
+            # empty cart
+            cart.empty_cart()
+            return redirect("/confirmation/" + str(booking.id))
+         # if method isn't post - load page
 
-        
+        # search payment_details table for user_id - sent to form for autofill option
+        payment_details = PaymentDetails.query.filter_by(user_id=session['user_id']).all()
+        # create from
+        payment_form = PaymentForm()
+        return render_template('/payment.html', title='Checkout', form=payment_form, payment_details=payment_details)
+    
+    else:
+        return redirect(url_for('home'))
+    
+@app.route('/confirmation/<int:booking_id>')
+def confirmation(booking_id):
+    booking = Bookings.query.get(booking_id)
+    booking_items = BookingsItems.query.filter_by(booking_id=booking_id).all()
+    # get user name
+    user = User.query.get(session['user_id'])
+    # get movie name
+    movie = Movies.query.get(booking.movie_id)
+    return render_template('/confirmation.html', title='Confirmation', booking=booking, booking_items=booking_items, movie_name=movie.title, user_name=user.name)
