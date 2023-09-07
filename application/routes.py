@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, session
+from flask_cors import cross_origin
 from sqlalchemy import desc
 from application import app, db, bcrypt
 from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView, Showings, CartItem, TicketType, PaymentDetails, Bookings, BookingsItems
@@ -269,3 +270,9 @@ def confirmation(booking_id):
     # get movie name
     movie = Movies.query.get(booking.movie_id)
     return render_template('/confirmation.html', title='Confirmation', booking=booking, booking_items=booking_items, movie_name=movie.title, user_name=user.name)
+
+@app.route('/get_remaining_tickets/<int:showing_id>')
+@cross_origin(origin='*', methods=['GET', 'POST'])
+def get_remaining_tickets(showing_id):
+    showing = Showings.query.get(showing_id)
+    return str(showing.seats_available)
