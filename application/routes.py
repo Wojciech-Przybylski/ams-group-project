@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import desc
 from application import app, db, bcrypt
 from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView, Showings
-from application.forms import CreateThreadForm, SignUpForm, LoginForm, CreateCommentForm
+from application.forms import CreateThreadForm, SignUpForm, LoginForm, CreateCommentForm, BookingForm
 from datetime import datetime, timedelta
 
 @app.route('/')
@@ -166,10 +166,12 @@ def book_tickets(movie_id):
     if 'user_id' not in session:
         return redirect(url_for('login'))
     else:
+        # create booking form
+        form = BookingForm()
         # get movie info
         movie = Movies.query.get(movie_id)
         # get users cart
         cart = Cart.query.filter_by(user_id=session['user_id']).first()
         # get all showings for movie
         showings = Showings.query.filter_by(movie_id=movie_id).all()
-        return render_template('book.html', title='Book Tickets', movie=movie)
+        return render_template('book.html', title='Book Tickets', movie=movie, showings=showings, cart=cart, form=form)
