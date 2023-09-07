@@ -1,17 +1,10 @@
-# Use an image with Python installed
-FROM python:3.8
-
-# Set environment variables
-ENV MYSQL_DATABASE cinema.db
-
-# Create a directory in the container to hold your Python script
-WORKDIR /app
-
-# Copy your Python script into the container
-COPY . .
-
-# Install any necessary dependencies for your Python script (if needed)
-# RUN pip install some-package
-
-# Specify the command to run your Python script as the entrypoint
-CMD ["python", "create.py"]
+# Derived from official mysql image (our base image)
+# Use mysql 5.7 as the flask-app is not set up to work with later versions
+FROM mysql:5.7
+# Add a database and root password
+# For hints on how to do this, consult the mysql 5.7 image documentation
+ENV MYSQL_DATABASE=cinema
+# Add the content of the .sql file to your image
+# All scripts copied to docker-entrypoint-initdb.d/ are automatically
+# executed during container startup
+COPY db.sql docker-entrypoint-initdb.d/
