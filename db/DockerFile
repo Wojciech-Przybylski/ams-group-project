@@ -1,4 +1,22 @@
-FROM mysql:5.7
-ENV MYSQL_DATABASE=cinema.db
-COPY . .
-ENTRYPOINT python3 create.py
+# FROM mysql:5.7
+# ENV MYSQL_DATABASE=cinema.db
+# COPY . .
+# ENTRYPOINT python3 create.py
+
+# Use an image with Python installed
+FROM python:3.8
+
+# Set environment variables
+ENV MYSQL_DATABASE cinema.db
+
+# Create a directory in the container to hold your Python script
+WORKDIR /app
+
+# Copy your Python script into the container
+COPY create.py .
+
+# Install any necessary dependencies for your Python script (if needed)
+# RUN pip install some-package
+
+# Specify the command to run your Python script as the entrypoint
+CMD ["python", "create.py"]
