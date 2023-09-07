@@ -84,6 +84,7 @@ class BookingsItems(db.Model):
     booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False, index=True)
     showing_id = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False, index=True)
     ticket_type_id = db.Column(db.Integer, db.ForeignKey('ticket_type.id'), nullable=False, index=True)
+    quantity = db.Column(db.Integer, nullable=False)
 
 
 class Cart(db.Model):

@@ -212,7 +212,7 @@ def payment():
                 # create payment details record
                 payment_details = PaymentDetails(
                     user_id = session['user_id'],
-                    card_name = request.form['cardholder_name'],
+                    card_name = request.form['card_name'],
                     card_number = request.form['card_number'],
                     expiry_date = request.form['expiry_date'],
                     security_code = request.form['security_code'])
@@ -233,6 +233,7 @@ def payment():
                     booking_id = booking.id,
                     showing_id = item.showing_id,
                     ticket_type_id = item.ticket_type_id,
+                    quantity = item.quantity
                 )
                 db.session.add(booking_item)
                 db.session.commit()
