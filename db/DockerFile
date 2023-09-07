@@ -8,7 +8,7 @@ ENV MYSQL_DATABASE cinema.db
 WORKDIR /app
 
 # Copy your Python script into the container
-COPY create.py .
+COPY . .
 
 # Install any necessary dependencies for your Python script (if needed)
 # RUN pip install some-package
