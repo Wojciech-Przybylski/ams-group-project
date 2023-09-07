@@ -7,7 +7,7 @@ services:
     ports:
       - 8083:3306
     volumes:
-      - ./test-sql-2:/docker-entrypoint-initdb.d
+      - ./db:/docker-entrypoint-initdb.d
     networks:
       - cinema-net
   cinema-app:
