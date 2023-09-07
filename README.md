@@ -94,3 +94,13 @@ git pull
 
 ### 07/09/2023
 - Several group members during development have had issues with the create.py file not correctly dropping the tables within the SQL database. This seemingly occurs where certain relationships that weren't needed have been removed. This then stops certain tables from being dropped correctly. In order to fix this, the schema must be deleted from the MySQL workbench, then the create.py file can be executed again and the database will completely rebuild itself.
+
+
+
+
+## ERD (Entity Relationship Diagram)
+
+### This entity relationship diagram was devised using the principles of relational databases and normalisation
+
+![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD.png)
+
