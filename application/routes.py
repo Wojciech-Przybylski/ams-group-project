@@ -242,6 +242,12 @@ def payment():
                 db.session.commit()
             # empty cart
             cart.empty_cart()
+            # set quantity of tickets in viewings table based on tickets just sold
+            booking_items = BookingsItems.query.filter_by(booking_id=booking.id).all()
+            for item in booking_items:
+                showing = Showings.query.get(item.showing_id)
+                showing.seats_available -= item.quantity
+                db.session.commit()
             return redirect("/confirmation/" + str(booking.id))
          # if method isn't post - load page
 
