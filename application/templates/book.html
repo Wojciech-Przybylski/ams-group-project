@@ -32,6 +32,9 @@
 <script>
     var child_tickets = document.getElementById("child_tickets");
     var adult_tickets = document.getElementById("adult_tickets");
+    // set initial values to 0
+    child_tickets.value = 0;
+    adult_tickets.value = 0;
 
     // Disable typing by preventing keydown and keypress events
     child_tickets.addEventListener("keydown", function (event) {
