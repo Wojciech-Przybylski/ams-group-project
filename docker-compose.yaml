@@ -7,9 +7,7 @@ services:
     ports:
       - 8083:3306
     volumes:
-      - type: volume
-        source: cinema-vol
-        target: /var/lib/mysql
+      - cinema-vol:/var/lib/mysql
     networks:
       - cinema-net
   cinema-app:
@@ -27,4 +25,8 @@ networks:
   cinema-net:
 volumes:
   cinema-vol:
-  - ./db.sql:/docker-entrypoint-initdb.d
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./db.sql
