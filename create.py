@@ -90,7 +90,7 @@ with app.app_context():
 
     new_release1 = Movies(title="Oppenheimer", description="A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.", image="images/oppenheimer.jpeg", release_date="2023-07-21")
 
-    showing1 = Showings(movie_id=1, screen_number=1, date="2023-10-01 12:00:00", seats_available=100)
+    showing1 = Showings(movie_id=1, screen_number=1, date="2023-10-01 12:00:00", seats_available=10)
     showing2 = Showings(movie_id=1, screen_number=1, date="2023-10-01 15:00:00", seats_available=100)
     showing3 = Showings(movie_id=1, screen_number=2, date="2023-10-01 18:00:00", seats_available=100)
     showing4 = Showings(movie_id=1, screen_number=2, date="2023-10-01 21:00:00", seats_available=100)
