@@ -12,7 +12,7 @@ pipeline {
                 script {
                     // Build Docker images
                     sh "docker build -t wojciechprzybylski/cinema-app:latest ."
-                    sh "docker build -t wojciechprzybylski/cinema-db:latest ./db/DockerFile ."
+                    sh "docker build -t wojciechprzybylski/cinema-db:latest -f ./db/DockerFile ."
                 }
             }
         }
