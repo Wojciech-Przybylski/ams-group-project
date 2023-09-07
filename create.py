@@ -1,6 +1,6 @@
 from app import app
 from application import db, bcrypt
-from application.models import User, Movies, MovieGenres, Genres, MovieActors, Actors, PaymentDetails, Showings, Bookings, Comments, CommentThread, MovieDirectors, Directors
+from application.models import User, Movies, MovieGenres, Genres, MovieActors, Actors, PaymentDetails, Showings, Bookings, Comments, CommentThread, MovieDirectors, Directors, Showings, Cart, CartItem, TicketType
 
 with app.app_context():
     db.drop_all()
@@ -90,12 +90,21 @@ with app.app_context():
 
     new_release1 = Movies(title="Oppenheimer", description="A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.", image="images/oppenheimer.jpeg", release_date="2023-07-21")
 
+    showing1 = Showings(movie_id=1, screen_number=1, date="2023-10-01 12:00:00", seats_available=100)
+    showing2 = Showings(movie_id=1, screen_number=1, date="2023-10-01 15:00:00", seats_available=100)
+    showing3 = Showings(movie_id=1, screen_number=2, date="2023-10-01 18:00:00", seats_available=100)
+    showing4 = Showings(movie_id=1, screen_number=2, date="2023-10-01 21:00:00", seats_available=100)
+
+    adult_ticket_type = TicketType(ticket_type="Adult", price=10)
+    child_ticket_type = TicketType(ticket_type="Child", price=5)
 
     # create a comment thread
     comment_thread1 = CommentThread(title="Mission Impossible")
     comment_thread2 = CommentThread(title="The Matrix")
     comment_thread3 = CommentThread(title="The Dark Knight")
     comment_thread4 = CommentThread(title="The Godfather")
+
+    
 
     comment1 = Comments(comment_thread_id=1, user_id=1, comment="This is a comment")
     comment2 = Comments(comment_thread_id=1, user_id=1, comment="This is another comment")
@@ -190,6 +199,14 @@ with app.app_context():
 
     db.session.add(user1)
     db.session.add(admin1)
+
+    db.session.add(showing1)
+    db.session.add(showing2)
+    db.session.add(showing3)
+    db.session.add(showing4)
+
+    db.session.add(adult_ticket_type)
+    db.session.add(child_ticket_type)
 
 
     db.session.commit()
