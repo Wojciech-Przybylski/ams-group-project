@@ -187,14 +187,17 @@ def book_tickets(movie_id):
             child_tickets = request.form.get('child_tickets')
             adult_tickets = request.form.get('adult_tickets')
             quantity = request.form.get('quantity')
-            # add tickets to cart
-            child_cart_item = CartItem(showing_id=showing_id, ticket_type_id=1, quantity=child_tickets, cart_id=cart.id)
-            adult_cart_item = CartItem(showing_id=showing_id, ticket_type_id=2, quantity=adult_tickets, cart_id=cart.id)
-            db.session.add(child_cart_item)
-            db.session.add(adult_cart_item)
+            # create cart items only if quantity is greater than 0
+            if int(child_tickets) != 0:
+                child_cart_item = CartItem(showing_id=showing_id, ticket_type_id=1, quantity=child_tickets, cart_id=cart.id)
+                db.session.add(child_cart_item)
+            if int(adult_tickets) != 0:
+                adult_cart_item = CartItem(showing_id=showing_id, ticket_type_id=2, quantity=adult_tickets, cart_id=cart.id)
+                db.session.add(adult_cart_item)
             db.session.commit()
-            # redirect to cart
-            return redirect(url_for('payment'))
+            # redirect to payment page only if either quantity is greater than 0
+            if int(child_tickets) != 0 or int(adult_tickets)!= 0:
+                return redirect(url_for('payment'))
         return render_template('book.html', title='Book Tickets', movie=movie, showings=showings, cart=cart, form=form, name=user.name)
     
 @app.route('/payment', methods=['GET', 'POST'])
