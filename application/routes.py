@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import desc
 from application import app, db, bcrypt
-from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView, Showings
+from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView, Showings, CartItem, TicketType
 from application.forms import CreateThreadForm, SignUpForm, LoginForm, CreateCommentForm, BookingForm
 from datetime import datetime, timedelta
 
@@ -160,18 +160,39 @@ def delete_comment(comment_id):
 def opening_times():
     return render_template('opening-times.html', title='Opening Times')
 
-@app.route('/book/<int:movie_id>')
+@app.route('/book/<int:movie_id>', methods=['GET', 'POST'])
 def book_tickets(movie_id):
     # if user is not logged in, redirect to login page
     if 'user_id' not in session:
         return redirect(url_for('login'))
     else:
+        # get users cart
+        cart = Cart.query.filter_by(user_id=session['user_id']).first()
         # create booking form
         form = BookingForm()
         # get movie info
         movie = Movies.query.get(movie_id)
-        # get users cart
-        cart = Cart.query.filter_by(user_id=session['user_id']).first()
         # get all showings for movie
         showings = Showings.query.filter_by(movie_id=movie_id).all()
+        choices = []
+        for showing in showings:
+            choices.append((showing.id, showing.date.strftime("%d/%m/%Y %H:%M:%S")))
+        form.showing_id.choices = choices
+        # if method is post, add tickets to cart
+        if request.method == 'POST':
+            # get form data
+            showing_id = request.form.get('showing_id')
+            child_tickets = request.form.get('child_tickets')
+            adult_tickets = request.form.get('adult_tickets')
+            quantity = request.form.get('quantity')
+            # add tickets to cart
+            child_cart_item = CartItem(showing_id=showing_id, ticket_type_id=1, quantity=child_tickets, cart_id=cart.id)
+            adult_cart_item = CartItem(showing_id=showing_id, ticket_type_id=2, quantity=adult_tickets, cart_id=cart.id)
+            db.session.add(child_cart_item)
+            db.session.add(adult_cart_item)
+            db.session.commit()
+            # redirect to cart
+            return redirect(url_for('home'))
         return render_template('book.html', title='Book Tickets', movie=movie, showings=showings, cart=cart, form=form)
+
+        
