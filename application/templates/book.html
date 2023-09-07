@@ -3,4 +3,67 @@
 
 <h2>Book tickets for: {{ movie.title }}</h2>
 
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form class="form" action="" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.house_name_num.label(class="form-label") }}
+                    {{ form.house_name_num(class="form-control") }}
+                </div>
+                
+                    {% for error in form.house_name_num.errors %}
+                    <div class="alert alert-danger">
+                        <span class="text-danger">{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                <div class="mb-3">
+                    {{ form.street.label(class="form-label") }}
+                    {{ form.street(class="form-control") }}
+                </div>
+                
+                {% for error in form.street.errors %}
+                <div class="alert alert-danger">
+                    <span class="text-danger">{{ error }}</span>
+                </div>
+                {% endfor %}
+
+
+                <div class="mb-3">
+                    {{ form.town_city.label(class="form-label") }}
+                    {{ form.town_city(class="form-control") }}
+                </div>
+                
+                    {% for error in form.town_city.errors %}
+                    <div class="alert alert-danger">
+                        <span class="text-danger">{{ error }}</span>
+                    </div>
+                    {% endfor %}
+
+                <div class="mb-3">
+                    {{ form.postcode.label(class="form-label") }}
+                    {{ form.postcode(class="form-control") }}
+                </div>
+                {% for error in form.postcode.errors %}
+                <div class="alert alert-danger">
+                        <span class="text-danger">{{ error }}</span>
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Next: Payment</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- <form action="">
+
+    <select name="Showing" id="showing-select">
+        <option value=""></option>
+        {% for showing in showings %}
+        <option value="{{ showing.id }}">{{ showing.date }}</option>
+        {% endfor %}
+    </select>
+
+</form> -->
+
 {% endblock %}
