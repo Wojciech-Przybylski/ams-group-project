@@ -38,6 +38,9 @@ def login():
                 print('user found')
                 # create session variable for user_id
                 session['user_id'] = user.id
+                # if user is admin, create session variable for admin
+                if user.admin:
+                    session['admin'] = True
                 # check if user has a cart
                 cart = Cart.query.filter_by(user_id=user.id).first()
                 if cart:
@@ -93,6 +96,7 @@ def new_releases():
 @app.route('/logout')
 def clear_variable():
     session.pop('user_id', None)  # Remove 'user_id' from session
+    session.pop('admin', None)  # Remove 'admin' from session
     print("Session variable cleared!")
     return redirect(url_for('home'))
 
@@ -135,7 +139,23 @@ def thread(thread_id):
     comments = Comments.query.filter_by(comment_thread_id=thread_id).order_by(desc(Comments.id)).all()
     comment_view_list = []
     for comment in comments:
-        comment_view = CommentView(comment=comment.comment, user_name=User.query.get(comment.user_id).name, time=comment.date.strftime("%d/%m/%Y %H:%M:%S"))
+        comment_view = CommentView(id=comment.id, comment=comment.comment, user_name=User.query.get(comment.user_id).name, time=comment.date.strftime("%d/%m/%Y %H:%M:%S"))
         comment_view_list.append(comment_view)
 
     return render_template('thread.html', thread=thread, comments=comment_view_list, form=form)
+
+@app.route('/delete-comment/<int:comment_id>', methods=['GET', 'POST'])
+def delete_comment(comment_id):
+    # get comment from db
+    comment = Comments.query.get(comment_id)
+    # get thread id from comment
+    thread_id = comment.comment_thread_id
+    # delete comment from db
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('thread', thread_id=thread_id))
+
+
+@app.route('/opening-times')
+def opening_times():
+    return render_template('opening-times.html', title='Opening Times')

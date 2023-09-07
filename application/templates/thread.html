@@ -9,15 +9,27 @@
                 <th>Comment</th>
                 <th>User</th>
                 <th>Time</th>
+                <!-- if user is admin, add delete comment column -->
+                {% if session['admin'] %}
+                <th>Delete Comment</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
             {% for comment in comments %}
-            <tr>
-                <td>{{ comment.comment }}</td>
-                <td>{{ comment.user_name }}</td>
-                <td>{{ comment.time }}</td>
-            </tr>
+                <tr>
+                    <td>{{ comment.comment }}</td>
+                    <td>{{ comment.user_name }}</td>
+                    <td>{{ comment.time }}</td>
+                    <!-- if user is admin, add delete comment button -->
+                    {% if session['admin'] %}
+                    <td>
+                        <form action="{{ url_for('delete_comment', comment_id=comment.id) }}" method="POST">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
             {% endfor %}
         </tbody>
     </table>
