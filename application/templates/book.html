@@ -9,61 +9,75 @@
             <form class="form" action="" method="POST">
                 {{ form.hidden_tag() }}
                 <div class="mb-3">
-                    {{ form.house_name_num.label(class="form-label") }}
-                    {{ form.house_name_num(class="form-control") }}
+                    {{ form.showing_id.label(class="form-label") }}
+                    {{ form.showing_id(class="form-control") }}
                 </div>
-                
-                    {% for error in form.house_name_num.errors %}
-                    <div class="alert alert-danger">
-                        <span class="text-danger">{{ error }}</span>
-                        </div>
-                    {% endfor %}
                 <div class="mb-3">
-                    {{ form.street.label(class="form-label") }}
-                    {{ form.street(class="form-control") }}
+                    {{ form.child_tickets.label(class="form-label") }}
+                    {{ form.child_tickets(class="form-control") }}
                 </div>
-                
-                {% for error in form.street.errors %}
-                <div class="alert alert-danger">
-                    <span class="text-danger">{{ error }}</span>
-                </div>
-                {% endfor %}
-
-
                 <div class="mb-3">
-                    {{ form.town_city.label(class="form-label") }}
-                    {{ form.town_city(class="form-control") }}
+                    {{ form.adult_tickets.label(class="form-label") }}
+                    {{ form.adult_tickets(class="form-control") }}
                 </div>
-                
-                    {% for error in form.town_city.errors %}
-                    <div class="alert alert-danger">
-                        <span class="text-danger">{{ error }}</span>
-                    </div>
-                    {% endfor %}
-
                 <div class="mb-3">
-                    {{ form.postcode.label(class="form-label") }}
-                    {{ form.postcode(class="form-control") }}
+                    <p id="total"></p>
                 </div>
-                {% for error in form.postcode.errors %}
-                <div class="alert alert-danger">
-                        <span class="text-danger">{{ error }}</span>
-                </div>
-                {% endfor %}
                 <button type="submit" class="btn btn-primary">Next: Payment</button>
             </form>
+
         </div>
     </div>
 </div>
-<!-- <form action="">
+<script>
+    var child_tickets = document.getElementById("child_tickets");
+    var adult_tickets = document.getElementById("adult_tickets");
 
-    <select name="Showing" id="showing-select">
-        <option value=""></option>
-        {% for showing in showings %}
-        <option value="{{ showing.id }}">{{ showing.date }}</option>
-        {% endfor %}
-    </select>
+    // Disable typing by preventing keydown and keypress events
+    child_tickets.addEventListener("keydown", function (event) {
+        event.preventDefault();
+    });
 
-</form> -->
+    child_tickets.addEventListener("keypress", function (event) {
+        event.preventDefault();
+    });
+
+    adult_tickets.addEventListener("keydown", function (event) {
+        event.preventDefault();
+    });
+
+    adult_tickets.addEventListener("keypress", function (event) {
+        event.preventDefault();
+    });
+
+    function updateTotal() {
+        // get child_tickets value
+        var child_tickets_value = child_tickets.value;
+        // get adult_tickets value
+        var adult_tickets_value = adult_tickets.value;
+
+        // if child_ticket value is less than 0, set to 0
+        if (child_tickets_value < 0) {
+            child_tickets.value = 0;
+        }
+
+        // if adult_ticket value is less than 0, set to 0
+
+        if (adult_tickets_value < 0) {
+            adult_tickets.value = 0;
+        }
+        // calculate total
+        var total = child_tickets_value * 5 + adult_tickets_value * 10;
+        // update total
+        // if total is negative, set to 0
+        if (total < 0) {
+            total = 0;
+        }
+        document.getElementById("total").innerHTML = "Total: £" + total;
+    }
+
+    child_tickets.addEventListener("change", updateTotal);
+    adult_tickets.addEventListener("change", updateTotal);
+</script>
 
 {% endblock %}
