@@ -20,7 +20,7 @@ services:
       - published: 80
         target: 5001
     deploy:
-      replicas: 5
+      replicas: 1
   # nginx:
   #   image: nginx:alpine
   #   volumes:
