@@ -82,6 +82,14 @@ class Bookings(db.Model):
     price = db.Column(db.Integer, nullable=False)
     showing = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False, index=True)
 
+class BookingsItems(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False, index=True)
+    showing_id = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False, index=True)
+    seat = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+
+
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
