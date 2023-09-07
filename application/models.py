@@ -69,9 +69,9 @@ class MovieDirectors(db.Model):
 class Showings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False, index=True)
+    screen_number = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     seats_available = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
 
 class Bookings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +86,7 @@ class BookingsItems(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False, index=True)
     showing_id = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False, index=True)
+    ticket_type_id = db.Column(db.Integer, db.ForeignKey('ticket_type.id'), nullable=False, index=True)
     seat = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
 
