@@ -315,29 +315,25 @@ def test_Bookings_and_BookingsItems(client):
     assert retrieved_booking_item.ticket_type_id == ticket_type.id
     assert retrieved_booking_item.quantity == 2
 
-def test_Cart_and_CartItem_methods(client):
+def test_Cart_empty_cart(client):
     # Create a user
     user = User(name="Alice", email="alice@example.com", password="hashed_password")
     db.session.add(user)
     db.session.commit()
-    
-    movie_id = 1  # Replace with the actual movie_id you intend to use
-    movie = Movies.query.get(movie_id)
-    
-    if movie is None:
-        movie = Movies(
-            id=movie_id,
-            title="Test Movie",
-            description="This is a test movie description.",
-            image="test_movie.jpg",
-            release_date="2023-09-10"
-        )
-        db.session.add(movie)
-        db.session.commit()
 
     # Create a cart for the user
     cart = Cart(user_id=user.id)
     db.session.add(cart)
+    db.session.commit()
+
+    movie = Movies(
+        title="Test Movie",
+        description="This is a test movie description.",
+        image="test_movie.jpg",
+        release_date="2023-09-10"
+    )
+
+    db.session.add(movie)
     db.session.commit()
 
     # Create a showing
@@ -358,25 +354,18 @@ def test_Cart_and_CartItem_methods(client):
     db.session.add(ticket_type)
     db.session.commit()
 
-    # Test add_item method
-    cart.add_item(showing.id)  # Pass only showing_id as an argument
-    cart_item = CartItem.query.filter_by(cart_id=cart.id).first()
-    assert cart_item is not None
-    assert cart_item.showing_id == showing.id
+    # Create some cart items for the cart
+    cart_item1 = CartItem(showing_id=showing.id, ticket_type_id=ticket_type.id, quantity=2, cart_id=cart.id)
+    cart_item2 = CartItem(showing_id=showing.id, ticket_type_id=ticket_type.id, quantity=3, cart_id=cart.id)
+    db.session.add(cart_item1)
+    db.session.add(cart_item2)
+    db.session.commit()
 
-    # Test set_quantity method
-    cart.set_quantity(showing.id, 3)  # Pass only showing_id and quantity
-    cart_item = CartItem.query.filter_by(cart_id=cart.id).first()
-    assert cart_item is not None
-    assert cart_item.quantity == 3
+    # Check that cart items exist before emptying
+    assert CartItem.query.filter_by(cart_id=cart.id).count() == 2
 
-    # Test remove_item method
-    cart.remove_item(showing.id)  # Pass only showing_id
-    cart_item = CartItem.query.filter_by(cart_id=cart.id).first()
-    assert cart_item is None
-
-    # Test empty_cart method
-    cart.add_item(showing.id)  # Re-add the item
+    # Call the empty_cart method
     cart.empty_cart()
-    cart_item = CartItem.query.filter_by(cart_id=cart.id).first()
-    assert cart_item is None
+
+    # Check that cart items are deleted after emptying
+    assert CartItem.query.filter_by(cart_id=cart.id).count() == 0

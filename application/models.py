@@ -91,33 +91,6 @@ class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    
-    def set_quantity(self, product_id, quantity):
-        cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
-        if cart_item:
-            if quantity > 0:
-                cart_item.quantity = quantity
-                db.session.commit()
-            else:
-                db.session.delete(cart_item)
-                db.session.commit()
-    
-    def add_item(self, product_id):
-        cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
-        if cart_item:
-            cart_item.quantity += 1
-            db.session.commit()
-        else:
-            new_cart_item = CartItem(product_id=product_id, quantity=1, cart_id=self.id)
-            db.session.add(new_cart_item)
-            db.session.commit()
-    
-    def remove_item(self, product_id):
-        cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
-        if cart_item:
-            db.session.delete(cart_item)
-            db.session.commit()
-
     def empty_cart(self):
         cart_items = CartItem.query.filter_by(cart_id=self.id).all()
         for item in cart_items:
