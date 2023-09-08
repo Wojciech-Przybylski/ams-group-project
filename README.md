@@ -102,11 +102,15 @@ git pull
 
 - Two group memebrs came across an issue withe the ticket booking system, specifically with the maximum amount of tickets able to be bought. This was an important issue to fix because if the user was able to buy too many tickets this could break the whole database.
 
+## Development Methodology 
+
 ## ERD (Entity Relationship Diagram)
 
 ### This entity relationship diagram was devised using the principles of relational databases and normalisation
 
 ![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD.png)
+
+## UML Diagram (Unified Modelling Language)
 
 
 
