@@ -98,7 +98,9 @@ git pull
 - One group member was having an issue getting some HTML and CSS code working for the Home and About pages of the website. In order to tackle this several group members peer-reviewed the work and came to the conclusion that their was an issue with the file structure within the home-page branch causing the HTML and CSS to not appear correectly. Furthermore the group members in the peer review concluded that their needed to be some image resizing within the home-page before it can be pushed to the main branch.
 
 ### 08/09/2023
+- One group member came across an issue with the deployment of the database using several CI/CD tools. After a diiscussion with the group after our morning SCRUM meeting we came to the conclusion to move away from this issue for now. As a group we concluded that other areas of this project need to take priority, on top of this their is a risk that pursuing this issue could take us far out of scope for this project.
 
+- Two group memebrs came across an issue withe the ticket booking system, specifically with the maximum amount of tickets able to be bought. This was an important issue to fix because if the user was able to buy too many tickets this could break the whole database.
 
 ## ERD (Entity Relationship Diagram)
 
