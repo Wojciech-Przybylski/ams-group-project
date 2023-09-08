@@ -170,3 +170,22 @@ class CheckAdmin(object):
         if field.data.lower() == 'admin':
             raise ValidationError('Name cannot be "admin".')
         
+class ValidateTicketNumber(object):
+    def __init__(self, message=None):
+        self.message = message
+
+    def __call__(self, form, field):
+        child_ticket_number = form.child_tickets.data
+        adult_ticket_number = form.adult_tickets.data
+        # get total tickets available from db
+        showing = Showings.query.filter_by(id=form.showing_id.data).first()
+        total_tickets_available = showing.seats_available
+        total_tickets_requested = child_ticket_number + adult_ticket_number
+        print(f'Total tickets requested: {child_ticket_number + adult_ticket_number}')
+        print(f'total tickets available: {total_tickets_available}')
+        # check if total tickets requested is greater than total tickets available
+        if total_tickets_requested > total_tickets_available:
+            print('Total tickets requested is greater than total tickets available.')
+            raise ValidationError('Total tickets requested is greater than total tickets available.')
+        
+        
