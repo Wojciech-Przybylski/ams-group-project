@@ -182,7 +182,7 @@ def book_tickets(movie_id):
             choices.append((showing.id, showing.date.strftime("%d/%m/%Y %H:%M:%S")))
         form.showing_id.choices = choices
         # if method is post, add tickets to cart
-        if request.method == 'POST':
+        if request.method == 'POST' and form.validate_on_submit():
             # get form data
             showing_id = request.form.get('showing_id')
             child_tickets = request.form.get('child_tickets')
