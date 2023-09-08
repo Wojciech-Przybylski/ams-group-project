@@ -276,3 +276,41 @@ def confirmation(booking_id):
 def get_remaining_tickets(showing_id):
     showing = Showings.query.get(showing_id)
     return str(showing.seats_available)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        search = request.form.get('search')
+        return redirect(url_for('search_results', search=search))
+
+@app.route('/search-results/<string:search>')
+def search_results(search):
+    movies = Movies.query.filter(Movies.title.like('%' + search + '%')).all()
+    # find all movies where the actor name is like the search
+    actors = Actors.query.filter(Actors.actor.like('%' + search + '%')).all()
+    for actor in actors:
+        # find all movies where the actor id is in the movie_actors table
+        movies_with_actor = MovieActors.query.filter_by(actor_id=actor.id).all()
+        for movie in movies_with_actor:
+            # if the movie is not already in the movies list, add it
+            if movie.movie_id not in movies:
+                movies.append(Movies.query.get(movie.movie_id))
+    # find all movies where the director name is like the search
+    directors = Directors.query.filter(Directors.director.like('%' + search + '%')).all()
+    for director in directors:
+        # find all movies where the director id is in the movie_directors table
+        movies_with_director = MovieDirectors.query.filter_by(director_id=director.id).all()
+        for movie in movies_with_director:
+            # if the movie is not already in the movies list, add it
+            if movie.movie_id not in movies:
+                movies.append(Movies.query.get(movie.movie_id))
+    # find all movies where the genre name is like the search
+    genres = Genres.query.filter(Genres.genre.like('%' + search + '%')).all()
+    for genre in genres:
+        # find all movies where the genre id is in the movie_genres table
+        movies_with_genre = MovieGenres.query.filter_by(genre_id=genre.id).all()
+        for movie in movies_with_genre:
+            # if the movie is not already in the movies list, add it
+            if movie.movie_id not in movies:
+                movies.append(Movies.query.get(movie.movie_id))
+    return render_template('search_results.html' , title=('Search results for: ' + search), movies=movies)

@@ -95,14 +95,32 @@ git pull
 ### 07/09/2023
 - Several group members during development have had issues with the create.py file not correctly dropping the tables within the SQL database. This seemingly occurs where certain relationships that weren't needed have been removed. This then stops certain tables from being dropped correctly. In order to fix this, the schema must be deleted from the MySQL workbench, then the create.py file can be executed again and the database will completely rebuild itself.
 
+- One group member was having an issue getting some HTML and CSS code working for the Home and About pages of the website. In order to tackle this several group members peer-reviewed the work and came to the conclusion that their was an issue with the file structure within the home-page branch causing the HTML and CSS to not appear correectly. Furthermore the group members in the peer review concluded that their needed to be some image resizing within the home-page before it can be pushed to the main branch.
 
+### 08/09/2023
+- One group member came across an issue with the deployment of the database using several CI/CD tools. After a diiscussion with the group after our morning SCRUM meeting we came to the conclusion to move away from this issue for now. As a group we concluded that other areas of this project need to take priority, on top of this their is a risk that pursuing this issue could take us far out of scope for this project.
 
+- Two group memebrs came across an issue withe the ticket booking system, specifically with the maximum amount of tickets able to be bought. This was an important issue to fix because if the user was able to buy too many tickets this could break the whole database.
+
+## Development Methodology 
+
+### Kanban Board 
+
+For this project our group used a Kanban board via Trello to more easily display and communicate our user stories and specification. Making this Kanban board was one of the first tasks that we undertook. In a group scenario this helped us easily distribute and prioritise different tasks. Each group member has made sure to keep up to date with the Trello board, by showing tasks as complete, adding comments or images to the individual tasks or user stories. There were some minor difficulties initially with the Kanban board. For this project the specification stated that we had to use Trello rather than Jira, none of the group members had used Trello before. However we quickly managed to figure out the interface of Trello and were able to put our Kanban board together. There are a number of examples of the progress of our Trello board within the documentation screenshots folder, however an example of this will be placed below:
+
+![Example of Trellp Board](/Documentation-Screenshots/Trello/Trello%201.png)
+
+### Scrum 
 
 ## ERD (Entity Relationship Diagram)
 
 ### This entity relationship diagram was devised using the principles of relational databases and normalisation
 
 ![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD.png)
+
+## UML Diagram (Unified Modelling Language)
+
+### A UML diagram is a diagram based on the UML (Unified Modeling Language) with the purpose of visually representing a system along with its main actors, roles, actions, artifacts or classes, in order to better understand, alter, maintain, or document information about the system.
 
 
 
