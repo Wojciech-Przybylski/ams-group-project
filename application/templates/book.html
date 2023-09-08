@@ -24,10 +24,10 @@
                     <p id="total"></p>
                 </div>
                 {% for error in form.adult_tickets.errors %}
-                    <br>
-                    <div class="alert alert-danger">
-                        <span class="text-danger">{{ error }}</span>
-                    </div>
+                <br>
+                <div class="alert alert-danger">
+                    <span class="text-danger">{{ error }}</span>
+                </div>
                 {% endfor %}
                 <button type="submit" class="btn btn-primary">Next: Payment</button>
             </form>
@@ -43,28 +43,14 @@
     child_tickets.value = 0;
     adult_tickets.value = 0;
 
-    // Disable typing by preventing keydown and keypress events
-    child_tickets.addEventListener("keydown", function (event) {
-        event.preventDefault();
-    });
 
-    child_tickets.addEventListener("keypress", function (event) {
-        event.preventDefault();
-    });
-
-    adult_tickets.addEventListener("keydown", function (event) {
-        event.preventDefault();
-    });
-
-    adult_tickets.addEventListener("keypress", function (event) {
-        event.preventDefault();
-    });
 
     function updateTotal() {
         // get child_tickets value
         var child_tickets_value = child_tickets.value;
         // get adult_tickets value
         var adult_tickets_value = adult_tickets.value;
+
         //get showing_id
         var showing_id = document.getElementById("showing_id");
 
@@ -88,58 +74,69 @@
                 adult_tickets.value = adult_tickets_value - 1;
             }
         }
-        
-
-            // calculate total
-            var total = child_tickets_value * 5 + adult_tickets_value * 10;
-            // update total
-            // if total is negative, set to 0
-            if (total < 0) {
-                total = 0;
-            }
-            document.getElementById("total").innerHTML = "Total: £" + total;
+        // calculate total
+        var total = child_tickets_value * 5 + adult_tickets_value * 10;
+        // update total
+        // if total is negative, set to 0
+        if (total < 0) {
+            total = 0;
         }
+        document.getElementById("total").innerHTML = "Total: £" + total;
+    }
 
-        function getRemainingTickets() {
-            // axios request to get showing details from the database
-            return axios.get('/get_remaining_tickets/' + showing_id.value)
-                .then(function (response) {
-                    var tickets_remaining = response.data;
-                    console.log("Remaining Tickets: " + tickets_remaining);
-                    return tickets_remaining;
-                })
-                .catch(function (error) {
-                    console.error(error);
-                });
-        }
-
-        getRemainingTickets()
-            .then(function (tickets_remaining) {
-                // Now you have the correct tickets_remaining value
-                // Find all elements with the class "text-danger"
-                var errorElements = document.getElementsByClassName("text-danger");
-
-                // Loop through errorElements
-                for (var i = 0; i < errorElements.length; i++) {
-                    // Set innerHTML to include the tickets_remaining value
-                    errorElements[i].innerHTML = errorElements[i].innerHTML + " Tickets remaining: " + tickets_remaining;
-                }
+    function getRemainingTickets() {
+        // axios request to get showing details from the database
+        return axios.get('/get_remaining_tickets/' + showing_id.value)
+            .then(function (response) {
+                tickets_remaining = response.data;
+                console.log("Remaining Tickets: " + tickets_remaining);
+                return tickets_remaining;
+            })
+            .catch(function (error) {
+                console.error(error);
             });
+    }
+
+    getRemainingTickets()
+        .then(function (tickets_remaining) {
+            // Now you have the correct tickets_remaining value
+            // Find all elements with the class "text-danger"
+            var errorElements = document.getElementsByClassName("text-danger");
+
+            // Loop through errorElements
+            for (var i = 0; i < errorElements.length; i++) {
+                // Set innerHTML to include the tickets_remaining value
+                errorElements[i].innerHTML = errorElements[i].innerHTML + " Tickets remaining: " + tickets_remaining;
+            }
+        });
 
 
 
-        child_tickets.addEventListener("change", updateTotal);
+
+    child_tickets.addEventListener("change", updateTotal);
 
 
-        adult_tickets.addEventListener("change", updateTotal);
+    adult_tickets.addEventListener("change", updateTotal);
 
-        // put event listener on showing_id
-        showing_id.addEventListener("change", getRemainingTickets);
+    // put event listener on showing_id
+    showing_id.addEventListener("change", getRemainingTickets);
 
+    // Disable typing by preventing keydown and keypress events
+    child_tickets.addEventListener("keydown", function (event) {
+        event.preventDefault();
+    });
 
-        
+    child_tickets.addEventListener("keypress", function (event) {
+        event.preventDefault();
+    });
 
-        
+    adult_tickets.addEventListener("keydown", function (event) {
+        event.preventDefault();
+    });
+
+    adult_tickets.addEventListener("keypress", function (event) {
+        event.preventDefault();
+    });
 
 </script>
 
