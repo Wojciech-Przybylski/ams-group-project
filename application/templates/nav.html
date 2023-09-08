@@ -53,6 +53,17 @@
                     </li>
                     {% endif %}
                 </ul>
+                <form method="POST" action="/search" class="form-inline my-2 my-lg-0">
+                    {{ search_form.hidden_tag() }}
+                    <div class="row">
+                        <div class="col">
+                            {{ search_form.search(class="form-control mr-sm-2", render_kw={"placeholder": "Search..."}) }}
+                        </div>
+                        <div class="col">
+                            {{ search_form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </nav>
