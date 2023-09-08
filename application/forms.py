@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, DateField, IntegerField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp
-from application.models import CheckAdmin, BannedChars, User
+from application.models import CheckAdmin, BannedChars, User, ValidateTicketNumber, Showings
+from wtforms import Form, IntegerField, SelectField, SubmitField, validators
+
 
 class SignUpForm(FlaskForm):
     name = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=30), BannedChars(), CheckAdmin(message="Name cannot be 'admin'.")])
@@ -29,10 +31,11 @@ class CreateCommentForm(FlaskForm):
     submit = SubmitField('Create Comment')
 
 class BookingForm(FlaskForm):
-    showing_id = SelectField('Showing Times', coerce=int, validators=[DataRequired()])
-    child_tickets = IntegerField('Child Tickets', validators=[DataRequired()])
-    adult_tickets = IntegerField('Adult Tickets', validators=[DataRequired()])
-    submit = SubmitField('Add to Cart')
+    showing_id = SelectField('Showing Times', coerce=int)
+    child_tickets = IntegerField('Child Tickets', validators=[ValidateTicketNumber()])
+    adult_tickets = IntegerField('Adult Tickets', validators=[ValidateTicketNumber()])
+    submit = SubmitField('Next: Payment')
+
 
 class PaymentForm(FlaskForm):
     card_name = StringField('Cardholder Name', validators=[DataRequired(), Length(min=2, max=30), BannedChars()])
