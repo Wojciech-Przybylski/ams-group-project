@@ -1,24 +1,24 @@
-/* Reset some default styles */
+
 body, h1, h2, h3, p {
     margin: 0;
     padding: 0;
 }
 
-/* Set a black background and white text for the entire page */
+
 body {
-    background-color: black;
-    color: white;
-    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
 }
 
-/* Style the header with a dark background and white text */
+
 header {
-    background-color: #222; 
+    background-color: #222;
     padding: 20px 0;
     text-align: center;
 }
 
-/* Style the navigation menu */
+
 .menu {
     list-style: none;
 }
@@ -30,14 +30,18 @@ header {
 
 .menu li a {
     text-decoration: none;
-    color: white;
+    color: #fff;
     font-weight: bold;
+    transition: color 0.3s;
 }
 
-/* Style the hero section */
+.menu li a:hover {
+    color: #FFD700; 
+}
+
+
 .hero {
-    background-image: url('hero-background.jpg'); /* Replace with your image */
-    background-size: cover;
+    background-image: url('html\templates\static\images\sleekbackground.jpg'); 
     background-position: center;
     text-align: center;
     padding: 100px 0;
@@ -45,20 +49,24 @@ header {
 
 .hero h1 {
     font-size: 36px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
 
 .hero p {
     font-size: 18px;
     margin-top: 20px;
+    color: #fff;
 }
 
-/* Style movie cards */
+
 .movie-card {
-    background-color: #333; /* Dark gray background for movie cards */
+    background-color: #333; 
     border-radius: 10px;
     padding: 20px;
     margin: 20px;
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .movie-card img {
@@ -68,20 +76,23 @@ header {
 
 .movie-card h3 {
     margin: 10px 0;
+    color: #fff;
 }
 
-/* Style buttons */
+
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #FFD700; /* Gold color */
-    color: black;
+    background-color: #FFD700; 
+    color: #000;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn:hover {
-    background-color: #FFC100; /* Darker gold color on hover */
+    background-color: #FFC100; 
+    transform: scale(1.05); 
 }
+
