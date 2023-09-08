@@ -104,6 +104,14 @@ git pull
 
 ## Development Methodology 
 
+### Kanban Board 
+
+For this project our group used a Kanban board via Trello to more easily display and communicate our user stories and specification. Making this Kanban board was one of the first tasks that we undertook. In a group scenario this helped us easily distribute and prioritise different tasks. Each group member has made sure to keep up to date with the Trello board, by showing tasks as complete, adding comments or images to the individual tasks or user stories. There were some minor difficulties initially with the Kanban board. For this project the specification stated that we had to use Trello rather than Jira, none of the group members had used Trello before. However we quickly managed to figure out the interface of Trello and were able to put our Kanban board together. There are a number of examples of the progress of our Trello board within the documentation screenshots folder, however an example of this will be placed below:
+
+![Example of Trellp Board](/Documentation-Screenshots/Trello/Trello%201.png)
+
+### Scrum 
+
 ## ERD (Entity Relationship Diagram)
 
 ### This entity relationship diagram was devised using the principles of relational databases and normalisation
@@ -111,6 +119,8 @@ git pull
 ![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD.png)
 
 ## UML Diagram (Unified Modelling Language)
+
+### A UML diagram is a diagram based on the UML (Unified Modeling Language) with the purpose of visually representing a system along with its main actors, roles, actions, artifacts or classes, in order to better understand, alter, maintain, or document information about the system.
 
 
 
