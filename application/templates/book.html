@@ -23,6 +23,12 @@
                 <div class="mb-3">
                     <p id="total"></p>
                 </div>
+                {% for error in form.adult_tickets.errors %}
+                    <br>
+                    <div class="alert alert-danger">
+                        <span class="text-danger">{{ error }}</span>
+                    </div>
+                {% endfor %}
                 <button type="submit" class="btn btn-primary">Next: Payment</button>
             </form>
             <br>
@@ -95,16 +101,31 @@
         }
 
         function getRemainingTickets() {
-            // axios request to get showing details from database
-            axios.get('/get_remaining_tickets/' + showing_id.value)
+            // axios request to get showing details from the database
+            return axios.get('/get_remaining_tickets/' + showing_id.value)
                 .then(function (response) {
-                    tickets_remaining = response.data;
+                    var tickets_remaining = response.data;
                     console.log("Remaining Tickets: " + tickets_remaining);
+                    return tickets_remaining;
                 })
                 .catch(function (error) {
                     console.error(error);
                 });
         }
+
+        getRemainingTickets()
+            .then(function (tickets_remaining) {
+                // Now you have the correct tickets_remaining value
+                // Find all elements with the class "text-danger"
+                var errorElements = document.getElementsByClassName("text-danger");
+
+                // Loop through errorElements
+                for (var i = 0; i < errorElements.length; i++) {
+                    // Set innerHTML to include the tickets_remaining value
+                    errorElements[i].innerHTML = errorElements[i].innerHTML + " Tickets remaining: " + tickets_remaining;
+                }
+            });
+
 
 
         child_tickets.addEventListener("change", updateTotal);
@@ -115,7 +136,10 @@
         // put event listener on showing_id
         showing_id.addEventListener("change", getRemainingTickets);
 
-        getRemainingTickets();
+
+        
+
+        
 
 </script>
 
