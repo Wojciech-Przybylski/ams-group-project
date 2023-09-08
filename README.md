@@ -112,6 +112,8 @@ For this project our group used a Kanban board via Trello to more easily display
 
 ### Scrum 
 
+Scrum is an agile framework typically used for the completeion of complex work. It is typically considered the leading agile development methodology. Therefore as a group we saw it best to utilise Scrum during this project. Whilst we could technically integrate scrum into our individual projects for the sole purpose of experience, on an individual level scrum as a development methodology only really works in a group environment, therefore, our group has not had much if any experience utilising scrum. The first major implementation of scrum that the group has taken onboard is the daily standup meeting. Each morning we discuss with each other and the trainer, what we achieved the previous day and what we plan to achieve today. Problems faced or blockages can also be brought up during the daily standup where we can agree as a team on the best course of action.
+
 ## ERD (Entity Relationship Diagram)
 
 ### This entity relationship diagram was devised using the principles of relational databases and normalisation
