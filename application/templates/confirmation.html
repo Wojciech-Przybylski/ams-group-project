@@ -1,0 +1,8 @@
+{% extends 'nav.html' %}
+{% block content %}
+
+<h2>Great news, {{ user_name }}! Your booking has been successful!</h2>
+<h2>You're off to see {{ movie_name }}</h2>
+<h3>Your booking number is: #{{ booking.id }}</h3>
+
+{% endblock %}

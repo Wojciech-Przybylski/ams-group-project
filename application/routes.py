@@ -1,8 +1,9 @@
 from flask import render_template, request, redirect, url_for, session
+from flask_cors import cross_origin
 from sqlalchemy import desc
 from application import app, db, bcrypt
-from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView
-from application.forms import CreateThreadForm, SignUpForm, LoginForm, CreateCommentForm
+from application.models import User, Movies, Comments, Genres, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Cart, CommentThread, CommentView, Showings, CartItem, TicketType, PaymentDetails, Bookings, BookingsItems
+from application.forms import CreateThreadForm, SignUpForm, LoginForm, CreateCommentForm, BookingForm, PaymentForm
 from datetime import datetime, timedelta
 
 @app.route('/')
@@ -159,3 +160,157 @@ def delete_comment(comment_id):
 @app.route('/opening-times')
 def opening_times():
     return render_template('opening-times.html', title='Opening Times')
+
+@app.route('/book/<int:movie_id>', methods=['GET', 'POST'])
+def book_tickets(movie_id):
+    # if user is not logged in, redirect to login page
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    else:
+        # get users name
+        user = User.query.get(session['user_id'])
+        # get users cart
+        cart = Cart.query.filter_by(user_id=session['user_id']).first()
+        # create booking form
+        form = BookingForm()
+        # get movie info
+        movie = Movies.query.get(movie_id)
+        # get all showings for movie
+        showings = Showings.query.filter_by(movie_id=movie_id).all()
+        choices = []
+        for showing in showings:
+            choices.append((showing.id, showing.date.strftime("%d/%m/%Y %H:%M:%S")))
+        form.showing_id.choices = choices
+        # if method is post, add tickets to cart
+        if request.method == 'POST' and form.validate_on_submit():
+            # get form data
+            showing_id = request.form.get('showing_id')
+            child_tickets = request.form.get('child_tickets')
+            adult_tickets = request.form.get('adult_tickets')
+            quantity = request.form.get('quantity')
+            # create cart items only if quantity is greater than 0
+            if int(child_tickets) != 0:
+                child_cart_item = CartItem(showing_id=showing_id, ticket_type_id=1, quantity=child_tickets, cart_id=cart.id)
+                db.session.add(child_cart_item)
+            if int(adult_tickets) != 0:
+                adult_cart_item = CartItem(showing_id=showing_id, ticket_type_id=2, quantity=adult_tickets, cart_id=cart.id)
+                db.session.add(adult_cart_item)
+            db.session.commit()
+            # redirect to payment page only if either quantity is greater than 0
+            if int(child_tickets) != 0 or int(adult_tickets)!= 0:
+                return redirect(url_for('payment'))
+        return render_template('book.html', title='Book Tickets', movie=movie, showings=showings, cart=cart, form=form, name=user.name)
+    
+@app.route('/payment', methods=['GET', 'POST'])
+def payment():
+    cart = Cart.query.filter_by(user_id=session['user_id']).first()
+    cart_items = CartItem.query.filter_by(cart_id=cart.id).all()
+    # if user is logged in
+    if 'user_id' in session:
+        # if method is post
+        if request.method == 'POST':
+            if PaymentDetails.query.filter_by(user_id=session['user_id'], card_number=request.form['card_number']).first():
+                # retrieve payment details record
+                payment_details = PaymentDetails.query.filter_by(user_id=session['user_id'], card_number=request.form['card_number']).first()
+            else:
+                # create payment details record
+                payment_details = PaymentDetails(
+                    user_id = session['user_id'],
+                    card_name = request.form['card_name'],
+                    card_number = request.form['card_number'],
+                    expiry_date = request.form['expiry_date'],
+                    security_code = request.form['security_code'])
+            db.session.add(payment_details)
+            db.session.commit()
+            # get showing id from cart
+            showing_id = cart_items[0].showing_id
+            # get movie id from showing
+            movie_id = Showings.query.get(showing_id).movie_id
+            booking = Bookings(user_id=session['user_id'], movie_id=movie_id, date=datetime.utcnow())
+            db.session.add(booking)
+            db.session.commit()
+            # get the booking id for the booking just created
+            booking = Bookings.query.filter_by(user_id=session['user_id']).order_by(desc(Bookings.id)).first()
+            for item in cart_items:
+                # create booking item
+                booking_item = BookingsItems(
+                    booking_id = booking.id,
+                    showing_id = item.showing_id,
+                    ticket_type_id = item.ticket_type_id,
+                    quantity = item.quantity
+                )
+                db.session.add(booking_item)
+                db.session.commit()
+            # empty cart
+            cart.empty_cart()
+            # set quantity of tickets in viewings table based on tickets just sold
+            booking_items = BookingsItems.query.filter_by(booking_id=booking.id).all()
+            for item in booking_items:
+                showing = Showings.query.get(item.showing_id)
+                showing.seats_available -= item.quantity
+                db.session.commit()
+            return redirect("/confirmation/" + str(booking.id))
+         # if method isn't post - load page
+
+        # search payment_details table for user_id - sent to form for autofill option
+        payment_details = PaymentDetails.query.filter_by(user_id=session['user_id']).all()
+        # create from
+        payment_form = PaymentForm()
+        return render_template('/payment.html', title='Checkout', form=payment_form, payment_details=payment_details)
+    
+    else:
+        return redirect(url_for('home'))
+    
+@app.route('/confirmation/<int:booking_id>')
+def confirmation(booking_id):
+    booking = Bookings.query.get(booking_id)
+    booking_items = BookingsItems.query.filter_by(booking_id=booking_id).all()
+    # get user name
+    user = User.query.get(session['user_id'])
+    # get movie name
+    movie = Movies.query.get(booking.movie_id)
+    return render_template('/confirmation.html', title='Confirmation', booking=booking, booking_items=booking_items, movie_name=movie.title, user_name=user.name)
+
+@app.route('/get_remaining_tickets/<int:showing_id>')
+@cross_origin(origin='*', methods=['GET', 'POST'])
+def get_remaining_tickets(showing_id):
+    showing = Showings.query.get(showing_id)
+    return str(showing.seats_available)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        search = request.form.get('search')
+        return redirect(url_for('search_results', search=search))
+
+@app.route('/search-results/<string:search>')
+def search_results(search):
+    movies = Movies.query.filter(Movies.title.like('%' + search + '%')).all()
+    # find all movies where the actor name is like the search
+    actors = Actors.query.filter(Actors.actor.like('%' + search + '%')).all()
+    for actor in actors:
+        # find all movies where the actor id is in the movie_actors table
+        movies_with_actor = MovieActors.query.filter_by(actor_id=actor.id).all()
+        for movie in movies_with_actor:
+            # if the movie is not already in the movies list, add it
+            if movie.movie_id not in movies:
+                movies.append(Movies.query.get(movie.movie_id))
+    # find all movies where the director name is like the search
+    directors = Directors.query.filter(Directors.director.like('%' + search + '%')).all()
+    for director in directors:
+        # find all movies where the director id is in the movie_directors table
+        movies_with_director = MovieDirectors.query.filter_by(director_id=director.id).all()
+        for movie in movies_with_director:
+            # if the movie is not already in the movies list, add it
+            if movie.movie_id not in movies:
+                movies.append(Movies.query.get(movie.movie_id))
+    # find all movies where the genre name is like the search
+    genres = Genres.query.filter(Genres.genre.like('%' + search + '%')).all()
+    for genre in genres:
+        # find all movies where the genre id is in the movie_genres table
+        movies_with_genre = MovieGenres.query.filter_by(genre_id=genre.id).all()
+        for movie in movies_with_genre:
+            # if the movie is not already in the movies list, add it
+            if movie.movie_id not in movies:
+                movies.append(Movies.query.get(movie.movie_id))
+    return render_template('search_results.html' , title=('Search results for: ' + search), movies=movies)
