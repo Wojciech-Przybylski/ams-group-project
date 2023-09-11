@@ -1,9 +1,13 @@
-import pytest
+import app
+from flask import session
+from application.models import User, Movies, Cart, CartItem, Showings, Bookings, BookingsItems, Genres, Actors, Directors, MovieGenres, MovieActors, MovieDirectors, CommentThread, Comments, CommentView
 from application import app, db, bcrypt
-from application.models import Genres, User, PaymentDetails, CommentThread, Comments, Movies, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Showings, Bookings, BookingsItems, TicketType, Cart, CartItem, CommentView, BannedChars, CheckAdmin
-from datetime import datetime
-from wtforms.validators import ValidationError
-from wtforms import Form, StringField
+from flask_testing import TestCase
+from datetime import datetime, timedelta
+import pytest
+from flask import url_for
+import pytest
+from application import app
 
 @pytest.fixture
 def client():
@@ -16,199 +20,173 @@ def client():
         db.session.remove()
         db.drop_all()
 
-def test_User(client):
-    
-    # Create a user
-    user = User(name="Bob", email="bob@qa.com", password=bcrypt.generate_password_hash("123"))
-    # Add the user to the database
-    db.session.add(user)
-    db.session.commit()
-    # Retrieve the user from the database
-    retrieved_user = User.query.filter_by(id=1).first()
-    # Assert that the retrieved user's name matches the expected value
-    assert retrieved_user.name == 'Bob'
-    assert retrieved_user.email == 'bob@qa.com'
-    assert bcrypt.check_password_hash(retrieved_user.password, "123")
+def test_home_route(client):
+    response = client.get('/home')
+    assert response.status_code == 200
+    assert b'Home' in response.data
+    assert b'<!DOCTYPE html>' in response.data  # Add more specific content checks as needed
 
-def test_PaymentDetails(client):
-    # Create a user (for the ForeignKey relationship)
-    user = User(name="Alice", email="alice@example.com", password="hashed_password")
-    db.session.add(user)
-    db.session.commit()
+def test_signup_form_validation(client):
+    # Simulate a POST request with invalid form data
+    response = client.post('/signup', data={}, follow_redirects=True)
 
-    # Create a payment detail
-    payment_detail = PaymentDetails(
-        card_name="Alice Smith",
-        user_id=user.id,
-        card_number="1234567890123456",
-        expiry_date="12/25",
-        security_code="123"
+    # Check if the form validation errors are displayed
+    assert response.status_code == 200  # You may need to adjust the status code based on your actual implementation
+
+def test_movies_route(client):
+    # Insert a sample movie into the database for testing
+    sample_movie = Movies(
+        title='Sample Movie',
+        description='Sample Description',
+        image='sample_image.jpg',  # Placeholder image value
+        release_date=datetime(2023, 9, 15)  # Provide a placeholder release date
     )
-
-    # Add the payment detail to the database
-    db.session.add(payment_detail)
+    db.session.add(sample_movie)
     db.session.commit()
 
-    # Retrieve the payment detail from the database
-    retrieved_payment_detail = PaymentDetails.query.filter_by(id=1).first()
+    # Simulate a GET request to the /movies route
+    response = client.get('/movies')
 
-    # Assert that the retrieved payment detail matches the expected values
-    assert retrieved_payment_detail.card_name == "Alice Smith"
-    assert retrieved_payment_detail.user_id == user.id
-    assert retrieved_payment_detail.card_number == "1234567890123456"
-    assert retrieved_payment_detail.expiry_date == "12/25"
-    assert retrieved_payment_detail.security_code == "123"
-    
-def test_Comments(client):
-    # Create a comment thread
-    comment_thread = CommentThread(title="Movie Discussion Thread")
-    db.session.add(comment_thread)
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Check if the movie title is present in the response
+    assert b'Sample Movie' in response.data
+
+    # Clean up: Delete the sample movie from the database
+    db.session.delete(sample_movie)
     db.session.commit()
 
-    # Create a user
-    user = User(name="Alice", email="alice@example.com", password="hashed_password")
-    db.session.add(user)
-    db.session.commit()
-
-    # Create a comment
-    comment = Comments(comment_thread_id=comment_thread.id, user_id=user.id, comment="This is a comment")
-
-    # Add the comment to the database
-    db.session.add(comment)
-    db.session.commit()
-
-    # Retrieve the comment from the database
-    retrieved_comment = Comments.query.filter_by(id=1).first()
-
-    # Assert that the retrieved comment matches the expected values
-    assert retrieved_comment.comment == "This is a comment"
-    
-def test_Movies(client):
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"  # Replace with the desired release date
+def test_movie_route(client):
+    # Insert a sample movie and related data into the database for testing
+    sample_movie = Movies(
+        title='Sample Movie',
+        description='Sample Description',
+        image='sample_image.jpg',
+        release_date=datetime(2023, 9, 15)
     )
+    sample_genre = Genres(genre='Action')
+    sample_actor = Actors(actor='John Doe')
+    sample_director = Directors(director='Jane Smith')
 
-    # Add the movie to the database
-    db.session.add(movie)
+    db.session.add_all([sample_movie, sample_genre, sample_actor, sample_director])
     db.session.commit()
 
-    # Retrieve the movie from the database
-    retrieved_movie = Movies.query.filter_by(id=1).first()
+    movie_genre = MovieGenres(movie_id=sample_movie.id, genre_id=sample_genre.id)
+    movie_actor = MovieActors(movie_id=sample_movie.id, actor_id=sample_actor.id)
+    movie_director = MovieDirectors(movie_id=sample_movie.id, director_id=sample_director.id)
 
-    # Assert that the retrieved movie matches the expected values
-    assert retrieved_movie.title == "Test Movie"
-    assert retrieved_movie.description == "This is a test movie description."
-    assert retrieved_movie.image == "test_movie.jpg"
-    assert retrieved_movie.release_date.strftime('%Y-%m-%d') == "2023-09-10"
+    db.session.add_all([movie_genre, movie_actor, movie_director])
+    db.session.commit()
+
+    # Simulate a GET request to the /movie/<movie_id> route (replace <movie_id> with the actual movie ID)
+    movie_id = sample_movie.id
+    response = client.get(f'/movie/{movie_id}')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Check if movie title is present in the response
+    assert b'Sample Movie' in response.data
+
+    # Check if genre, actor, and director names are present in the response
+    assert b'Action' in response.data
+    assert b'John Doe' in response.data
+    assert b'Jane Smith' in response.data
     
-def test_Genres_and_MovieGenres(client):
-    # Create a movie genre
-    genre = Genres(genre="Action")
+def test_new_releases_route(client):
+    # Insert some sample movies into the database with recent release dates (within 3 months)
+    # Replace the placeholders with actual data as needed
+    sample_movies = [
+        Movies(
+            title='New Release 1',
+            description='Description 1',
+            image='image1.jpg',
+            release_date=datetime(2023, 8, 1)  # Within 3 months
+        ),
+        Movies(
+            title='New Release 2',
+            description='Description 2',
+            image='image2.jpg',
+            release_date=datetime(2023, 8, 15)  # Within 3 months
+        ),
+        Movies(
+            title='Old Movie',
+            description='Description 3',
+            image='image3.jpg',
+            release_date=datetime(2023, 6, 1)  # Older than 3 months
+        ),
+    ]
 
-    # Add the genre to the database
-    db.session.add(genre)
+    db.session.add_all(sample_movies)
     db.session.commit()
 
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
+    # Simulate a GET request to the /new-releases route
+    response = client.get('/new-releases')
 
-    # Add the movie to the database
-    db.session.add(movie)
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Check if the titles of the new releases are present in the response
+    assert b'New Release 1' in response.data
+    assert b'New Release 2' in response.data
+
+    # Check if the title of the old movie is NOT present in the response
+    assert b'Old Movie' not in response.data
+
+    # Clean up: Delete the sample movies from the database
+    for movie in sample_movies:
+        db.session.delete(movie)
     db.session.commit()
-
-    # Create a MovieGenres association between the movie and genre
-    movie_genre = MovieGenres(movie_id=movie.id, genre_id=genre.id)
-
-    # Add the association to the database
-    db.session.add(movie_genre)
-    db.session.commit()
-
-    # Retrieve the movie genre association from the database
-    retrieved_movie_genre = MovieGenres.query.filter_by(id=1).first()
-
-    # Assert that the retrieved association matches the expected values
-    assert retrieved_movie_genre.movie_id == movie.id
-    assert retrieved_movie_genre.genre_id == genre.id
-
-def test_Actors_and_MovieActors(client):
-    # Create an actor
-    actor = Actors(actor="John Doe")
-
-    # Add the actor to the database
-    db.session.add(actor)
-    db.session.commit()
-
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
-
-    # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
-
-    # Create a MovieActors association between the movie and actor
-    movie_actor = MovieActors(movie_id=movie.id, actor_id=actor.id)
-
-    # Add the association to the database
-    db.session.add(movie_actor)
-    db.session.commit()
-
-    # Retrieve the movie actor association from the database
-    retrieved_movie_actor = MovieActors.query.filter_by(id=1).first()
-
-    # Assert that the retrieved association matches the expected values
-    assert retrieved_movie_actor.movie_id == movie.id
-    assert retrieved_movie_actor.actor_id == actor.id
     
-def test_Directors_and_MovieDirectors(client):
-    # Create a director
-    director = Directors(director="Jane Smith")
+def test_discussion_board_route(client):
+    # Simulate a GET request to the /discussion-board route
+    response = client.get('/discussion-board')
 
-    # Add the director to the database
-    db.session.add(director)
-    db.session.commit()
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 302
+    assert b'/login' in response.headers['Location'].encode('utf-8')  
 
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
+    # Simulate a POST request to the /discussion-board route (assuming the user is logged in)
+    with client.session_transaction() as session:
+        session['id'] = 1  # Replace with a valid user ID if needed
 
-    # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
+    response = client.post('/discussion-board', data={'title': 'New Thread Title'})
 
-    # Create a MovieDirectors association between the movie and director
-    movie_director = MovieDirectors(movie_id=movie.id, director_id=director.id)
+    # Check if the response status code is 302 (redirect) after posting a new thread
+    assert response.status_code == 302
 
-    # Add the association to the database
-    db.session.add(movie_director)
-    db.session.commit()
+    # Check if the new thread is added to the database
+    new_thread = CommentThread.query.filter_by(title='New Thread Title').first()
+    assert new_thread is not None
 
-    # Retrieve the movie director association from the database
-    retrieved_movie_director = MovieDirectors.query.filter_by(id=1).first()
+    # Clean up: Delete the newly created thread from the database (assuming you have a way to delete threads)
+    if new_thread:
+        db.session.delete(new_thread)
+        db.session.commit()
 
-    # Assert that the retrieved association matches the expected values
-    assert retrieved_movie_director.movie_id == movie.id
-    assert retrieved_movie_director.director_id == director.id
+
+
+
+
+
+
+def test_opening_times_route(client):
+    # Simulate a GET request to the /opening-times route
+    response = client.get('/opening-times')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Check if the response contains the expected title
+    assert b'<title>Opening Times</title>' in response.data
     
-def test_Showings(client):
-    # Create a movie
+
+def test_get_remaining_tickets_route(client):
+    # Create a sample showing record in the database with seats_available
+    showing_id = 1  # Replace with a valid showing ID from your database
+    seats_available = 10  # Set the seats available for testing
+
     movie = Movies(
         title="Test Movie",
         description="This is a test movie description.",
@@ -219,188 +197,21 @@ def test_Showings(client):
     # Add the movie to the database
     db.session.add(movie)
     db.session.commit()
-
-    # Create a showing
-    showing = Showings(
-        movie_id=movie.id,
-        screen_number=1,
-        date=datetime.utcnow(),
-        seats_available=100
-    )
-
-    # Add the showing to the database
+    # Insert the sample showing record into the database
+    showing = Showings(id=showing_id, seats_available=seats_available, movie_id=1, screen_number=1)
     db.session.add(showing)
     db.session.commit()
 
-    # Retrieve the showing from the database
-    retrieved_showing = Showings.query.filter_by(id=1).first()
+    # Simulate a GET request to the /get_remaining_tickets/<showing_id> route
+    response = client.get(f'/get_remaining_tickets/{showing_id}')
 
-    # Assert that the retrieved showing matches the expected values
-    assert retrieved_showing.movie_id == movie.id
-    assert retrieved_showing.screen_number == 1
-    assert isinstance(retrieved_showing.date, datetime)
-    assert retrieved_showing.seats_available == 100
-    
-def test_Bookings_and_BookingsItems(client):
-    # Create a user
-    user = User(name="Alice", email="alice@example.com", password="hashed_password")
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
 
-    # Add the user to the database
-    db.session.add(user)
+    # Check if the response contains the expected remaining tickets count as a string
+    expected_tickets_count = str(seats_available)
+    assert response.data.decode('utf-8') == expected_tickets_count
+
+    # Clean up: Delete the sample showing record from the database
+    db.session.delete(showing)
     db.session.commit()
-
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
-
-    # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
-
-    # Create a showing
-    showing = Showings(
-        movie_id=movie.id,
-        screen_number=1,
-        date=datetime.utcnow(),
-        seats_available=100
-    )
-
-    # Add the showing to the database
-    db.session.add(showing)
-    db.session.commit()
-
-    # Create a ticket type
-    ticket_type = TicketType(ticket_type="Standard", price=10)
-
-    # Add the ticket type to the database
-    db.session.add(ticket_type)
-    db.session.commit()
-
-    # Create a booking
-    booking = Bookings(
-        user_id=user.id,
-        movie_id=movie.id,
-        date=datetime.utcnow()
-    )
-
-    # Add the booking to the database
-    db.session.add(booking)
-    db.session.commit()
-
-    # Create a booking item
-    booking_item = BookingsItems(
-        booking_id=booking.id,
-        showing_id=showing.id,
-        ticket_type_id=ticket_type.id,
-        quantity=2
-    )
-
-    # Add the booking item to the database
-    db.session.add(booking_item)
-    db.session.commit()
-
-    # Retrieve the booking and booking item from the database
-    retrieved_booking = Bookings.query.filter_by(id=1).first()
-    retrieved_booking_item = BookingsItems.query.filter_by(id=1).first()
-
-    # Assert that the retrieved booking and booking item match the expected values
-    assert retrieved_booking.user_id == user.id
-    assert retrieved_booking.movie_id == movie.id
-    assert isinstance(retrieved_booking.date, datetime)
-
-    assert retrieved_booking_item.booking_id == booking.id
-    assert retrieved_booking_item.showing_id == showing.id
-    assert retrieved_booking_item.ticket_type_id == ticket_type.id
-    assert retrieved_booking_item.quantity == 2
-
-def test_Cart_empty_cart(client):
-    # Create a user
-    user = User(name="Alice", email="alice@example.com", password="hashed_password")
-    db.session.add(user)
-    db.session.commit()
-
-    # Create a cart for the user
-    cart = Cart(user_id=user.id)
-    db.session.add(cart)
-    db.session.commit()
-
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
-
-    db.session.add(movie)
-    db.session.commit()
-
-    # Create a showing
-    showing = Showings(
-        movie_id=1,  # Replace with actual movie_id
-        screen_number=1,
-        date=datetime.utcnow(),
-        seats_available=100
-    )
-    db.session.add(showing)
-    db.session.commit()
-
-    # Create a ticket type
-    ticket_type = TicketType(
-        ticket_type="Standard",
-        price=10
-    )
-    db.session.add(ticket_type)
-    db.session.commit()
-
-    # Create some cart items for the cart
-    cart_item1 = CartItem(showing_id=showing.id, ticket_type_id=ticket_type.id, quantity=2, cart_id=cart.id)
-    cart_item2 = CartItem(showing_id=showing.id, ticket_type_id=ticket_type.id, quantity=3, cart_id=cart.id)
-    db.session.add(cart_item1)
-    db.session.add(cart_item2)
-    db.session.commit()
-
-    # Check that cart items exist before emptying
-    assert CartItem.query.filter_by(cart_id=cart.id).count() == 2
-
-    # Call the empty_cart method
-    cart.empty_cart()
-
-    # Check that cart items are deleted after emptying
-    assert CartItem.query.filter_by(cart_id=cart.id).count() == 0
-
-def test_comment_view():
-    comment = CommentView(id=1, user_name='John', comment='Hello', time='2023-09-08 14:30:00')
-    assert comment.id == 1
-    assert comment.user_name == 'John'
-    assert comment.comment == 'Hello'
-    assert comment.time == '2023-09-08 14:30:00'
-
-def test_banned_chars_validator_valid_input():
-    form = Form()
-    field = StringField(validators=[BannedChars()])
-    field.data = 'Hello123'
-    assert BannedChars()(form, field) is None  # Should not raise ValidationError
-
-def test_banned_chars_validator_invalid_input():
-    form = Form()
-    field = StringField(validators=[BannedChars()])
-    field.data = 'Hello$'
-    with pytest.raises(ValidationError):
-        BannedChars()(form, field)  # Should raise ValidationError
-
-def test_check_admin_validator_valid_input():
-    form = Form()
-    field = StringField(validators=[CheckAdmin()])
-    field.data = 'John'
-    assert CheckAdmin()(form, field) is None  # Should not raise ValidationError
-
-def test_check_admin_validator_invalid_input():
-    form = Form()
-    field = StringField(validators=[CheckAdmin()])
-    field.data = 'admin'
-    with pytest.raises(ValidationError):
-        CheckAdmin()(form, field)  # Should raise ValidationError
