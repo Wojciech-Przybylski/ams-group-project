@@ -118,6 +118,13 @@ Scrum is an agile framework typically used for the completeion of complex work. 
 
 During the intiial sprint for this this project we tackled three main tasks. Firstly we set up the first draft of the Trello board, splitting the different tasks into the MVP and website wishlist that were outlined in the project specification, we later added several more tasks to the board and made sure to keep up-to-date with the board, throughout all sprints. At the same time several group members began to design the basic file structure within Visual Studio Code. As we have been taguht best practice for a file structure when designing a website we were all able to utilise our file structures from our idividual projects to conclude what structure would work best in this group scenario. During later sprints we would add extra folders to the file structure from some of the feature branches that were also created later. The final task of our first srpint was the devise the risk assessment for the project this included risks for users and developers. We believed this was important to tackle during the first sprint, so we would have a much more in depth understanding of the risks we were facing during this project and how best to minimize them.
 
+### Sprint 2
+
+During the second sprint we began adding the basic content to several of the files that were previously added when creating the file structure. This included: app.py, create.py, requirements.txt, routes.py, models.py, __init__.py as well as adding the basic content to numerous html files that were to be worked on later. After this the group split in to three groups, two people were going to work on generating the first iteration of the database as well as working on other aspects of the backend, another group of two were beginning to work on the HTML files, starting with the homepage, and finally the final member of the group was to work on installing jenkins and setting up the necessary AWS instances. At several points during this sprint the group reconvened to discuss progress or any problems that they had ran into.
+
+### Sprint 3 
+
+
 
 ## ERD (Entity Relationship Diagram)
 
