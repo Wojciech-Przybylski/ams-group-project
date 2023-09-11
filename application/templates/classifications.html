@@ -1,0 +1,52 @@
+{% extends 'nav.html' %}
+{% block content %}
+
+<section class="classifications">
+    <h1>UK Film Classification System</h1>
+    <p>The UK film classification system provides guidance to viewers about the content and suitability of movies. Here are the standard UK film classifications along with their appropriate icons:</p>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Classification</th>
+                <th>Icon</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Universal (U)</td>
+                <td><img src="{{ url_for('static', filename='images/U.svg') }}" alt="Universal (U)"></td>
+                <td>This film is suitable for all audiences, including children. It contains no content that would offend or harm any viewer.</td>
+            </tr>
+            <tr>
+                <td>Parental Guidance (PG)</td>
+                <td><img src="{{ url_for('static', filename='images/PG.svg') }}" alt="Parental Guidance (PG)"></td>
+                <td>This film may contain mild content that requires parental guidance. Parents are urged to provide "parental guidance."</td>
+            </tr>
+            <tr>
+                <td>12A</td>
+                <td><img src="{{ url_for('static', filename='images/12A.svg') }}" alt="12A"></td>
+                <td>This film is suitable for children aged 12 and over, or younger children when accompanied by an adult.</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td><img src="{{ url_for('static', filename='images/12.svg') }}" alt="12"></td>
+                <td>Suitable only for persons of 12 years and over. Not to be supplied to any person below that age.</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td><img src="{{ url_for('static', filename='images/15.svg') }}" alt="15"></td>
+                <td>This film is suitable only for viewers aged 15 and over.</td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td><img src="{{ url_for('static', filename='images/18.svg') }}" alt="18"></td>
+                <td>This film is suitable only for adults aged 18 and over. It may contain strong content such as violence, nudity, or strong language.</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+{% endblock %}
