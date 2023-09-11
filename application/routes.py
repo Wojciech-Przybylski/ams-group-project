@@ -30,6 +30,9 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # if user is logged in, redirect to home page
+    if 'user_id' in session:
+        return redirect(url_for('home'))
     form = LoginForm()
     message = ''
     if request.method == 'POST':
@@ -53,7 +56,7 @@ def login():
                     cart = Cart(user_id=user.id)
                     db.session.add(cart)
                     db.session.commit()
-                return render_template('home.html', title='Home', message="Login Successful!")
+                return redirect(url_for('home'))
             else:
                 print('user not found')
                 message = 'Login Unsuccessful. Please check email and password'
@@ -71,6 +74,8 @@ def movie(movie_id):
     movie = Movies.query.get(movie_id)
     #  get genre from movie_genres
     genres = MovieGenres.query.filter_by(movie_id=movie_id).all()
+    # get showings from db
+    showings = Showings.query.filter_by(movie_id=movie_id).all()
     #  get genre name from genres
     genre_names = []
     for genre in genres:
@@ -87,7 +92,7 @@ def movie(movie_id):
     director_names = []
     for director in directors:
         director_names.append(Directors.query.get(director.director_id).director)
-    return render_template('movie.html', title=movie.title, movie=movie, genre_names=genre_names, actor_names=actor_names, director_names=director_names)
+    return render_template('movie.html', title=movie.title, movie=movie, genre_names=genre_names, actor_names=actor_names, director_names=director_names, showings=showings)
 
 @app.route('/new-releases')
 def new_releases():
@@ -316,3 +321,11 @@ def search_results(search):
             if movie.movie_id not in movies:
                 movies.append(Movies.query.get(movie.movie_id))
     return render_template('search_results.html' , title=('Search results for: ' + search), movies=movies)
+
+@app.route('/classifications')
+def clasifications():
+    return render_template('classifications.html', title='UK Film Classification System')
+
+@app.route('/about')
+def about():
+    return render_template('about.html', title='About')
