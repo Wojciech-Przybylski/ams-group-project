@@ -1,7 +1,9 @@
 import pytest
 from application import app, db, bcrypt
-from application.models import Genres, User, PaymentDetails, CommentThread, Comments, Movies, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Showings, Bookings, BookingsItems, TicketType, Cart, CartItem
+from application.models import Genres, User, PaymentDetails, CommentThread, Comments, Movies, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Showings, Bookings, BookingsItems, TicketType, Cart, CartItem, CommentView, BannedChars, CheckAdmin
 from datetime import datetime
+from wtforms.validators import ValidationError
+from wtforms import Form, StringField
 
 @pytest.fixture
 def client():
@@ -369,3 +371,36 @@ def test_Cart_empty_cart(client):
 
     # Check that cart items are deleted after emptying
     assert CartItem.query.filter_by(cart_id=cart.id).count() == 0
+
+def test_comment_view():
+    comment = CommentView(id=1, user_name='John', comment='Hello', time='2023-09-08 14:30:00')
+    assert comment.id == 1
+    assert comment.user_name == 'John'
+    assert comment.comment == 'Hello'
+    assert comment.time == '2023-09-08 14:30:00'
+
+def test_banned_chars_validator_valid_input():
+    form = Form()
+    field = StringField(validators=[BannedChars()])
+    field.data = 'Hello123'
+    assert BannedChars()(form, field) is None  # Should not raise ValidationError
+
+def test_banned_chars_validator_invalid_input():
+    form = Form()
+    field = StringField(validators=[BannedChars()])
+    field.data = 'Hello$'
+    with pytest.raises(ValidationError):
+        BannedChars()(form, field)  # Should raise ValidationError
+
+def test_check_admin_validator_valid_input():
+    form = Form()
+    field = StringField(validators=[CheckAdmin()])
+    field.data = 'John'
+    assert CheckAdmin()(form, field) is None  # Should not raise ValidationError
+
+def test_check_admin_validator_invalid_input():
+    form = Form()
+    field = StringField(validators=[CheckAdmin()])
+    field.data = 'admin'
+    with pytest.raises(ValidationError):
+        CheckAdmin()(form, field)  # Should raise ValidationError
