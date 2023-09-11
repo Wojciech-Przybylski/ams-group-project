@@ -85,10 +85,48 @@ with app.app_context():
 
 
     movie2 = Movies(title="The Matrix", description="A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",  image="images/the_matrix.jpg", release_date="1999-03-31")
+    movie1_genre = MovieGenres(movie_id=1, genre_id=1)
+    movie1_actor_1 = MovieActors(movie_id=1, actor_id=1)
+    movie1_actor_2 = MovieActors(movie_id=1, actor_id=2)
+    movie1_actor_3 = MovieActors(movie_id=1, actor_id=3)
+    movie1_director = MovieDirectors(movie_id=1, director_id=1)
+
+
     movie3 = Movies(title="The Dark Knight", description="When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", image="images/the_dark_knight.jpg", release_date="2008-07-14")
+    movie1_genre = MovieGenres(movie_id=1, genre_id=1)
+    movie1_actor_1 = MovieActors(movie_id=1, actor_id=1)
+    movie1_actor_2 = MovieActors(movie_id=1, actor_id=2)
+    movie1_actor_3 = MovieActors(movie_id=1, actor_id=3)
+    movie1_director = MovieDirectors(movie_id=1, director_id=1)
+    
+    
     movie4 = Movies(title="The Godfather", description="The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", image="images/the_godfather.jpg", release_date="1972-03-24")
+    movie1_genre = MovieGenres(movie_id=1, genre_id=1)
+    movie1_actor_1 = MovieActors(movie_id=1, actor_id=1)
+    movie1_actor_2 = MovieActors(movie_id=1, actor_id=2)
+    movie1_actor_3 = MovieActors(movie_id=1, actor_id=3)
+    movie1_director = MovieDirectors(movie_id=1, director_id=1)
 
     new_release1 = Movies(title="Oppenheimer", description="A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.", image="images/oppenheimer.jpeg", release_date="2023-07-21")
+    new_release2 = Movies(title="Barbie", description="Barbie suffers a crisis that leads her to question her world and her existence..", image="images/barbie.jpg", release_date="2023-07-21")
+    new_release3 = Movies(title="No Hard Feelings", description="On the brink of losing her childhood home, a desperate woman agrees to date a wealthy couple's introverted and awkward 19-year-old son.", image="images/no_hard_feelings.jpg", release_date="2023-07-21")
+    new_release4 = Movies(title="Past Lives", description="Two deeply connected childhood friends are separated. Decades later, they are reunited for one fateful week.", image="images/past_lives.jpg", release_date="2023-07-21")
+    new_release5 = Movies(title="The Equalizer III", description="Since giving up his life as a government assassin, Robert McCall finds solace in serving justice on behalf of the oppressed.", image="images/the_equalizer_3.jpg", release_date="2023-07-21")
+    new_release6 = Movies(title="Teenage Mutant Ninja Turtles: Mutant Mayhem", description="After years of being sheltered from the human world, the Turtle brothers set out to win the hearts of New Yorkers and be accepted as normal teenagers.", image="images/teenage_mutant_nijna_turtles_mutant_mayhem.jpg", release_date="2023-07-21")
+    new_release7 = Movies(title="Passages", description="A gay couple's marriage is thrown into crisis when one of them impulsively begins a passionate affair with a young woman.", image="images/passages.jpg", release_date="2023-07-21")
+    new_release8 = Movies(title="Scrapper", description="Living alone in her London flat, 12-year-old Georgie must confront reality when her estranged father, Jason, shows up out of nowhere.", image="images/scrapper.jpg", release_date="2023-07-21")
+    new_release9 = Movies(title="Dumb Money", description="Everyday people flip the script on Wall Street and get rich by turning GameStop into one of the world's hottest companies.", image="images/dumb_money.jpg", release_date="2023-07-21")
+    new_release10 = Movies(title="The Nun II", description="A priest is violently murdered, and Sister Irene begins to investigate. She once again comes face-to-face with a powerful evil.", image="images/the_nun.jpg", release_date="2023-07-21")
+    
+
+
+
+
+
+
+
+
+
 
 
     # create a comment thread
