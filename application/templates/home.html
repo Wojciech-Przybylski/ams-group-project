@@ -1,96 +1,53 @@
 {% extends 'nav.html' %}
 {% block content %}
-<!-- <section class="hero">
-    <div class="hero-content">
-        <h1>Welcome to QA Cinemas</h1>
-        <p>Your Gateway to Classic and New Movies</p>
-        <a href="#" class="btn">Explore Now</a>
+<div class="row">
+    <!-- if user is signed in -->
+    {% if session["user_name"] %}
+    <div class="col-md-6">
+        <h3>Welcome, {{ session["user_name"] }}!</h3>
     </div>
-</section>
-
-<section class="movie-list">
-    <h2>Now Showing</h2>
-    <div class="movie-card">
-        <img src="static/images/movie1.jpg" alt="movie1">
-        <h3>Oppenheimer</h3>
-        <p>Directed by Christopher Nolan, the story of American scientist, J. Robert Oppenheimer, and his role in the development of the atomic bomb.</p>
-        <a href="#" class="btn btn-book">Book Tickets</a>
-        <a href="#" class="btn btn-trailer" data-trailer-url="https://www.youtube.com/watch?v=uYPbbksJxIg">Watch Trailer</a>
-        <a href="#" class="btn btn-reviews" data-toggle-modal="reviews-modal-1">User Reviews</a>
+    <div class="col-md-6">
+        <a href="/logout" class="btn btn-primary">Logout</a>
     </div>
-
-    <div class="movie-card">
-        <img src="static/images/movie2.jpg" alt="movie2">
-        <h3>Barbie</h3>
-        <p>Directed by Greta Gerwig, Barbie suffers a crisis that leads her to question her world and her existence.</p>
-        <a href="#" class="btn btn-book">Book Tickets</a>
-        <a href="#" class="btn btn-trailer" data-trailer-url="https://www.youtube.com/watch?v=pBk4NYhWNMM">Watch Trailer</a>
-        <a href="#" class="btn btn-reviews" data-toggle-modal="reviews-modal-2">User Reviews</a>
+    {% endif %}
+    <div class="col-md-6">
+        <h3>Your Gateway to Classic and New Movies</h3>
     </div>
-</section>
-
-<section class="newsletter">
-    <h2>Subscribe to our Newsletter</h2>
-    <p>Stay updated with our latest movie releases and special events.</p>
-    <form action="#" method="POST">
-        <input type="email" placeholder="Enter your email" required>
-        <button type="submit" class="btn btn-subscribe">Subscribe</button>
-    </form>
-</section>
-
-<footer>
-    <p>&copy; 2023 QA Cinemas. All rights reserved.</p>
-</footer>
-
-<div class="modal" id="reviews-modal-1">
-    <div class="modal-content">
-        <h3>Oppenheimer Reviews</h3>
-        <ul>
-            <li><strong>Dwight:</strong> Great movie!</li>
-            <li><strong>Angela:</strong> Loved it!</li>
-        </ul>
-        <button class="btn btn-close-modal">Close</button>
+    <div class="col-md-6">
+        <a href="/movies" class="btn btn-primary">Explore Now</a>
     </div>
 </div>
 
-<div class="modal" id="reviews-modal-2">
-    <div class="modal-content">
-        <h3>Barbie Reviews</h3>
-        <ul>
-            <li><strong>Pam:</strong> Excellent!</li>
-            <li><strong>Jim:</strong> Must-watch!</li>
-        </ul>
-        <button class="btn btn-close-modal">Close</button>
-    </div>
-</div> -->
-
-<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 700px;">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-        {% for movie in movies %}
-        <li data-target="#myCarousel" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
-        {% endfor %}
-    </ol>
-    
-    <!-- Slides -->
-    <div class="carousel-inner">
-        {% for movie in movies %}
-        <div class="carousel-item {% if loop.first %}active{% endif %}">
-            <a href="{{ url_for('movie', movie_id=movie.id) }}"><img src="{{ url_for('static', filename=movie.image) }}" alt="{{ movie.name }}" height="auto" width="700px"></a>
-            <div class="carousel-caption">
-                <h3>{{ movie.name }}</h3>
+<br>
+<div class="row justify-content-center">
+    <div id="myCarousel" class="carousel slide row justify-content-center" data-ride="carousel" style="width: 700px;">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            {% for movie in movies %}
+            <li data-target="#myCarousel" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
+            {% endfor %}
+        </ol>
+        
+        <!-- Slides -->
+        <div class="carousel-inner">
+            {% for movie in movies %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <a href="{{ url_for('movie', movie_id=movie.id) }}"><img src="{{ url_for('static', filename=movie.image) }}" alt="{{ movie.name }}" height="auto" width="100%"></a>
+                <div class="carousel-caption">
+                    <h3>{{ movie.name }}</h3>
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        
+        <!-- Controls -->
+        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
     </div>
-    
-    <!-- Controls -->
-    <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </a>
-    <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </a>
 </div>
 
 {% endblock %}

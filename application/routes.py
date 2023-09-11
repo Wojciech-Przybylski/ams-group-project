@@ -15,6 +15,9 @@ def home():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    # if user is logged in, redirect to home page
+    if 'user_id' in session:
+        return redirect(url_for('home'))
     form = SignUpForm()
     if request.method == 'POST' and form.validate_on_submit():
         print('validated')
@@ -45,6 +48,8 @@ def login():
                 # create session variable for user_id
                 session['user_id'] = user.id
                 # if user is admin, create session variable for admin
+                # create session variable for user name
+                session['user_name'] = user.name
                 if user.admin:
                     session['admin'] = True
                 # check if user has a cart
@@ -105,6 +110,7 @@ def new_releases():
 def clear_variable():
     session.pop('user_id', None)  # Remove 'user_id' from session
     session.pop('admin', None)  # Remove 'admin' from session
+    session.pop('user_name', None)  # Remove 'user_name' from session
     print("Session variable cleared!")
     return redirect(url_for('home'))
 
@@ -329,3 +335,7 @@ def clasifications():
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404

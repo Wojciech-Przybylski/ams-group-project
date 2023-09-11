@@ -23,3 +23,9 @@
     flex-direction: column;
     margin-right: 4rem;
 }
+
+.fixed-bottom-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
