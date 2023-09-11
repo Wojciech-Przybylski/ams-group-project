@@ -318,3 +318,7 @@ def search_results(search):
             if movie.movie_id not in movies:
                 movies.append(Movies.query.get(movie.movie_id))
     return render_template('search_results.html' , title=('Search results for: ' + search), movies=movies)
+
+@app.route('/classifications')
+def clasifications():
+    return render_template('classifications.html', title='UK Film Classification System')
