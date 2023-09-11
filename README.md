@@ -114,6 +114,11 @@ For this project our group used a Kanban board via Trello to more easily display
 
 Scrum is an agile framework typically used for the completeion of complex work. It is typically considered the leading agile development methodology. Therefore as a group we saw it best to utilise Scrum during this project. Whilst we could technically integrate scrum into our individual projects for the sole purpose of experience, on an individual level scrum as a development methodology only really works in a group environment, therefore, our group has not had much if any experience utilising scrum. The first major implementation of scrum that the group has taken onboard is the daily standup meeting. Each morning we discuss with each other and the trainer, what we achieved the previous day and what we plan to achieve today. Problems faced or blockages can also be brought up during the daily standup where we can agree as a team on the best course of action.
 
+### Sprint 1
+
+During the intiial sprint for this this project we tackled three main tasks. Firstly we set up the first draft of the Trello board, splitting the different tasks into the MVP and website wishlist that were outlined in the project specification, we later added several more tasks to the board and made sure to keep up-to-date with the board, throughout all sprints. At the same time several group members began to design the basic file structure within Visual Studio Code. As we have been taguht best practice for a file structure when designing a website we were all able to utilise our file structures from our idividual projects to conclude what structure would work best in this group scenario. During later sprints we would add extra folders to the file structure from some of the feature branches that were also created later. The final task of our first srpint was the devise the risk assessment for the project this included risks for users and developers. We believed this was important to tackle during the first sprint, so we would have a much more in depth understanding of the risks we were facing during this project and how best to minimize them.
+
+
 ## ERD (Entity Relationship Diagram)
 
 ### This entity relationship diagram was devised using the principles of relational databases and normalisation
