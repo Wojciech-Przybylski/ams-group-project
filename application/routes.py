@@ -9,7 +9,9 @@ from datetime import datetime, timedelta
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html', title='Home')
+    # get all movies from db
+    movies = Movies.query.order_by(Movies.title).all()
+    return render_template('home.html', title='Home', movies=movies)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
