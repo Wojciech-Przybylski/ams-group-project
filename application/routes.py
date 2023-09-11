@@ -71,6 +71,8 @@ def movie(movie_id):
     movie = Movies.query.get(movie_id)
     #  get genre from movie_genres
     genres = MovieGenres.query.filter_by(movie_id=movie_id).all()
+    # get showings from db
+    showings = Showings.query.filter_by(movie_id=movie_id).all()
     #  get genre name from genres
     genre_names = []
     for genre in genres:
@@ -87,7 +89,7 @@ def movie(movie_id):
     director_names = []
     for director in directors:
         director_names.append(Directors.query.get(director.director_id).director)
-    return render_template('movie.html', title=movie.title, movie=movie, genre_names=genre_names, actor_names=actor_names, director_names=director_names)
+    return render_template('movie.html', title=movie.title, movie=movie, genre_names=genre_names, actor_names=actor_names, director_names=director_names, showings=showings)
 
 @app.route('/new-releases')
 def new_releases():
