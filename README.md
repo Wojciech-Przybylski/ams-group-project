@@ -136,7 +136,7 @@ During the second sprint we began adding the basic content to several of the fil
 
 ![Entity Relationship Diagram 2](/Documentation-Screenshots/SQL/ERD%202.png)
 
-### Update Three of ERD with the inclusion of Showings table 
+### Update Three of ERD with the inclusion of Showings table:
 
 ![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD%203.png)
 
