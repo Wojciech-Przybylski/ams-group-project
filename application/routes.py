@@ -30,6 +30,9 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # if user is logged in, redirect to home page
+    if 'user_id' in session:
+        return redirect(url_for('home'))
     form = LoginForm()
     message = ''
     if request.method == 'POST':
@@ -53,7 +56,7 @@ def login():
                     cart = Cart(user_id=user.id)
                     db.session.add(cart)
                     db.session.commit()
-                return render_template('home.html', title='Home', message="Login Successful!")
+                return redirect(url_for('home'))
             else:
                 print('user not found')
                 message = 'Login Unsuccessful. Please check email and password'
@@ -322,3 +325,7 @@ def search_results(search):
 @app.route('/classifications')
 def clasifications():
     return render_template('classifications.html', title='UK Film Classification System')
+
+@app.route('/about')
+def about():
+    return render_template('about.html', title='About')
