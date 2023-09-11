@@ -136,6 +136,10 @@ During the second sprint we began adding the basic content to several of the fil
 
 ![Entity Relationship Diagram 2](/Documentation-Screenshots/SQL/ERD%202.png)
 
+### Update Three of ERD with the inclusion of Showings table 
+
+![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD%203.png)
+
 ## UML Diagram (Unified Modelling Language)
 
 ### A UML diagram is a diagram based on the UML (Unified Modeling Language) with the purpose of visually representing a system along with its main actors, roles, actions, artifacts or classes, in order to better understand, alter, maintain, or document information about the system.
