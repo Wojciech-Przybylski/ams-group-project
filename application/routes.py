@@ -321,4 +321,4 @@ def search_results(search):
 
 @app.route('/classifications')
 def clasifications():
-    return render_template('classifications.html', title='Classifications')
+    return render_template('classifications.html', title='UK Film Classification System')
