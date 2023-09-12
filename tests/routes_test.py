@@ -636,3 +636,50 @@ def test_search_results_route(client):
     assert b'Actor Name' not in response.data
     assert b'Director Name' not in response.data
     assert b'Genre Name' not in response.data
+    
+def test_classifications_route(client):
+    # Simulate a GET request to the /classifications route
+    response = client.get('/classifications')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # You can add more specific checks for the content of the 'classifications' template if needed
+
+def test_about_route(client):
+    # Simulate a GET request to the /about route
+    response = client.get('/about')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # You can add more specific checks for the content of the 'about' template if needed
+
+def test_contact_route(client):
+    # Simulate a GET request to the /contact-us route
+    response = client.get('/contact-us')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # You can add more specific checks for the content of the 'contact' template if needed
+
+def test_screens_route(client):
+    # Simulate a GET request to the /screens route
+    response = client.get('/screens')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # You can add more specific checks for the content of the 'screens' template if needed
+
+def test_404_error_handler(client):
+    # Simulate a GET request to a non-existent route to trigger the 404 error handler
+    response = client.get('/non-existent-route')
+
+    # Check if the response status code is 404 (Not Found)
+    assert response.status_code == 404
+
+    # Check if the 404.html template is rendered
+
+    assert b'404 Not Found' in response.data 
