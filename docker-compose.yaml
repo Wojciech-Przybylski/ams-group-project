@@ -11,7 +11,7 @@ services:
       - cinema-vol:/var/lib/mysql
     networks:
       - cinema-net
-  cinema-app:
+  flask-app:
     image: wojciechprzybylski/cinema-app:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
