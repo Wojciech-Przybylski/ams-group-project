@@ -10,7 +10,35 @@ Before QA Cinemas re-launch their social media strategy, they have decided that 
 
 QA Cinemas had a previous consultation with a business transformation group that suggested that a website for online booking was a key method of growth within region and has suggested the prioritisation of this project over all other business endeavours. This means that their other areas of expansion, such as the opening of a new café and indoor arcade, have paused. 
 The previous consultants also mentioned the need of DevOps within the infrastructure of this site; the ability to quickly automate and roll out new versions of a tested application for changes that need to be made. Whilst QA Cinemas don’t fully understand the technical aspects of this, they have had the benefits of automated builds and containers explained to them and are very keen to have this implemented alongside the site.
- 
+
+
+## Project Mark Scheme For Documentation 
+
+
+### 1/5 - not working towards
+
+- No designs, or designs used without adherence to expected formats, or designs are wrong. As the documents in MongoDB reflect JSON, data designs are allowed to be more freeform then with SQL, but cardinality is still required to be specified.
+
+### 2/5 - Working towards
+
+- One simple design provided, but without expansion (e.g. one minimal data design without keys).
+
+### 3/5 - Competent
+
+- 1 solid data design diagram or UML provided, following expected formats. 
+- Wireframe designs provided for the frontend.
+
+### 4/5 - Proficient
+
+- 2 solid data designs (before-and-after), or 1 solid data design diagram & 1 solid UML provided.
+- Wireframe designs provided for the frontend.
+
+### 5/5 - Fully Proficient
+
+- Evidence of project evolution over time (e.g. multiple data designs & UML).
+- Wireframe designs provided for the frontend.
+
+On top of this criteria screenshots will be added in a separate folder throughout the project to show development over time. These screenshots will be separated into, SQL, Code, Trello, Website and Github. This is to display the different aspects of development. On top of this instructions for istalling the application will be included in this README document as per the mark scheme.
 
 
 ## Installation
