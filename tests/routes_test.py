@@ -1,7 +1,8 @@
 import app
 from flask import session
-from application.models import User, Movies, Cart, CartItem, Showings, Bookings, BookingsItems, Genres, Actors, Directors, MovieGenres, MovieActors, MovieDirectors, CommentThread, Comments, CommentView
+from application.models import User, Movies, Cart, CartItem, Showings, Bookings, BookingsItems, Genres, Actors, Directors, MovieGenres, MovieActors, MovieDirectors, CommentThread, Comments, CommentView, TicketType
 from application import app, db, bcrypt
+from application.forms import CreateCommentForm
 from flask_testing import TestCase
 from datetime import datetime, timedelta
 import pytest
@@ -25,6 +26,86 @@ def test_home_route(client):
     assert response.status_code == 200
     assert b'Home' in response.data
     assert b'<!DOCTYPE html>' in response.data  # Add more specific content checks as needed
+    
+    
+def test_signup_route(client):
+    # Simulate a GET request to the /signup route
+    response = client.get('/signup')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Check if the response contains the expected title
+    assert b'<title>Sign Up</title>' in response.data
+
+    # Simulate a POST request to the /signup route with valid form data
+    user_data = {
+        'name': 'Test User',
+        'email': 'test@example.com',
+        'password': 'testpassword'
+    }
+    response = client.post('/signup', data=user_data, follow_redirects=True)
+
+    # Check if the response status code is 200 (OK) after successful signup
+    assert response.status_code == 200
+
+    # Check if the response contains the expected redirect to the home page
+    assert b'Home' in response.data
+    
+    user = User(name="Test User'", email="test@example.com", password=bcrypt.generate_password_hash("testpassword"))
+    # Add the user to the database
+    db.session.add(user)
+    db.session.commit()
+
+    # Check if a new user has been added to the database
+    new_user = User.query.filter_by(email='test@example.com').first()
+    assert new_user is not None
+
+    # Clean up: Delete the newly created user from the database (if needed)
+    if new_user:
+        db.session.delete(new_user)
+        db.session.commit()
+    if new_user:
+        db.session.delete(user)
+        db.session.commit()
+
+def test_login_route(client):
+    # Create a sample user for testing
+    sample_user = User(
+        name='Test User',
+        email='test@example.com',
+        password='testpassword'  # Ensure this matches the hashed password stored in your database
+    )
+    db.session.add(sample_user)
+    db.session.commit()
+
+    # Simulate a GET request to the /login route
+    response = client.get('/login')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Check if the response contains the expected title
+    assert b'<title>Login</title>' in response.data
+
+    # Simulate a POST request to the /login route with valid form data
+    login_data = {
+        'email': 'test@example.com',
+        'password': 'testpassword'
+    }
+    response = client.post('/login', data=login_data, follow_redirects=True)
+
+    # Check if the response status code is 200 (OK) after successful login
+    assert response.status_code == 200
+
+    # Check if the response contains the expected redirect to the home page
+    assert b'Home' in response.data
+
+
+    # Clean up: Delete the sample user from the database (if needed)
+    db.session.delete(sample_user)
+    db.session.commit()
+
 
 def test_signup_form_validation(client):
     # Simulate a POST request with invalid form data
@@ -139,6 +220,21 @@ def test_new_releases_route(client):
         db.session.delete(movie)
     db.session.commit()
     
+def test_logout_route(client):
+    # Simulate a GET request to the /logout route
+    response = client.get('/logout', follow_redirects=True)
+
+    # Check if the response status code is 200 (OK) after successful logout
+    assert response.status_code == 200
+
+    # Check if the response contains the expected redirect to the home page
+    assert b'Home' in response.data
+
+    # Check if the 'user_id' and 'admin' session variables are cleared
+    with client.session_transaction() as session:
+        assert 'user_id' not in session
+        assert 'admin' not in session
+    
 def test_discussion_board_route(client):
     # Simulate a GET request to the /discussion-board route
     response = client.get('/discussion-board')
@@ -165,10 +261,99 @@ def test_discussion_board_route(client):
         db.session.delete(new_thread)
         db.session.commit()
 
+def test_thread_route_authenticated(client):
+    
+    # Create a sample user for testing
+    sample_user = User(
+        name='Test User',
+        email='test@example.com',
+        password='testpassword'  # Ensure this matches the hashed password stored in your database
+    )
+    db.session.add(sample_user)
+    db.session.commit()
 
+    # Create a sample comment thread for testing
+    sample_thread = CommentThread(
+        title='Sample Thread Title'
+    )
+    db.session.add(sample_thread)
+    db.session.commit()
 
+    # Simulate a user login by setting 'user_id' in the session
+    with client.session_transaction() as session:
+        session['user_id'] = sample_user.id
 
+    # Simulate a GET request to the /discussion-board/<thread_id> route
+    thread_id = sample_thread.id  # Use the ID of the sample thread created above
+    response = client.get(f'/discussion-board/{thread_id}')
 
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Check if the response contains the expected thread title
+    assert b'Sample Thread Title' in response.data
+
+    # Simulate a POST request with valid form data to add a comment
+    comment_data = {
+        'comment': 'Test Comment'
+    }
+    response = client.post(f'/discussion-board/{thread_id}', data=comment_data, follow_redirects=True)
+
+    # Check if the response status code is 200 (OK) after posting a comment
+    assert response.status_code == 200
+
+    # Check if the response contains the expected redirect back to the thread page
+    assert b'Sample Thread Title' in response.data
+
+    # Check if the new comment is added to the database
+    new_comment = Comments.query.filter_by(comment_thread_id=thread_id).first()
+    assert new_comment is not None
+    assert new_comment.comment == 'Test Comment'
+    
+
+def test_delete_comment_route(client):
+    # Create a sample user for testing
+    sample_user = User(
+        name='Test User',
+        email='test@example.com',
+        password='testpassword'  # Ensure this matches the hashed password stored in your database
+    )
+    db.session.add(sample_user)
+    db.session.commit()
+
+    # Create a sample comment thread for testing
+    sample_thread = CommentThread(
+        title='Sample Thread Title'
+    )
+    db.session.add(sample_thread)
+    db.session.commit()
+
+    # Create a sample comment associated with the sample thread
+    sample_comment = Comments(
+        comment_thread_id=sample_thread.id,  # Use the ID of the sample thread
+        user_id=sample_user.id,
+        comment='Sample Comment'
+    )
+    db.session.add(sample_comment)
+    db.session.commit()
+
+    # Get the comment ID for the sample comment
+    comment_id = sample_comment.id
+
+    # Simulate a GET request to the /delete-comment/<comment_id> route
+    response = client.get(f'/delete-comment/{comment_id}')
+
+    # Check if the response status code is 302 (redirect)
+    assert response.status_code == 302
+
+    # Check if the comment is deleted from the database
+    deleted_comment = Comments.query.get(comment_id)
+    assert deleted_comment is None
+
+    # Clean up: Delete the sample user, thread, and any other related records
+    db.session.delete(sample_user)
+    db.session.delete(sample_thread)
+    db.session.commit()
 
 
 def test_opening_times_route(client):
@@ -181,6 +366,159 @@ def test_opening_times_route(client):
     # Check if the response contains the expected title
     assert b'<title>Opening Times</title>' in response.data
     
+def test_book_tickets_route(client):
+    # Create a sample user for testing
+    sample_user = User(
+        name='Test User',
+        email='test@example.com',
+        password='testpassword'  # Ensure this matches the hashed password stored in your database
+    )
+    db.session.add(sample_user)
+    db.session.commit()
+
+    # Create a sample movie for testing
+    sample_movie = Movies(
+        title='Sample Movie',
+        description='Sample Description',
+        image='sample_image.jpg',
+        release_date=datetime(2023, 9, 15)
+    )
+    db.session.add(sample_movie)
+    db.session.commit()
+
+    # Create a sample showing for the sample movie with a valid screen number
+    sample_showing = Showings(
+        movie_id=sample_movie.id,
+        screen_number=1,  # Set a valid screen number
+        date=datetime(2023, 9, 20, 18, 0, 0),  # Set the date and time for the showing
+        seats_available=50  # Set the number of available seats
+    )
+    db.session.add(sample_showing)
+    db.session.commit()
+
+    # Log in the sample user by setting the 'user_id' in the session
+    with client.session_transaction() as session:
+        session['user_id'] = sample_user.id
+
+    # Simulate a GET request to the /book/<movie_id> route
+    movie_id = sample_movie.id
+    response = client.get(f'/book/{movie_id}')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Check if the sample movie title is present in the response
+    assert b'Sample Movie' in response.data
+
+def test_payment_route(client):
+    # Create a sample user for testing
+    sample_user = User(
+        name='Test User',
+        email='test@example.com',
+        password='testpassword'  # Ensure this matches the hashed password stored in your database
+    )
+    db.session.add(sample_user)
+    db.session.commit()
+
+    # Log in the sample user by setting the 'user_id' in the session
+    with client.session_transaction() as session:
+        session['user_id'] = sample_user.id
+
+    # Create a sample cart and cart items for the user
+    sample_cart = Cart(user_id=sample_user.id)
+    db.session.add(sample_cart)
+    db.session.commit()
+
+    # Create a sample showing and related movie for testing
+    sample_movie = Movies(
+        title='Sample Movie',
+        description='Sample Description',
+        image='sample_image.jpg',
+        release_date=datetime(2023, 9, 15)
+    )
+    db.session.add(sample_movie)
+    db.session.commit()
+
+    sample_showing = Showings(
+        movie_id=sample_movie.id,
+        screen_number=1,  # Set a valid screen number
+        date=datetime(2023, 9, 20, 18, 0, 0),  # Set the date and time for the showing
+        seats_available=50  # Set the number of available seats
+    )
+    db.session.add(sample_showing)
+    db.session.commit()
+
+    # Simulate a GET request to the /payment route
+    response = client.get('/payment')
+
+    # Check if the response status code is 200 (OK) since the user is logged in
+    assert response.status_code == 200
+
+
+def test_confirmation_route(client):
+    # Create a sample user for testing
+    sample_user = User(
+        name='Test User',
+        email='test@example.com',
+        password='testpassword'  # Ensure this matches the hashed password stored in your database
+    )
+    db.session.add(sample_user)
+    db.session.commit()
+
+    # Log in the sample user by setting the 'user_id' in the session
+    with client.session_transaction() as session:
+        session['user_id'] = sample_user.id
+
+    # Create a sample booking and related booking items for testing
+    sample_movie = Movies(
+        title='Sample Movie',
+        description='Sample Description',
+        image='sample_image.jpg',
+        release_date=datetime(2023, 9, 15)
+    )
+    db.session.add(sample_movie)
+    db.session.commit()
+    
+    sample_showing = Showings(
+        movie_id=sample_movie.id,
+        screen_number=1,  # Set a valid screen number
+        date=datetime(2023, 9, 20, 18, 0, 0),  # Set the date and time for the showing
+        seats_available=50  # Set the number of available seats
+    )
+    db.session.add(sample_showing)
+    db.session.commit()
+
+    sample_booking = Bookings(
+        user_id=sample_user.id,
+        movie_id=sample_movie.id,
+        date=datetime.utcnow()
+    )
+    db.session.add(sample_booking)
+    db.session.commit()
+    
+    sample_ticket_type = TicketType(
+        ticket_type= 'regular',
+        price= 1.50        
+    )
+    db.session.add(sample_ticket_type)
+    db.session.commit()
+
+    sample_booking_item = BookingsItems(
+        booking_id=sample_booking.id,
+        showing_id=sample_showing.id,  # Replace with a valid showing ID
+        ticket_type_id=sample_ticket_type.id,  # Replace with a valid ticket type ID
+        quantity=2  # Set the quantity of tickets
+    )
+    db.session.add(sample_booking_item)
+    db.session.commit()
+
+    # Simulate a GET request to the /confirmation route with the sample booking ID
+    response = client.get(f'/confirmation/{sample_booking.id}')
+
+    # Check if the response status code is 200 (OK)
+    assert response.status_code == 200
+
+
 
 def test_get_remaining_tickets_route(client):
     # Create a sample showing record in the database with seats_available
