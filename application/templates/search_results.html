@@ -1,0 +1,36 @@
+{% extends 'nav.html' %}
+{% block content %}
+
+{% for movie in movies %}
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-2">
+            <img src="{{ url_for('static', filename=movie.image) }}" class="img-fluid rounded-start"
+                alt="{{ movie.title }}" style="height: 250px; width: auto;">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text">{{ movie.description }}</p>
+                <p class="card-text"><small class="text-muted" id="release-date">Released: {{ movie.release_date
+                        }}</small></p>
+                <a href="/book/{{ movie.id }}" class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+    dates = document.querySelectorAll('#release-date');
+    for (let i = 0; i < dates.length; i++) {
+        let dateText = dates[i].innerText;  // Corrected variable name
+        // remove all but first 4 chars from date
+        dateText = dateText.substring(0, 14);
+        // update date value
+        dates[i].innerText = dateText;  // Corrected variable name
+    }
+</script>
+{% endfor %}
+
+{% endblock %}

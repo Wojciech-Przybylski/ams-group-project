@@ -21,6 +21,27 @@
     <li>{{ actor }}</li>
 {% endfor %}
 </ul>
+<h3>Showings:</h3>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Screen</th>
+            <th> Date & Time</th>
+            <th>Available Seats</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for screening in showings %}
+        <tr>
+            <td>Screen {{ screening.screen_number }}</td>
+            <td>{{ screening.date }}</td>
+            <td>{{ screening.seats_available }}</td>
+        </tr>
+        {% endfor %}
+
+</table>
+<a href="{{ url_for('book_tickets', movie_id=movie.id) }}"><button class="btn btn-primary">Book Tickets</button></a>
+<br><br>
 <script>
     dates = document.querySelectorAll('h3.date');
     for (let i = 0; i < dates.length; i++) {

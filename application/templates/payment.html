@@ -1,0 +1,87 @@
+{% extends 'nav.html' %}
+
+{% block content %}
+{% if payment_details %}
+<form class="form-inline" style="padding-bottom: 10px;">
+    <div class="form-group">
+        <label for="category" class="mr-2">Select Card:</label>
+        <select class="form-control" name="category" id="category">
+            <option value="" selected disabled>Select</option>
+            {% for card in payment_details %}
+            <option value="{{ card.card_name + ',' + card.card_number + ',' + card.expiry_date + ',' + card.security_code }}">Last 4 digits: {{ card.card_number[-4:] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</form>
+{% endif %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form class="form" action="" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.card_name.label(class="form-label") }}
+                    {{ form.card_name(class="form-control") }}
+                </div>
+                {% for error in form.card_name.errors %}
+                <div class="alert alert-danger">
+                        <span class="text-danger">{{ error }}</span>
+                </div>
+                {% endfor %}
+                <div class="mb-3">
+                    {{ form.card_number.label(class="form-label") }}
+                    {{ form.card_number(class="form-control") }}
+                </div>
+                {% for error in form.card_number.errors %}
+                <div class="alert alert-danger">
+                        <span class="text-danger">{{ error }}</span>
+                </div>
+                {% endfor %}
+                <div class="mb-3">
+                    {{ form.expiry_date.label(class="form-label") }}
+                    {{ form.expiry_date(class="form-control") }}
+                </div>
+                {% for error in form.expiry_date.errors %}
+                <div class="alert alert-danger">
+                        <span class="text-danger">{{ error }}</span>
+                </div>
+                {% endfor %}
+                <div class="mb-3">
+                    {{ form.security_code.label(class="form-label") }}
+                    {{ form.security_code(class="form-control") }}
+                </div>
+                {% for error in form.security_code.errors %}
+                <div class="alert alert-danger">
+                        <span class="text-danger">{{ error }}</span>
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <br>
+        </div>
+    </div>
+</div>
+<script>
+    let dropDown = document.querySelector('#category');
+    // if there is a dropdown
+    if (dropDown) {
+        // add event listener to dropdown on change
+        dropDown.addEventListener('change', function() {
+            let selectedValue = this.options[dropDown.selectedIndex].value;
+            // fill form with details from selected card
+            let cardholderName = document.querySelector('#card_name');
+            let cardNumber = document.querySelector('#card_number');
+            let expiryDate = document.querySelector('#expiry_date');
+            let securityCode = document.querySelector('#security_code');
+            // split the selected value based on the delimiter ','
+            let cardDetails = selectedValue.split(',')
+            cardholderName.value = cardDetails[0];
+            cardNumber.value = cardDetails[1];
+            expiryDate.value = cardDetails[2];
+            securityCode.value = cardDetails[3];
+
+        });
+    }
+</script>
+
+{% endblock %}

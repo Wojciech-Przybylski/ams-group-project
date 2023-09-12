@@ -69,79 +69,46 @@ class MovieDirectors(db.Model):
 class Showings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False, index=True)
+    screen_number = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    seats = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
+    seats_available = db.Column(db.Integer, nullable=False)
 
 class Bookings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, index=True)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False, index=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    seat = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    showing = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False, index=True)
 
 class BookingsItems(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False, index=True)
     showing_id = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False, index=True)
-    seat = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
+    ticket_type_id = db.Column(db.Integer, db.ForeignKey('ticket_type.id'), nullable=False, index=True)
+    quantity = db.Column(db.Integer, nullable=False)
 
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    
-    # def set_quantity(self, product_id, quantity):
-    #     cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
-    #     if cart_item:
-    #         if quantity > 0:
-    #             cart_item.quantity = quantity
-    #             db.session.commit()
-    #         else:
-    #             db.session.delete(cart_item)
-    #             db.session.commit()
-    
-    # def add_item(self, product_id):
-    #     cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
-    #     if cart_item:
-    #         cart_item.quantity += 1
-    #         db.session.commit()
-    #     else:
-    #         new_cart_item = CartItem(product_id=product_id, quantity=1, cart_id=self.id)
-    #         db.session.add(new_cart_item)
-    #         db.session.commit()
-    
-    # def remove_item(self, product_id):
-    #     cart_item = CartItem.query.filter_by(product_id=product_id, cart_id=self.id).first()
-    #     if cart_item:
-    #         db.session.delete(cart_item)
-    #         db.session.commit()
-
-    # def empty_cart(self):
-    #     cart_items = CartItem.query.filter_by(cart_id=self.id).all()
-    #     for item in cart_items:
-    #         db.session.delete(item)
-    #         db.session.commit()
+    def empty_cart(self):
+        cart_items = CartItem.query.filter_by(cart_id=self.id).all()
+        for item in cart_items:
+            db.session.delete(item)
+            db.session.commit()
         
     
-# class CartItem(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
-#     quantity = db.Column(db.Integer, nullable=False)
-#     cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'), nullable=False)
+class CartItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    showing_id = db.Column(db.Integer, db.ForeignKey('showings.id'), nullable=False)
+    ticket_type_id = db.Column(db.Integer, db.ForeignKey('ticket_type.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'), nullable=False)
 
-    
-# class CartDisplay():
-#     def __init__(self, product_id, name, price, quantity, image) -> None:
-#         self.id = product_id
-#         self.name = name
-#         self.price = price
-#         self.quantity = quantity
-#         self.image = image
+class TicketType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ticket_type = db.Column(db.String(30), nullable=False, unique=True, index=True)
+    price = db.Column(db.Integer, nullable=False)
 
 class CommentView:
     def __init__(self, id, user_name, comment, time) -> None:
@@ -166,4 +133,32 @@ class CheckAdmin(object):
     def __call__(self, form, field):
         if field.data.lower() == 'admin':
             raise ValidationError('Name cannot be "admin".')
+        
+class ValidateTicketNumber(object):
+    def __init__(self, message=None):
+        self.message = message
+
+    def __call__(self, form, field):
+        child_ticket_number = form.child_tickets.data
+        adult_ticket_number = form.adult_tickets.data
+        # get total tickets available from db
+        showing = Showings.query.filter_by(id=form.showing_id.data).first()
+        total_tickets_available = showing.seats_available
+        total_tickets_requested = child_ticket_number + adult_ticket_number
+        print(f'Total tickets requested: {child_ticket_number + adult_ticket_number}')
+        print(f'total tickets available: {total_tickets_available}')
+        # check if total tickets requested is greater than total tickets available
+        if total_tickets_requested > total_tickets_available:
+            print('Total tickets requested is greater than total tickets available.')
+            raise ValidationError('Total tickets requested is greater than total tickets available.')
+        
+class SpecialCharacterPassword(object):
+    def __init__(self, message=None):
+        self.message = message
+
+    def __call__(self, form, field):
+        regex = re.compile('^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$')
+        if not regex.search(field.data):
+            raise ValidationError('Password must contain at least one uppercase chacter, one lowercase character, one number, and one special character.')
+        
         
