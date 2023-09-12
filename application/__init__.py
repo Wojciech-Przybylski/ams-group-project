@@ -3,14 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from os import environ
 
-# DB_PASSWORD=environ.get($DB_PASSWORD)
-
-# print(DB_PASSWORD)
-
 app = Flask(__name__)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.sqlite"
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:password@mysql:3306/cinema"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://root:password@localhost:3306/cinema"
 
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
