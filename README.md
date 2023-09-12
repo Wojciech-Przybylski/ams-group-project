@@ -51,9 +51,9 @@ As this project will be utlising feature branches, git pull is a command that wi
 git clone https://github.com/jamesbryer/ams-group-project
 cd ams-group-project
 pip3 install -r requirements.txt
+git pull
 python3 create.py
 python3 app.py
-git pull
 
 ```
 
