@@ -1,0 +1,29 @@
+{% extends 'nav.html' %}
+{% block content %}
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <td>Theatre Type</td>
+            <td>Max Capacity</td>
+            <td>Seating Plan</td>
+            <td>Decor</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Standard</td>
+            <td>100</td>
+            <td><img class="table-image" src="{{ url_for('static', filename='images/layout.jpg') }}" alt="Standard"></td>
+            <td><img class="table-image" src="{{ url_for('static', filename='images/regular_cinema.jpeg')}}" alt=""></td>
+        </tr>
+        <tr>
+            <td>Deluxe</td>
+            <td>80</td>
+            <td><img class="table-image" src="{{ url_for('static', filename='images/layout-2.jpg') }}" alt="Standard"></td>
+            <td><img class="table-image" src="{{ url_for('static', filename='images/fancy_cinema.jpg')}}" alt=""></td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

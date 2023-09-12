@@ -29,3 +29,9 @@
     bottom: 0;
     width: 100%;
 }
+
+.table-image {
+    width: 40em;
+    height: auto;
+    object-fit: cover;
+}
