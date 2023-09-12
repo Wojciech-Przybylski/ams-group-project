@@ -218,6 +218,11 @@ During the third sprint we developed the majority of the back and front end of t
 ![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD%203.png)
 
 
+## Wireframe Diagrams (Basic webpage design)
+
+
+### Wireframe designs are used to plan the layout of a webpage and its various different pages before developing the frontend. This will allow the team to contribute to the design of the website before any coding is done. On top of this, wireframe designs will help the team understand what is required on each page of the website, even if it is not a page that they will be working on.
+
 
 ## UML Diagram (Unified Modelling Language)
 
