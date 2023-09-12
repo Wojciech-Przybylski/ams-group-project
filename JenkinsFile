@@ -11,6 +11,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker images
+                    sh 'mysqldump --user=root --password=$DB_PASSWORD -h localhost cinema > ./db/db.sql'
                     sh "docker build -t wojciechprzybylski/cinema-app:latest ."
                     sh "docker build -t wojciechprzybylski/cinema-db:latest -f ./db/DockerFile ."
                 }
