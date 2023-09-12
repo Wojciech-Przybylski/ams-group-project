@@ -355,7 +355,7 @@ UNLOCK TABLES;
 -- Table structure for table `movies`
 --
 
-DROP TABLE IF EXISTS `movies`;
+DROP TABLE IF EXISTS `Movies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `movies` (
@@ -373,9 +373,9 @@ CREATE TABLE `movies` (
 -- Dumping data for table `movies`
 --
 
-LOCK TABLES `movies` WRITE;
+LOCK TABLES `Movies` WRITE;
 /*!40000 ALTER TABLE `movies` DISABLE KEYS */;
-INSERT INTO `movies` VALUES (1,'Mission Impossible','A secret agent is sent to Sydney, to find and destroy a genetically modified disease called \'Chimera\'.','images/mission_impossible.jpeg','1996-05-22 00:00:00'),(2,'The Matrix','A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.','images/the_matrix.jpg','1999-03-31 00:00:00'),(3,'The Dark Knight','When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.','images/the_dark_knight.jpg','2008-07-14 00:00:00'),(4,'The Godfather','The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.','images/the_godfather.jpg','1972-03-24 00:00:00'),(5,'Oppenheimer','A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.','images/oppenheimer.jpeg','2023-07-21 00:00:00'),(6,'Barbie','Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.','images/barbie.jpeg','2023-07-21 00:00:00');
+INSERT INTO `Movies` VALUES (1,'Mission Impossible','A secret agent is sent to Sydney, to find and destroy a genetically modified disease called \'Chimera\'.','images/mission_impossible.jpeg','1996-05-22 00:00:00'),(2,'The Matrix','A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.','images/the_matrix.jpg','1999-03-31 00:00:00'),(3,'The Dark Knight','When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.','images/the_dark_knight.jpg','2008-07-14 00:00:00'),(4,'The Godfather','The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.','images/the_godfather.jpg','1972-03-24 00:00:00'),(5,'Oppenheimer','A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.','images/oppenheimer.jpeg','2023-07-21 00:00:00'),(6,'Barbie','Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.','images/barbie.jpeg','2023-07-21 00:00:00');
 /*!40000 ALTER TABLE `movies` ENABLE KEYS */;
 UNLOCK TABLES;
 
