@@ -10,7 +10,7 @@ from os import environ
 app = Flask(__name__)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.sqlite"
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://root:@localhost:3306/cinema"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://root:{environ.get('DB_PASSWORD')}@mysql:3306/cinema"
 
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
