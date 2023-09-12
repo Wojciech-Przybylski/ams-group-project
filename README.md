@@ -102,6 +102,9 @@ git pull
 
 - Two group members came across an issue withe the ticket booking system, specifically with the maximum amount of tickets able to be bought. This was an important issue to fix because if the user was able to buy too many tickets this could break the whole database.
 
+### 11/09/2023
+- The group came across an issue with the footer. Whilst the footer was functioning as it should on most pages, the addition of the search page on the site raised an issue with the footer. Seemingingly tbe footer would sometimes not move around the page correctly and cover up certain search results, if their were enough in a certain search. In order to fix this, several group members discussed what caused this issue. After consideration, some minor changes were made to the HTML and CSS for the footer, this allowed for the positioning footer to adjust correctly, depending on the number of search results.
+
 ## Development Methodology 
 
 ### Kanban Board 
