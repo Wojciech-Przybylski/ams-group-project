@@ -169,23 +169,38 @@ During the third sprint we developed the majority of the back and front end of t
 
 ### This entity relationship diagram was devised using the principles of relational databases and normalisation
 
+
+
 ![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD.png)
+
+
 
 ### An updated version of the ERD with the inclusion of the cart_item and ticket_type tables. This is to show the progress and development of our groups database:
 
+
+
 ![Entity Relationship Diagram 2](/Documentation-Screenshots/SQL/ERD%202.png)
+
+
 
 ### Update Three of ERD with the inclusion of Showings table:
 
+
+
 ![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD%203.png)
 
+
+
 ## UML Diagram (Unified Modelling Language)
+
 
 ### A UML diagram is a diagram based on the UML (Unified Modeling Language) with the purpose of visually representing a system along with its main actors, roles, actions, artifacts or classes, in order to better understand, alter, maintain, or document information about the system.
 
 
 
 ## Risk Assessment 
+
+
 
 | Facility/Activity            | Identify the hazards                                    | who/what may be harmed | risk likelihood | Severity of harm  | Overall risk | Existing control measures                                                                                                                             |
 |------------------------------|---------------------------------------------------------|------------------------|-----------------|-------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
