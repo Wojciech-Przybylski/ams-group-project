@@ -210,7 +210,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,1,1,'This is a comment','2023-09-12 13:16:48'),(2,1,1,'This is another comment','2023-09-12 13:16:48'),(3,1,1,'This is a third comment','2023-09-12 13:16:48');
+INSERT INTO `comments` VALUES (1,1,1,'This is a comment','2023-09-12 15:02:42'),(2,1,1,'This is another comment','2023-09-12 15:02:42'),(3,1,1,'This is a third comment','2023-09-12 15:02:42');
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,7 +355,7 @@ UNLOCK TABLES;
 -- Table structure for table `movies`
 --
 
-DROP TABLE IF EXISTS `Movies`;
+DROP TABLE IF EXISTS `movies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `movies` (
@@ -373,9 +373,9 @@ CREATE TABLE `movies` (
 -- Dumping data for table `movies`
 --
 
-LOCK TABLES `Movies` WRITE;
+LOCK TABLES `movies` WRITE;
 /*!40000 ALTER TABLE `movies` DISABLE KEYS */;
-INSERT INTO `Movies` VALUES (1,'Mission Impossible','A secret agent is sent to Sydney, to find and destroy a genetically modified disease called \'Chimera\'.','images/mission_impossible.jpeg','1996-05-22 00:00:00'),(2,'The Matrix','A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.','images/the_matrix.jpg','1999-03-31 00:00:00'),(3,'The Dark Knight','When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.','images/the_dark_knight.jpg','2008-07-14 00:00:00'),(4,'The Godfather','The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.','images/the_godfather.jpg','1972-03-24 00:00:00'),(5,'Oppenheimer','A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.','images/oppenheimer.jpeg','2023-07-21 00:00:00'),(6,'Barbie','Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.','images/barbie.jpeg','2023-07-21 00:00:00');
+INSERT INTO `movies` VALUES (1,'Mission Impossible','A secret agent is sent to Sydney, to find and destroy a genetically modified disease called \'Chimera\'.','images/mission_impossible.jpeg','1996-05-22 00:00:00'),(2,'The Matrix','A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.','images/the_matrix.jpg','1999-03-31 00:00:00'),(3,'The Dark Knight','When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.','images/the_dark_knight.jpg','2008-07-14 00:00:00'),(4,'The Godfather','The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.','images/the_godfather.jpg','1972-03-24 00:00:00'),(5,'Oppenheimer','A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.','images/oppenheimer.jpeg','2023-07-21 00:00:00'),(6,'Barbie','Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.','images/barbie.jpeg','2023-07-21 00:00:00');
 /*!40000 ALTER TABLE `movies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -489,7 +489,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'james','$2b$12$KuCn0V6.EgNZhMaSW.7B0OLWhMjclFFeCvRq1bEpnZWhsab/94pF6','james@qa.com',0),(2,'admin','$2b$12$UIG5IA/.Gi2rsFsCrniUh.HKYUz4we2YXJgnvGQdyGfKhJ28dBTZe','admin@qa.com',1);
+INSERT INTO `user` VALUES (1,'james','$2b$12$QnT2GW4mxw17IDb4dSYvH.x.WFvwhpDdWB6zhjuni0GsMvtU40UJq','james@qa.com',0),(2,'admin','$2b$12$tmpE7QyqyM.bjdyssdLG1OfFujAPYspPbi2zNZ6AVHeRFe2r5VG6i','admin@qa.com',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -502,4 +502,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-12 15:50:56
+-- Dump completed on 2023-09-12 16:03:16
