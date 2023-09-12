@@ -8,3 +8,4 @@ flask-bcrypt
 pymysql
 email_validator
 Flask-CORS
+cryptography

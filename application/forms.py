@@ -1,15 +1,15 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, DateField, IntegerField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp
-from application.models import CheckAdmin, BannedChars, User, ValidateTicketNumber, Showings
+from application.models import CheckAdmin, BannedChars, User, ValidateTicketNumber, Showings, SpecialCharacterPassword
 from wtforms import Form, IntegerField, SelectField, SubmitField, validators
 
 
 class SignUpForm(FlaskForm):
     name = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=30), BannedChars(), CheckAdmin(message="Name cannot be 'admin'.")])
     email = StringField('Email', validators=[DataRequired(), Email(), Length(min=2, max=30)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=2, max=30), BannedChars()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), Length(min=2, max=30), BannedChars(), EqualTo('password')])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=2, max=30), SpecialCharacterPassword()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), Length(min=2, max=30), EqualTo('password')])
     submit = SubmitField('Sign Up')
 
     def validate_email(self, email):
