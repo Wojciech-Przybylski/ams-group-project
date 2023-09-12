@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS=credentials('Docker_Login')
+        DB_PASSWORD=credentials('DB_PASSWORD')
+    }
+
+    stages {
+        stage('Docker Build'){
+            steps {
+                script {
+                    // Build Docker images
+                    sh "docker build -t wojciechprzybylski/cinema-app:latest ."
+                    sh "docker build -t wojciechprzybylski/cinema-db:latest -f ./db/DockerFile ."
+                }
+            }
+        }
+        stage('Login to DockerHub and Push'){
+            steps {
+                script {
+                    sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    sh "docker push wojciechprzybylski/cinema-db:latest"
+                    sh "docker push wojciechprzybylski/cinema-app:latest"
+                }
+            }
+        }
+        stage('Deploy through docker-compose') {
+            steps {
+                script {
+                    sh "docker pull wojciechprzybylski/cinema-db:latest && docker pull wojciechprzybylski/cinema-app:latest"
+                    sh "docker-compose up -d"
+                }
+            }
+        }
+    }   
+}
