@@ -553,3 +553,86 @@ def test_get_remaining_tickets_route(client):
     # Clean up: Delete the sample showing record from the database
     db.session.delete(showing)
     db.session.commit()
+    
+def test_search_redirects_to_results(client):
+    
+    movie = Movies(
+    title="Test Movie",
+    description="This is a test movie description.",
+    image="test_movie.jpg",
+    release_date="2023-09-10"
+)
+    db.session.add(movie)
+    db.session.commit()
+    
+    # Simulate a POST request to the /search route with a search query
+    response = client.post('/search', data={'search': 'Test Movie'})
+
+    # Check if the response status code is 302 (redirect)
+    assert response.status_code == 302
+
+    # Check if the response redirects to the search_results route with the search query as a parameter
+    assert response.location == 'http://localhost/search_results?search=Movie+1'
+
+def test_search_results_route(client):
+    
+    movie = Movies(
+    title="Test Movie",
+    description="This is a test movie description.",
+    image="test_movie.jpg",
+    release_date="2023-09-10"
+)
+    db.session.add(movie)
+    db.session.commit()
+    
+    # Simulate a GET request to the /search_results route with a search query
+    response = client.get('/search_results?search=Test+Movie')
+
+    # Check if the response status code is 200 (OK) or any other appropriate status code
+    assert response.status_code == 200
+
+    # Check if the response contains the expected search results for 'Test Movie'
+    assert b'Test Movie' in response.data
+    
+def test_search_results_route(client):
+    # Simulate a GET request to the /search-results route with a search query
+    
+    movie = Movies(
+    title="Test Movie",
+    description="This is a test movie description.",
+    image="test_movie.jpg",
+    release_date="2023-09-10"
+)
+    db.session.add(movie)
+    db.session.commit()
+    
+    response = client.get('/search-results/movie')
+
+    # Check if the response status code is 200 (OK) or any other appropriate status code
+    assert response.status_code == 200
+
+    # Check if the response contains the expected search results for 'Movie'
+    assert b'Test Movie' in response.data
+
+    actor = Actors(actor="John Doe")
+
+    # Add the actor to the database
+    db.session.add(actor)
+    db.session.commit()
+    
+    director = Directors(director="Jane Smith")
+
+    # Add the director to the database
+    db.session.add(director)
+    db.session.commit()
+    
+    genre = Genres(genre="Action")
+
+    # Add the genre to the database
+    db.session.add(genre)
+    db.session.commit()
+
+    # Check if the response does not contain results for other search terms
+    assert b'Actor Name' not in response.data
+    assert b'Director Name' not in response.data
+    assert b'Genre Name' not in response.data
