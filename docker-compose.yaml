@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  mysql:
+    image: wojciechprzybylski/cinema-db:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 8083:3306
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - cinema-vol:/var/lib/mysql
+    networks:
+      - cinema-net
+  cinema-app:
+    image: wojciechprzybylski/cinema-app:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - cinema-net
+    ports:
+      - published: 80
+        target: 5001
+    deploy:
+      replicas: 1
+networks:
+  cinema-net:
+volumes:
+  cinema-vol:
