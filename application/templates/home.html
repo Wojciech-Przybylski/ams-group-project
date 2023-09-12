@@ -1,45 +1,42 @@
 {% extends 'nav.html' %}
 {% block content %}
 <div class="row">
-    <!-- if user is signed in -->
-    {% if session["user_name"] %}
-    <div class="col-md-6">
-        <h3>Welcome, {{ session["user_name"] }}!</h3>
-    </div>
-    <div class="col-md-6">
-        <a href="/logout" class="btn btn-primary">Logout</a>
-    </div>
-    {% endif %}
-    <div class="col-md-6">
-        <h3>Your Gateway to Classic and New Movies</h3>
-    </div>
-    <div class="col-md-6">
-        <a href="/movies" class="btn btn-primary">Explore Now</a>
-    </div>
+
 </div>
 
 <br>
 <div class="row justify-content-center">
-    <div id="myCarousel" class="carousel slide row justify-content-center" data-ride="carousel" style="width: 700px;">
+    <div style="width: 80%;">
+        <!-- if user is signed in -->
+        {% if session["user_name"] %}
+        <div class="col-md-6">
+            <h3>Welcome, {{ session["user_name"] }}!</h3>
+        </div>
+        {% endif %}
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 80%;">
         <!-- Indicators -->
         <ol class="carousel-indicators">
             {% for movie in movies %}
-            <li data-target="#myCarousel" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
+            <li data-target="#myCarousel" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active" {% endif
+                %}></li>
             {% endfor %}
         </ol>
-        
+
         <!-- Slides -->
         <div class="carousel-inner">
             {% for movie in movies %}
             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                <a href="{{ url_for('movie', movie_id=movie.id) }}"><img src="{{ url_for('static', filename=movie.image) }}" alt="{{ movie.name }}" height="auto" width="100%"></a>
+                <a href="{{ url_for('movie', movie_id=movie.id) }}"><img
+                        src="{{ url_for('static', filename=movie.image) }}" alt="{{ movie.name }}" height="auto"
+                        width="100%"></a>
                 <div class="carousel-caption">
                     <h3>{{ movie.name }}</h3>
                 </div>
             </div>
             {% endfor %}
         </div>
-        
+
         <!-- Controls -->
         <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
             <span class="carousel-control-prev-icon"></span>
