@@ -31,43 +31,70 @@ git pull
 
 ## The MVP (The Minimum Viable Product) 
 
+### This MVP contains the user stories and the acceptance criteria according to our projects specification.
+
 - Home Page:
+   
     - Should describe QA Cinemas as a brand as well as this the home page needs to be well-designed and aesthetically   pleasing/accessible. 
     - Home page must be the default for the entire site and other pages should be accessible from here.
+
 - Login Page:
+    
     - Login page should be accessible from the home page at the very minimum. 
     - Should be accessible at the top right of the screen on all pages.
     - existing accounts should be able to login and new accounts created via a signup form.
+
 - Listing Gallery:
+   
     - Gallery should be accessible via overall site navigation.
     - It must feature at least 4 different movie images.
     - Each Image should appear on its own page with information regarding the movie - Title, actors, director and showing times.
+
 - Opening Times:
+
     - Must be part of overall site navigation.
     - Page must have details of the opening times of the cinema.
+
 - New Releases Gallery:
+
     - New release gallery must be part of overall navigation.
     - Must confine to the same image and information rules as the listing gallery.
+
 - Classification: 
+
     - Part of the overall site navigation. 
     - Must follow standard film classifications and icons.
     - page must include any other relevant facts to classification system.
+
 - Screens:
+
     - Should include seating plan and decor of both standard and deluxe screens.
+
 - Ticket Bookings:
+
     - When booking a ticket bookings should include, movie title, screening date, time, number of seats, name of booker and ticket type, as well as concession 
+
 - Payment:
+
     - Payment page should gather - card holder name, card number, expiry date, CVC.
+
 - Cinema Services:
+
     - Part of overall site navigation. 
     - Should include prices for food and drink. 
     - feature upcoming cafe and arcade.
+
 - Discussion Board:
+
     - Users can comment on a forum part of the sites navigation. 
     - content of the forum must be moderated for innappropriate content.
+
 - Search:
+
     - Search bar allowing users to search keywords - with relevant links being returned. 
+
 - About Page:
+
     - Part of overall site navigation.
     - The name and a small paragraph on all the team members.
     - Basic contact information and information on who QA cinemas are.
@@ -85,24 +112,29 @@ git pull
 ## Problems Faced
 
 ### 05/09/2023
+
 - One group member had an emergency that meant that they had to leave early. This is something we accounted for in the risk assessment for this project. In order to tackle this issue, the group member who had to leave prepared a short handover to inform the rest of the group of the work that they had been doing, so that a seamless transfer of work could be made.
 
 ### 06/09/2023
+
 - One Group member had a differing password for MySQL this meant that when running the app this member was considered unauthorised and could not get into the website. The current solution for this is for the group member to manually input their password to the __init__.py file and then run the create.py file. This then gave the group member access to the site. However, it is also vital that this password change is not pushed to Github as this will mean all other members will no longer have site access.
 
 - One group member ran into issues with reverse proxying the docker-composed images during deployment. In order to fix this the group member exposed the ports in the docker-compose file in the cinema-app section. This issue has also been recorded on the trello board for the project.
 
 ### 07/09/2023
+
 - Several group members during development have had issues with the create.py file not correctly dropping the tables within the SQL database. This seemingly occurs where certain relationships that weren't needed have been removed. This then stops certain tables from being dropped correctly. In order to fix this, the schema must be deleted from the MySQL workbench, then the create.py file can be executed again and the database will completely rebuild itself.
 
 - One group member was having an issue getting some HTML and CSS code working for the Home and About pages of the website. In order to tackle this several group members peer-reviewed the work and came to the conclusion that their was an issue with the file structure within the home-page branch causing the HTML and CSS to not appear correectly. Furthermore the group members in the peer review concluded that their needed to be some image resizing within the home-page before it can be pushed to the main branch.
 
 ### 08/09/2023
+
 - One group member came across an issue with the deployment of the database using several CI/CD tools. After a diiscussion with the group after our morning SCRUM meeting we came to the conclusion to move away from this issue for now. As a group we concluded that other areas of this project need to take priority, on top of this their is a risk that pursuing this issue could take us far out of scope for this project.
 
 - Two group members came across an issue withe the ticket booking system, specifically with the maximum amount of tickets able to be bought. This was an important issue to fix because if the user was able to buy too many tickets this could break the whole database.
 
 ### 11/09/2023
+
 - The group came across an issue with the footer. Whilst the footer was functioning as it should on most pages, the addition of the search page on the site raised an issue with the footer. Seemingingly tbe footer would sometimes not move around the page correctly and cover up certain search results, if their were enough in a certain search. In order to fix this, several group members discussed what caused this issue. After consideration, some minor changes were made to the HTML and CSS for the footer, this allowed for the positioning footer to adjust correctly, depending on the number of search results.
 
 ## Development Methodology 
