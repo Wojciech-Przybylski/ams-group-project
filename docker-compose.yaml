@@ -7,7 +7,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - cinema-vol:/var/lib/mysql
+      - cinema-db-data:/var/lib/mysql
     networks:
       - cinema-net
   mysql-init:
