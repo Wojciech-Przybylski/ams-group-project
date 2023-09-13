@@ -14,7 +14,7 @@ pipeline {
                     sh 'docker run --rm -v cinema-vol:/volume -v $(pwd)/backup:/backup alpine tar -czf /backup/cinema-data-backup.tar.gz -C /volume .'
                 }
             }
-        // }
+        }
         // stage('Testing') {
         //     steps {
         //         sh "docker build -t wojciechprzybylski/pytest:latest -f ./Dockerfile-test ."
