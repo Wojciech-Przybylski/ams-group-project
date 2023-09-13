@@ -140,7 +140,7 @@ def thread(thread_id):
         new_comment = Comments(comment_thread_id=thread_id, user_id=user_id, comment=comment, date=datetime.utcnow())
         db.session.add(new_comment)
         db.session.commit()
-        return redirect(url_for('thread', thread_id=thread_id))
+        return redirect(url_for('thread', title="Discussion", thread_id=thread_id))
     # if user is not logged in, redirect to login page
     if 'user_id' not in session:
         return redirect(url_for('login'))
@@ -156,7 +156,7 @@ def thread(thread_id):
         comment_view = CommentView(id=comment.id, comment=comment.comment, user_name=User.query.get(comment.user_id).name, time=comment.date.strftime("%d/%m/%Y %H:%M:%S"))
         comment_view_list.append(comment_view)
 
-    return render_template('thread.html', thread=thread, comments=comment_view_list, form=form)
+    return render_template('thread.html', title="Discussion", thread=thread, comments=comment_view_list, form=form)
 
 @app.route('/delete-comment/<int:comment_id>', methods=['GET', 'POST'])
 def delete_comment(comment_id):
