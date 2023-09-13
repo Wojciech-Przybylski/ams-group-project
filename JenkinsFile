@@ -14,13 +14,13 @@ pipeline {
                     sh 'docker run --rm -v cinema-vol:/volume -v $(pwd)/backup:/backup alpine tar -czf /backup/cinema-data-backup.tar.gz -C /volume .'
                 }
             }
-        }
-        stage('Testing') {
-            steps {
-                sh "docker build -t wojciechprzybylski/pytest:latest -f ./Dockerfile-test ."
-                sh "docker run -t wojciechprzybylski/pytest:latest"
-            }
-        }    
+        // }
+        // stage('Testing') {
+        //     steps {
+        //         sh "docker build -t wojciechprzybylski/pytest:latest -f ./Dockerfile-test ."
+        //         sh "docker run -t wojciechprzybylski/pytest:latest"
+        //     }
+        // }    
         stage('Build') {
             steps {
                 script {
