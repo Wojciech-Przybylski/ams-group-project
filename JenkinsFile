@@ -7,27 +7,20 @@ pipeline {
     }
 
     stages {
-        stage('Docker Build') {
+        stage('Build') {
             steps {
                 script {
                     // Build Docker images
                     sh "docker build -t wojciechprzybylski/mysql-init:latest -f ./db/Dockerfile-create ."
                     sh "docker build -t wojciechprzybylski/cinema-app:latest ."
                     sh "docker build -t wojciechprzybylski/cinema-db:latest -f ./db/DockerFile ."
-                }
-            }
-        }
-        stage('Login to DockerHub and Push') {
-            steps {
-                script {
                     sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                     sh "docker push wojciechprzybylski/mysql-init:latest"
                     sh "docker push wojciechprzybylski/cinema-db:latest"
                     sh "docker push wojciechprzybylski/cinema-app:latest"
                 }
             }
-        }
-        stage('Backup Data') {
+        stage('Backup') {
             steps {
                 script {
                     // Create a backup of the data in cinema-vol volume
@@ -35,7 +28,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy through docker-compose') {
+        stage('Deploy') {
             steps {
                 script {
                     // Restore data from the backup before starting containers
@@ -45,7 +38,7 @@ pipeline {
                 }
             }
         }
-        stage('Remove Dangling Docker Images') {
+        stage('Clean up') {
             steps {
                 sh '''
                     docker images -f dangling=true -q | xargs -r docker rmi
