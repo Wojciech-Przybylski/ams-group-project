@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Run pytest') {
             steps {
-                sh "pytest mytest.py"
+                sh "python pytest --cov"
             }
         }    
         stage('Backup') {
