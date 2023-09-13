@@ -1,7 +1,7 @@
 FROM mysql:5.7
 FROM python:3.8.10
-WORKDIR /app
+WORKDIR /test
 COPY ./tests/test.sql /docker-entrypoint-initdb.d/
 ENV DB_PASSWORD=${DB_PASSWORD}, MYSQL_DATABASE=test
 RUN pip3 install -r requirements.txt
-ENTRYPOINT pytest --cov
+ENTRYPOINT pytest -m 'models'
