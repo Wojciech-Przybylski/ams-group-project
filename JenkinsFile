@@ -5,14 +5,11 @@ pipeline {
         DOCKERHUB_CREDENTIALS=credentials('Docker_Login')
         DB_PASSWORD=credentials('DB_PASSWORD')
     }
-    
-    node {
+
+    stages {
         stage('Run pytest') {
             bat "pytest mytest.py"
         }    
-    }   
-
-    stages {
         stage('Backup') {
             steps {
                 script {
