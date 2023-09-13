@@ -15,6 +15,9 @@ def home():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    # if user is logged in, redirect to home page
+    if 'user_id' in session:
+        return redirect(url_for('home'))
     form = SignUpForm()
     if request.method == 'POST' and form.validate_on_submit():
         print('validated')
@@ -30,6 +33,9 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # if user is logged in, redirect to home page
+    if 'user_id' in session:
+        return redirect(url_for('home'))
     form = LoginForm()
     message = ''
     if request.method == 'POST':
@@ -42,6 +48,8 @@ def login():
                 # create session variable for user_id
                 session['user_id'] = user.id
                 # if user is admin, create session variable for admin
+                # create session variable for user name
+                session['user_name'] = user.name
                 if user.admin:
                     session['admin'] = True
                 # check if user has a cart
@@ -53,7 +61,7 @@ def login():
                     cart = Cart(user_id=user.id)
                     db.session.add(cart)
                     db.session.commit()
-                return render_template('home.html', title='Home', message="Login Successful!")
+                return redirect(url_for('home'))
             else:
                 print('user not found')
                 message = 'Login Unsuccessful. Please check email and password'
@@ -71,6 +79,8 @@ def movie(movie_id):
     movie = Movies.query.get(movie_id)
     #  get genre from movie_genres
     genres = MovieGenres.query.filter_by(movie_id=movie_id).all()
+    # get showings from db
+    showings = Showings.query.filter_by(movie_id=movie_id).all()
     #  get genre name from genres
     genre_names = []
     for genre in genres:
@@ -87,7 +97,7 @@ def movie(movie_id):
     director_names = []
     for director in directors:
         director_names.append(Directors.query.get(director.director_id).director)
-    return render_template('movie.html', title=movie.title, movie=movie, genre_names=genre_names, actor_names=actor_names, director_names=director_names)
+    return render_template('movie.html', title=movie.title, movie=movie, genre_names=genre_names, actor_names=actor_names, director_names=director_names, showings=showings)
 
 @app.route('/new-releases')
 def new_releases():
@@ -100,6 +110,7 @@ def new_releases():
 def clear_variable():
     session.pop('user_id', None)  # Remove 'user_id' from session
     session.pop('admin', None)  # Remove 'admin' from session
+    session.pop('user_name', None)  # Remove 'user_name' from session
     print("Session variable cleared!")
     return redirect(url_for('home'))
 
@@ -316,3 +327,23 @@ def search_results(search):
             if movie.movie_id not in movies:
                 movies.append(Movies.query.get(movie.movie_id))
     return render_template('search_results.html' , title=('Search results for: ' + search), movies=movies)
+
+@app.route('/classifications')
+def clasifications():
+    return render_template('classifications.html', title='UK Film Classification System')
+
+@app.route('/about')
+def about():
+    return render_template('about.html', title='About')
+
+@app.route('/contact-us')
+def contact():
+    return render_template('contact.html', title='Contact')
+
+@app.route('/screens')
+def screens():
+    return render_template('screens.html', title='Screens')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404

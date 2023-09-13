@@ -66,6 +66,15 @@ with app.app_context():
 
     actor14 = Actors(actor="Ryan Gosling")
     actor15 = Actors(actor="Will Ferrell")
+    actress15 = Actors(actor="Anna Popplewell")
+    actress16 = Actors(actor="Anouk Darwin Homewood")
+    actress17 = Actors(actor="Bonnie Aarons")
+
+    actor16 = Actors(actor="Andrea Vasiliou")
+    actor17 = Actors(actor="Archie Madekwe")
+    actor18 = Actors(actor="Bianca Bardoe")
+    actor19 = Actors(actor=" David Harbour")
+
 
     # create a movie director
     director1 = Directors(director="Christopher Nolan")
@@ -81,6 +90,8 @@ with app.app_context():
     director11 = Directors(director="Guy Ritchie")
     director12 = Directors(director="Ron Howard")
     director13 = Directors(director="Greta Gerwig")
+    director14 = Directors(director="Michael Chaves")
+    director15 = Directors(director="Neill Blomkamp")
 
     # create a movie
     movie1 = Movies(title="Mission Impossible", description="A secret agent is sent to Sydney, to find and destroy a genetically modified disease called 'Chimera'.", image="images/mission_impossible.jpeg", release_date="1996-05-22")
@@ -127,6 +138,21 @@ with app.app_context():
     new_release2_actor_3 = MovieActors(movie_id=6, actor_id=29)
     new_release2_director = MovieDirectors(movie_id=6, director_id=13)
 
+    new_release3 = Movies(title="The Nun II", description="1956 - France. A priest is murdered. An evil is spreading. The sequel to the worldwide smash hit follows Sister Irene as she once again comes face-to-face with Valak, the demon nun.", image="images/the_nun_2.jpg", release_date="2023-09-08")
+    new_release3_genre = MovieGenres(movie_id=7, genre_id=3)
+    new_release3_actor_1 = MovieActors(movie_id=7, actor_id=30)
+    new_release3_actor_2 = MovieActors(movie_id=7, actor_id=31)
+    new_release3_actor_3 = MovieActors(movie_id=7, actor_id=32)
+    new_release3_director = MovieDirectors(movie_id=7, director_id=14)
+
+    new_release4 = Movies(title="Gran Turismo", description=" Based on the true story of Jann Mardenborough, the film is the ultimate wish fulfillment tale of a teenage Gran Turismo player whose gaming skills won a series of Nissan competitions to become an actual professional racecar driver.", image="images/gran_turismo.jpg", release_date="2023-08-25")
+    new_release4_genre = MovieGenres(movie_id=8, genre_id=20)
+    new_release4_genre_2 = MovieGenres(movie_id=8, genre_id=21)
+    new_release4_actor_1 = MovieActors(movie_id=8, actor_id=33)
+    new_release4_actor_2 = MovieActors(movie_id=8, actor_id=34)
+    new_release4_actor_3 = MovieActors(movie_id=8, actor_id=35)
+    new_release4_director = MovieDirectors(movie_id=8, director_id=15)
+
     showing1 = Showings(movie_id=1, screen_number=1, date="2023-10-01 12:00:00", seats_available=10)
     showing2 = Showings(movie_id=1, screen_number=1, date="2023-10-01 15:00:00", seats_available=100)
     showing3 = Showings(movie_id=1, screen_number=2, date="2023-10-01 18:00:00", seats_available=100)
@@ -157,12 +183,15 @@ with app.app_context():
     showing23 = Showings(movie_id=6, screen_number=22, date="2023-11-11 18:00:00", seats_available=100)
     showing24 = Showings(movie_id=6, screen_number=22, date="2023-11-11 21:00:00", seats_available=100)
 
+    showing25 = Showings(movie_id=7, screen_number=25, date="2023-11-21 12:00:00", seats_available=100)
+    showing26 = Showings(movie_id=7, screen_number=25, date="2023-11-21 15:00:00", seats_available=100)
+    showing27 = Showings(movie_id=7, screen_number=26, date="2023-11-21 18:00:00", seats_available=100)
+    showing28 = Showings(movie_id=7, screen_number=26, date="2023-11-21 21:00:00", seats_available=100)
 
-
-
-
-
-
+    showing29 = Showings(movie_id=8, screen_number=29, date="2023-12-01 12:00:00", seats_available=100)
+    showing30 = Showings(movie_id=8, screen_number=29, date="2023-12-01 15:00:00", seats_available=100)
+    showing31 = Showings(movie_id=8, screen_number=30, date="2023-12-01 18:00:00", seats_available=100)
+    showing32 = Showings(movie_id=8, screen_number=30, date="2023-12-01 21:00:00", seats_available=100)
 
     adult_ticket_type = TicketType(ticket_type="Adult", price=10)
     child_ticket_type = TicketType(ticket_type="Child", price=5)
@@ -233,6 +262,14 @@ with app.app_context():
 
     db.session.add(actor14)
     db.session.add(actor15)
+    db.session.add(actress15)
+    db.session.add(actress16)
+    db.session.add(actress17)
+
+    db.session.add(actor16)
+    db.session.add(actor17)
+    db.session.add(actor18)
+    db.session.add(actor19)
 
     
     db.session.add(director1)
@@ -248,6 +285,8 @@ with app.app_context():
     db.session.add(director11)
     db.session.add(director12)
     db.session.add(director13)
+    db.session.add(director14)
+    db.session.add(director15)
 
     db.session.add(movie1)
     db.session.add(movie2)
@@ -255,6 +294,8 @@ with app.app_context():
     db.session.add(movie4)
     db.session.add(new_release1)
     db.session.add(new_release2)
+    db.session.add(new_release3)
+    db.session.add(new_release4)
     db.session.commit()
 
     db.session.add(movie1_genre)
@@ -294,7 +335,18 @@ with app.app_context():
     db.session.add(new_release2_actor_3)
     db.session.add(new_release2_director)
 
+    db.session.add(new_release3_genre)
+    db.session.add(new_release3_actor_1)
+    db.session.add(new_release3_actor_2)
+    db.session.add(new_release3_actor_3)
+    db.session.add(new_release3_director)
 
+    db.session.add(new_release4_genre)
+    db.session.add(new_release4_genre_2)
+    db.session.add(new_release4_actor_1)
+    db.session.add(new_release4_actor_2)
+    db.session.add(new_release4_actor_3)
+    db.session.add(new_release4_director)
 
 
     db.session.add(comment_thread1)
@@ -334,6 +386,15 @@ with app.app_context():
     db.session.add(showing22)
     db.session.add(showing23)
     db.session.add(showing24)
+    db.session.add(showing25)
+    db.session.add(showing26)
+    db.session.add(showing27)
+    db.session.add(showing28)
+    db.session.add(showing29)
+    db.session.add(showing30)
+    db.session.add(showing31)
+    db.session.add(showing32)
+
 
 
     db.session.add(adult_ticket_type)

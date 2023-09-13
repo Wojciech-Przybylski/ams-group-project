@@ -152,4 +152,13 @@ class ValidateTicketNumber(object):
             print('Total tickets requested is greater than total tickets available.')
             raise ValidationError('Total tickets requested is greater than total tickets available.')
         
+class SpecialCharacterPassword(object):
+    def __init__(self, message=None):
+        self.message = message
+
+    def __call__(self, form, field):
+        regex = re.compile('^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$')
+        if not regex.search(field.data):
+            raise ValidationError('Password must contain at least one uppercase chacter, one lowercase character, one number, and one special character.')
+        
         
