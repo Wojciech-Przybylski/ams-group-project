@@ -22,7 +22,7 @@ pipeline {
         //         sh "docker stop wojciechprzybylski/pytest:latest"
         //         sh "docker rm wojciechprzybylski/pytest:latest"
         //     }
-        }    
+        // }    
         stage('Build') {
             steps {
                 script {
