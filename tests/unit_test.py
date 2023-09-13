@@ -1,19 +1,16 @@
 import pytest
-from application import app, db, bcrypt
+from application import app, db, bcrypt, create_db_engine
 from application.models import Genres, User, PaymentDetails, CommentThread, Comments, Movies, MovieGenres, Actors, MovieActors, Directors, MovieDirectors, Showings, Bookings, BookingsItems, TicketType, Cart, CartItem, CommentView, BannedChars, CheckAdmin
 from datetime import datetime
 from wtforms.validators import ValidationError
 from wtforms import Form, StringField
 import pytest
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy import create_engine
 
 
-@pytest.fixture(scope='session')
 def db_engine(request):
-    
-    db_url = request.config.getoption("--dburl")
-    engine_ = create_engine(db_url, echo=True)
+    """yields a SQLAlchemy engine which is suppressed after the test session"""
+    engine_ = create_db_engine("postgresql://user:password@localhost/mydatabase")
 
     yield engine_
 
