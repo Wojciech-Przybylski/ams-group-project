@@ -19,7 +19,7 @@ def client():
 def test_User(client):
     
     # Create a user
-    user = User(name="James", email="bob@qa.com", password=bcrypt.generate_password_hash("123"))
+    user = User(name="James", email="James@qa.com", password=bcrypt.generate_password_hash("123"))
     # Add the user to the database
     db.session.add(user)
     db.session.commit()
