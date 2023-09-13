@@ -1,5 +1,5 @@
 FROM python:3.8.10
-WORKDIR /test
+WORKDIR /app
 COPY ./tests .
 ENV DB_PASSWORD=${DB_PASSWORD}
 RUN pip3 install -r requirements.txt
