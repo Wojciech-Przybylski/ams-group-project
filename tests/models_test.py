@@ -24,7 +24,7 @@ def test_User(client):
     db.session.add(user)
     db.session.commit()
     # Retrieve the user from the database
-    retrieved_user = User.query.filter_by(id=1).first()
+    retrieved_user = User.query.filter_by(id=3).first()
     # Assert that the retrieved user's name matches the expected value
     assert retrieved_user.name == 'bob'
     assert retrieved_user.email == 'bob@qa.com'

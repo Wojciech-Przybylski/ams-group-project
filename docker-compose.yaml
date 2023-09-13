@@ -1,11 +1,11 @@
 version: "3.8"
 services:
-  # mysql-init:
-  #   image: wojciechprzybylski/mysql-init:latest
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-  #   networks:
-  #     - cinema-net
+  mysql-init:
+    image: wojciechprzybylski/mysql-init:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - cinema-net
   mysql:
     image: wojciechprzybylski/cinema-db:latest
     environment:
