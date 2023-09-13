@@ -18,7 +18,7 @@ pipeline {
         stage('Testing') {
             steps {
                 sh "docker build -t wojciechprzybylski/pytest:latest -f ./Dockerfile-test ."
-                sh "docker-compose -f tests/docker-compose.yml up -d" 
+                sh "docker-compose -f tests/docker-compose.yaml up -d" 
             }
         }    
         stage('Build') {
