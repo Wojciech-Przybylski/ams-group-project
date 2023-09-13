@@ -1,10 +1,12 @@
 # Derived from official mysql image (our base image)
 # Use mysql 5.7 as the flask-app is not set up to work with later versions
 FROM mysql:5.7
-FROM python:3.8.10
-WORKDIR /app
-COPY . .
-RUN pip3 install -r requirements.txt
+
+# Add a database and root password
+# For hints on how to do this, consult the mysql 5.7 image documentation
 ENV MYSQL_DATABASE cinema
+
+# Add the content of the .sql file to your image
+# All scripts copied to docker-entrypoint-initdb.d/ are automatically
+# executed during container startup
 COPY ./db/db.sql /docker-entrypoint-initdb.d/
-ENTRYPOINT python3 create.py

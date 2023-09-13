@@ -1,11 +1,20 @@
 version: "3.8"
 services:
+  mysql-init:
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    container_name: mysql-init
+    volumes:
+      - ./create.py:./create.py
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
   mysql:
     image: wojciechprzybylski/cinema-db:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
-      - 8083:3306
+      - 3306:3306
     volumes:
       - ./db:/docker-entrypoint-initdb.d
       - cinema-vol:/var/lib/mysql
