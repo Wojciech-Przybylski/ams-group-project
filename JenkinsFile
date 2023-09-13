@@ -18,6 +18,7 @@ pipeline {
         stage('Testing') {
             steps {
                 sh "docker-compose -f tests/docker-compose.yaml up -d"
+                sh "docker-compose -f tests/docker-compose.yaml run db pytest -m 'models'"
             }
         }    
         stage('Build') {
