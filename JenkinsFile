@@ -7,6 +7,14 @@ pipeline {
     }
 
     stages {
+        stage('Backup') {
+            steps {
+                script {
+                    // Create a backup of the data in cinema-vol volume
+                    sh 'docker run --rm -v cinema-vol:/volume -v $(pwd)/backup:/backup alpine tar -czf /backup/cinema-data-backup.tar.gz -C /volume .'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 script {
@@ -18,14 +26,6 @@ pipeline {
                     sh "docker push wojciechprzybylski/mysql-init:latest"
                     sh "docker push wojciechprzybylski/cinema-db:latest"
                     sh "docker push wojciechprzybylski/cinema-app:latest"
-                }
-            }
-        }
-        stage('Backup') {
-            steps {
-                script {
-                    // Create a backup of the data in cinema-vol volume
-                    sh 'docker run --rm -v cinema-vol:/volume -v $(pwd)/backup:/backup alpine tar -czf /backup/cinema-data-backup.tar.gz -C /volume .'
                 }
             }
         }
