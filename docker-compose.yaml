@@ -7,7 +7,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - cinema-db-data:/var/lib/mysql
+      - cinema-vol:/var/lib/mysql
     networks:
       - cinema-net
   mysql-init:
@@ -18,8 +18,6 @@ services:
       - cinema-net
   cinema-app:
     image: wojciechprzybylski/cinema-app:latest
-    depends_on:
-      - mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
@@ -32,5 +30,4 @@ services:
 networks:
   cinema-net:
 volumes:
-  cinema-db-data:
   cinema-vol:
