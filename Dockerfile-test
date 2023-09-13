@@ -3,4 +3,4 @@ WORKDIR /app
 COPY . .
 ENV DB_PASSWORD=${DB_PASSWORD}
 RUN pip3 install -r requirements.txt
-ENTRYPOINT pytest --cov
+ENTRYPOINT pytest -m 'modules'
