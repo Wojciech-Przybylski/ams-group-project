@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Docker Build'){
+        stage('Docker Build') {
             steps {
                 script {
                     // Build Docker images
@@ -17,7 +17,7 @@ pipeline {
                 }
             }
         }
-        stage('Login to DockerHub and Push'){
+        stage('Login to DockerHub and Push') {
             steps {
                 script {
                     sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
@@ -42,5 +42,5 @@ pipeline {
                 '''
             }
         }
-    }   
+    }
 }
