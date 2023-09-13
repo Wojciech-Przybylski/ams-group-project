@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Run pytest') {
+        stage('Testing') {
             steps {
                 sh "docker build -t wojciechprzybylski/pytest:latest -f ./Dockerfile-test ."
                 sh "docker run -t wojciechprzybylski/pytest:latest"
