@@ -20,6 +20,7 @@ pipeline {
                     sh "docker push wojciechprzybylski/cinema-app:latest"
                 }
             }
+        }
         stage('Backup') {
             steps {
                 script {
