@@ -32,7 +32,18 @@ pipeline {
                 script {
                     sh "docker pull wojciechprzybylski/cinema-db:latest && docker pull wojciechprzybylski/cinema-app:latest && docker pull wojciechprzybylski/mysql-init:latest"
                     sh "docker-compose up -d"
-                    sh "docker rmi (docker images -f dangling=true)"
+                }
+            }
+        }
+        stage('Remove Dangling Docker Images') {
+            steps {
+                script {
+                    def danglingImages = sh(returnStdout: true, script: 'docker images -f dangling=true -q').trim()
+                    if (danglingImages) {
+                        sh "docker rmi $danglingImages"
+                    } else {
+                        echo "No dangling Docker images found."
+                    }
                 }
             }
         }
