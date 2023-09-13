@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  mysql:
+  cinema-db:
     image: wojciechprzybylski/cinema-db:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
