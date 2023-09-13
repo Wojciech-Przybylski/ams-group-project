@@ -32,7 +32,7 @@ pipeline {
                 script {
                     sh "docker pull wojciechprzybylski/cinema-db:latest && docker pull wojciechprzybylski/cinema-app:latest && docker pull wojciechprzybylski/mysql-init:latest"
                     sh "docker-compose up -d"
-                    sh "docker rmi $(docker images -f dangling=true)"
+                    sh "docker rmi (docker images -f dangling=true)"
                 }
             }
         }
