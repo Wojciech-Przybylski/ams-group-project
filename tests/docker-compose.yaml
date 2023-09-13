@@ -1,12 +1,12 @@
 version: "3.7"
 services:
   db:
-      image: mysql
+      image: mysql:latest
       restart: always
       command: --max_allowed_packet=32505856
       environment:
           MYSQL_DATABASE: 'test'
-          MYSQL_USER: 'user'
+          MYSQL_USER: 'root'
           MYSQL_PASSWORD: 'password'
           MYSQL_ROOT_PASSWORD: 'password'
       volumes:
