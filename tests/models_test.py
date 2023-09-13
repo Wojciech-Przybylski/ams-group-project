@@ -19,15 +19,15 @@ def client():
 def test_User(client):
     
     # Create a user
-    user = User(name="Bob", email="bob@qa.com", password=bcrypt.generate_password_hash("123"))
+    user = User(name="James", email="bob@qa.com", password=bcrypt.generate_password_hash("123"))
     # Add the user to the database
     db.session.add(user)
     db.session.commit()
     # Retrieve the user from the database
     retrieved_user = User.query.filter_by(id=1).first()
     # Assert that the retrieved user's name matches the expected value
-    assert retrieved_user.name == 'Bob'
-    assert retrieved_user.email == 'bob@qa.com'
+    assert retrieved_user.name == 'James'
+    assert retrieved_user.email == 'James@qa.com'
     assert bcrypt.check_password_hash(retrieved_user.password, "123")
 
 def test_PaymentDetails(client):
