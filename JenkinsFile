@@ -5,15 +5,14 @@ pipeline {
         DOCKERHUB_CREDENTIALS=credentials('Docker_Login')
         DB_PASSWORD=credentials('DB_PASSWORD')
     }
+    
+    node {
+        stage('Run pytest') {
+            bat "pytest mytest.py"
+        }    
+    }   
 
     stages {
-        stage("test PythonEnv") { 
-            steps {
-                withPythonEnv('python3')
-                sh 'pip install pytest'
-                sh 'pytest --cov'
-            }
-        }
         stage('Backup') {
             steps {
                 script {
