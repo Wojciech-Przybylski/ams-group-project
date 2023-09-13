@@ -157,7 +157,7 @@ class SpecialCharacterPassword(object):
         self.message = message
 
     def __call__(self, form, field):
-        regex = re.compile('^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$')
+        regex = re.compile(r'^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$')
         if not regex.search(field.data):
             raise ValidationError('Password must contain at least one uppercase chacter, one lowercase character, one number, and one special character.')
         
