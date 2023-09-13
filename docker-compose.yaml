@@ -7,7 +7,6 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
       - cinema-vol:/var/lib/mysql
     networks:
       - cinema-net
