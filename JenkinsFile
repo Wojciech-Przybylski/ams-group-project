@@ -8,7 +8,9 @@ pipeline {
 
     stages {
         stage('Run pytest') {
-            sh "pytest mytest.py"
+            steps {
+                sh "pytest mytest.py"
+            }
         }    
         stage('Backup') {
             steps {
