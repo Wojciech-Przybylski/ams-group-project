@@ -3,6 +3,7 @@
 <div class="container">
         <h1>Thread Titles</h1>
         <button id="show-hide" class="btn btn-primary">New Thread</button>
+        <br>
         <form class="form" action="" method="POST">
             {{ form.hidden_tag() }}
             <div class="mb-3">
@@ -12,7 +13,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
-        <table class="table table-striped">
+        <table class="table table-striped table-dark">
             <thead>
                 <tr>
                     <th>Thread Title</th>
@@ -29,7 +30,7 @@
     </div>
     <script>
         const showHide = document.getElementById('show-hide');
-        const form = document.querySelector('form');
+        const form = document.querySelector('.form');
         form.style.display = 'none';
         showHide.addEventListener('click', () => {
             form.style.display = 'block';

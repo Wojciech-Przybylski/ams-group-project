@@ -1,6 +1,6 @@
 from app import app
 from application import db, bcrypt
-from application.models import User, Movies, MovieGenres, Genres, MovieActors, Actors, PaymentDetails, Showings, Bookings, Comments, CommentThread, MovieDirectors, Directors
+from application.models import User, Movies, MovieGenres, Genres, MovieActors, Actors, PaymentDetails, Showings, Bookings, Comments, CommentThread, MovieDirectors, Directors, Showings, Cart, CartItem, TicketType
 
 with app.app_context():
     db.drop_all()
@@ -46,6 +46,7 @@ with app.app_context():
     actor10 = Actors(actor="Matt Damon")
     actor11 = Actors(actor="Harrison Ford")
     actor12 = Actors(actor="Morgan Freeman")
+    actor13 = Actors(actor="Cillian Murphy")
 
     #  create a movie actress
     actress1 = Actors(actor="Scarlett Johansson")
@@ -60,6 +61,11 @@ with app.app_context():
     actress10 = Actors(actor="Charlize Theron")
     actress11 = Actors(actor="Natalie Portman")
     actress12 = Actors(actor="Meryl Streep")
+    actress13 = Actors(actor="Margot Robbie")
+    actress14 = Actors(actor="Florence Pugh")
+
+    actor14 = Actors(actor="Ryan Gosling")
+    actor15 = Actors(actor="Will Ferrell")
 
     # create a movie director
     director1 = Directors(director="Christopher Nolan")
@@ -74,6 +80,7 @@ with app.app_context():
     director10 = Directors(director="Peter Jackson")
     director11 = Directors(director="Guy Ritchie")
     director12 = Directors(director="Ron Howard")
+    director13 = Directors(director="Greta Gerwig")
 
     # create a movie
     movie1 = Movies(title="Mission Impossible", description="A secret agent is sent to Sydney, to find and destroy a genetically modified disease called 'Chimera'.", image="images/mission_impossible.jpeg", release_date="1996-05-22")
@@ -85,39 +92,70 @@ with app.app_context():
 
 
     movie2 = Movies(title="The Matrix", description="A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",  image="images/the_matrix.jpg", release_date="1999-03-31")
-    movie1_genre = MovieGenres(movie_id=1, genre_id=1)
-    movie1_actor_1 = MovieActors(movie_id=1, actor_id=1)
-    movie1_actor_2 = MovieActors(movie_id=1, actor_id=2)
-    movie1_actor_3 = MovieActors(movie_id=1, actor_id=3)
-    movie1_director = MovieDirectors(movie_id=1, director_id=1)
-
+    movie2_genre = MovieGenres(movie_id=2, genre_id=5)
+    movie2_actor_1 = MovieActors(movie_id=2, actor_id=3)
+    movie2_actor_2 = MovieActors(movie_id=2, actor_id=4)
+    movie2_actor_3 = MovieActors(movie_id=2, actor_id=5)
+    movie2_director = MovieDirectors(movie_id=2, director_id=5)
 
     movie3 = Movies(title="The Dark Knight", description="When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", image="images/the_dark_knight.jpg", release_date="2008-07-14")
-    movie1_genre = MovieGenres(movie_id=1, genre_id=1)
-    movie1_actor_1 = MovieActors(movie_id=1, actor_id=1)
-    movie1_actor_2 = MovieActors(movie_id=1, actor_id=2)
-    movie1_actor_3 = MovieActors(movie_id=1, actor_id=3)
-    movie1_director = MovieDirectors(movie_id=1, director_id=1)
-    
-    
+    movie3_genre = MovieGenres(movie_id=3, genre_id=1)
+    movie3_actor_1 = MovieActors(movie_id=3, actor_id=5)
+    movie3_actor_2 = MovieActors(movie_id=3, actor_id=6)
+    movie3_actor_3 = MovieActors(movie_id=3, actor_id=7)
+    movie3_director = MovieDirectors(movie_id=3, director_id=1)
+
     movie4 = Movies(title="The Godfather", description="The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", image="images/the_godfather.jpg", release_date="1972-03-24")
-    movie1_genre = MovieGenres(movie_id=1, genre_id=1)
-    movie1_actor_1 = MovieActors(movie_id=1, actor_id=1)
-    movie1_actor_2 = MovieActors(movie_id=1, actor_id=2)
-    movie1_actor_3 = MovieActors(movie_id=1, actor_id=3)
-    movie1_director = MovieDirectors(movie_id=1, director_id=1)
+    movie4_genre = MovieGenres(movie_id=4, genre_id=10)
+    movie4_actor_1 = MovieActors(movie_id=4, actor_id=8)
+    movie4_actor_2 = MovieActors(movie_id=4, actor_id=9)
+    movie4_actor_3 = MovieActors(movie_id=4, actor_id=10)
+    movie4_director = MovieDirectors(movie_id=4, director_id=3)
 
     new_release1 = Movies(title="Oppenheimer", description="A look at the life of J. Robert Oppenheimer, the physicist tasked with developing the first atomic bomb.", image="images/oppenheimer.jpeg", release_date="2023-07-21")
-    new_release2 = Movies(title="Barbie", description="Barbie suffers a crisis that leads her to question her world and her existence..", image="images/barbie.jpg", release_date="2023-07-21")
-    new_release3 = Movies(title="No Hard Feelings", description="On the brink of losing her childhood home, a desperate woman agrees to date a wealthy couple's introverted and awkward 19-year-old son.", image="images/no_hard_feelings.jpg", release_date="2023-06-21")
-    new_release4 = Movies(title="Past Lives", description="Two deeply connected childhood friends are separated. Decades later, they are reunited for one fateful week.", image="images/past_lives.jpg", release_date="2023-09-07")
-    new_release5 = Movies(title="The Equalizer III", description="Since giving up his life as a government assassin, Robert McCall finds solace in serving justice on behalf of the oppressed.", image="images/the_equalizer_3.jpg", release_date="2023-09-01")
-    new_release6 = Movies(title="Teenage Mutant Ninja Turtles: Mutant Mayhem", description="After years of being sheltered from the human world, the Turtle brothers set out to win the hearts of New Yorkers and be accepted as normal teenagers.", image="images/teenage_mutant_nijna_turtles_mutant_mayhem.jpg", release_date="2023-08-02")
-    new_release7 = Movies(title="Passages", description="A gay couple's marriage is thrown into crisis when one of them impulsively begins a passionate affair with a young woman.", image="images/passages.jpg", release_date="2023-09-01")
-    new_release8 = Movies(title="Scrapper", description="Living alone in her London flat, 12-year-old Georgie must confront reality when her estranged father, Jason, shows up out of nowhere.", image="images/scrapper.jpg", release_date="2023-08-25")
-    new_release9 = Movies(title="Dumb Money", description="Everyday people flip the script on Wall Street and get rich by turning GameStop into one of the world's hottest companies.", image="images/dumb_money.jpg", release_date="2023-09-18")
-    new_release10 = Movies(title="The Nun II", description="A priest is violently murdered, and Sister Irene begins to investigate. She once again comes face-to-face with a powerful evil.", image="images/the_nun.jpg", release_date="2023-09-08")
-    
+    new_release1_genre = MovieGenres(movie_id=5, genre_id=13)
+    new_release1_actor_1 = MovieActors(movie_id=5, actor_id=5)
+    new_release1_actor_2 = MovieActors(movie_id=5, actor_id=13)
+    new_release1_actor_3 = MovieActors(movie_id=5, actor_id=27)
+    new_release1_director = MovieDirectors(movie_id=5, director_id=1)
+
+    new_release2 = Movies(title="Barbie", description="Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.", image="images/barbie.jpeg", release_date="2023-07-21")
+    new_release2_genre = MovieGenres(movie_id=6, genre_id=2)
+    new_release2_genre_2 = MovieGenres(movie_id=6, genre_id=8)
+    new_release2_actor_1 = MovieActors(movie_id=6, actor_id=26)
+    new_release2_actor_2 = MovieActors(movie_id=6, actor_id=28)
+    new_release2_actor_3 = MovieActors(movie_id=6, actor_id=29)
+    new_release2_director = MovieDirectors(movie_id=6, director_id=13)
+
+    showing1 = Showings(movie_id=1, screen_number=1, date="2023-10-01 12:00:00", seats_available=10)
+    showing2 = Showings(movie_id=1, screen_number=1, date="2023-10-01 15:00:00", seats_available=100)
+    showing3 = Showings(movie_id=1, screen_number=2, date="2023-10-01 18:00:00", seats_available=100)
+    showing4 = Showings(movie_id=1, screen_number=2, date="2023-10-01 21:00:00", seats_available=100)
+
+    showing5 = Showings(movie_id=2, screen_number=5, date="2023-10-11 12:00:00", seats_available=100)
+    showing6 = Showings(movie_id=2, screen_number=5, date="2023-10-11 15:00:00", seats_available=100)
+    showing7 = Showings(movie_id=2, screen_number=6, date="2023-10-11 18:00:00", seats_available=100)
+    showing8 = Showings(movie_id=2, screen_number=6, date="2023-10-11 21:00:00", seats_available=100)
+
+    showing9 = Showings(movie_id=3, screen_number=9, date="2023-10-21 12:00:00", seats_available=100)
+    showing10 = Showings(movie_id=3, screen_number=9, date="2023-10-21 15:00:00", seats_available=100)
+    showing11 = Showings(movie_id=3, screen_number=10, date="2023-10-21 18:00:00", seats_available=100)
+    showing12 = Showings(movie_id=3, screen_number=10, date="2023-10-21 21:00:00", seats_available=100)
+
+    showing13 = Showings(movie_id=4, screen_number=13, date="2023-10-31 12:00:00", seats_available=100)
+    showing14 = Showings(movie_id=4, screen_number=13, date="2023-10-31 15:00:00", seats_available=100)
+    showing15 = Showings(movie_id=4, screen_number=14, date="2023-10-31 18:00:00", seats_available=100)
+    showing16 = Showings(movie_id=4, screen_number=14, date="2023-10-31 21:00:00", seats_available=100)
+
+    showing17 = Showings(movie_id=5, screen_number=17, date="2023-11-01 12:00:00", seats_available=100)
+    showing18 = Showings(movie_id=5, screen_number=17, date="2023-11-01 15:00:00", seats_available=100)
+    showing19 = Showings(movie_id=5, screen_number=18, date="2023-11-01 18:00:00", seats_available=100)
+    showing20 = Showings(movie_id=5, screen_number=18, date="2023-11-01 21:00:00", seats_available=100)
+
+    showing21 = Showings(movie_id=6, screen_number=21, date="2023-11-11 12:00:00", seats_available=100)
+    showing22 = Showings(movie_id=6, screen_number=21, date="2023-11-11 15:00:00", seats_available=100)
+    showing23 = Showings(movie_id=6, screen_number=22, date="2023-11-11 18:00:00", seats_available=100)
+    showing24 = Showings(movie_id=6, screen_number=22, date="2023-11-11 21:00:00", seats_available=100)
 
 
 
@@ -126,14 +164,16 @@ with app.app_context():
 
 
 
-
-
+    adult_ticket_type = TicketType(ticket_type="Adult", price=10)
+    child_ticket_type = TicketType(ticket_type="Child", price=5)
 
     # create a comment thread
     comment_thread1 = CommentThread(title="Mission Impossible")
     comment_thread2 = CommentThread(title="The Matrix")
     comment_thread3 = CommentThread(title="The Dark Knight")
     comment_thread4 = CommentThread(title="The Godfather")
+
+    
 
     comment1 = Comments(comment_thread_id=1, user_id=1, comment="This is a comment")
     comment2 = Comments(comment_thread_id=1, user_id=1, comment="This is another comment")
@@ -174,6 +214,7 @@ with app.app_context():
     db.session.add(actor10)
     db.session.add(actor11)
     db.session.add(actor12)
+    db.session.add(actor13)
     
     db.session.add(actress1)
     db.session.add(actress2)
@@ -187,21 +228,14 @@ with app.app_context():
     db.session.add(actress10)
     db.session.add(actress11)
     db.session.add(actress12)
+    db.session.add(actress13)
+    db.session.add(actress14)
+
+    db.session.add(actor14)
+    db.session.add(actor15)
+
     
     db.session.add(director1)
-
-    db.session.add(movie1)
-    db.session.add(movie2)
-    db.session.add(movie3)
-    db.session.add(movie4)
-    db.session.commit()
-
-    db.session.add(movie1_genre)
-    db.session.add(movie1_actor_1)
-    db.session.add(movie1_actor_2)
-    db.session.add(movie1_actor_3)
-    db.session.add(movie1_director)
-
     db.session.add(director2)
     db.session.add(director3)
     db.session.add(director4)
@@ -213,8 +247,55 @@ with app.app_context():
     db.session.add(director10)
     db.session.add(director11)
     db.session.add(director12)
+    db.session.add(director13)
 
+    db.session.add(movie1)
+    db.session.add(movie2)
+    db.session.add(movie3)
+    db.session.add(movie4)
     db.session.add(new_release1)
+    db.session.add(new_release2)
+    db.session.commit()
+
+    db.session.add(movie1_genre)
+    db.session.add(movie1_actor_1)
+    db.session.add(movie1_actor_2)
+    db.session.add(movie1_actor_3)
+    db.session.add(movie1_director)
+
+    db.session.add(movie2_genre)
+    db.session.add(movie2_actor_1)
+    db.session.add(movie2_actor_2)
+    db.session.add(movie2_actor_3)
+    db.session.add(movie2_director)
+
+    db.session.add(movie3_genre)
+    db.session.add(movie3_actor_1)
+    db.session.add(movie3_actor_2)
+    db.session.add(movie3_actor_3)
+    db.session.add(movie3_director)
+
+    db.session.add(movie4_genre)
+    db.session.add(movie4_actor_1)
+    db.session.add(movie4_actor_2)
+    db.session.add(movie4_actor_3)
+    db.session.add(movie4_director)
+
+    db.session.add(new_release1_genre)
+    db.session.add(new_release1_actor_1)
+    db.session.add(new_release1_actor_2)
+    db.session.add(new_release1_actor_3)
+    db.session.add(new_release1_director)
+
+    db.session.add(new_release2_genre)
+    db.session.add(new_release2_genre_2)
+    db.session.add(new_release2_actor_1)
+    db.session.add(new_release2_actor_2)
+    db.session.add(new_release2_actor_3)
+    db.session.add(new_release2_director)
+
+
+
 
     db.session.add(comment_thread1)
     db.session.add(comment_thread2)
@@ -228,6 +309,35 @@ with app.app_context():
 
     db.session.add(user1)
     db.session.add(admin1)
+
+    db.session.add(showing1)
+    db.session.add(showing2)
+    db.session.add(showing3)
+    db.session.add(showing4)
+    db.session.add(showing5)
+    db.session.add(showing6)
+    db.session.add(showing7)
+    db.session.add(showing8)
+    db.session.add(showing9)
+    db.session.add(showing10)
+    db.session.add(showing11)
+    db.session.add(showing12)
+    db.session.add(showing13)
+    db.session.add(showing14)
+    db.session.add(showing15)
+    db.session.add(showing16)
+    db.session.add(showing17)
+    db.session.add(showing18)
+    db.session.add(showing19)
+    db.session.add(showing20)
+    db.session.add(showing21)
+    db.session.add(showing22)
+    db.session.add(showing23)
+    db.session.add(showing24)
+
+
+    db.session.add(adult_ticket_type)
+    db.session.add(child_ticket_type)
 
 
     db.session.commit()

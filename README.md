@@ -81,3 +81,72 @@ git pull
 
 - Page header and footer, available on all pages.
 - A custom logo for QA Cinemas.
+
+## Problems Faced
+
+### 05/09/2023
+- One group member had an emergency that meant that they had to leave early. This is something we accounted for in the risk assessment for this project. In order to tackle this issue, the group member who had to leave prepared a short handover to inform the rest of the group of the work that they had been doing, so that a seamless transfer of work could be made.
+
+### 06/09/2023
+- One Group member had a differing password for MySQL this meant that when running the app this member was considered unauthorised and could not get into the website. The current solution for this is for the group member to manually input their password to the __init__.py file and then run the create.py file. This then gave the group member access to the site. However, it is also vital that this password change is not pushed to Github as this will mean all other members will no longer have site access.
+
+- One group member ran into issues with reverse proxying the docker-composed images during deployment. In order to fix this the group member exposed the ports in the docker-compose file in the cinema-app section. This issue has also been recorded on the trello board for the project.
+
+### 07/09/2023
+- Several group members during development have had issues with the create.py file not correctly dropping the tables within the SQL database. This seemingly occurs where certain relationships that weren't needed have been removed. This then stops certain tables from being dropped correctly. In order to fix this, the schema must be deleted from the MySQL workbench, then the create.py file can be executed again and the database will completely rebuild itself.
+
+- One group member was having an issue getting some HTML and CSS code working for the Home and About pages of the website. In order to tackle this several group members peer-reviewed the work and came to the conclusion that their was an issue with the file structure within the home-page branch causing the HTML and CSS to not appear correectly. Furthermore the group members in the peer review concluded that their needed to be some image resizing within the home-page before it can be pushed to the main branch.
+
+### 08/09/2023
+- One group member came across an issue with the deployment of the database using several CI/CD tools. After a diiscussion with the group after our morning SCRUM meeting we came to the conclusion to move away from this issue for now. As a group we concluded that other areas of this project need to take priority, on top of this their is a risk that pursuing this issue could take us far out of scope for this project.
+
+- Two group memebrs came across an issue withe the ticket booking system, specifically with the maximum amount of tickets able to be bought. This was an important issue to fix because if the user was able to buy too many tickets this could break the whole database.
+
+## Development Methodology 
+
+### Kanban Board 
+
+For this project our group used a Kanban board via Trello to more easily display and communicate our user stories and specification. Making this Kanban board was one of the first tasks that we undertook. In a group scenario this helped us easily distribute and prioritise different tasks. Each group member has made sure to keep up to date with the Trello board, by showing tasks as complete, adding comments or images to the individual tasks or user stories. There were some minor difficulties initially with the Kanban board. For this project the specification stated that we had to use Trello rather than Jira, none of the group members had used Trello before. However we quickly managed to figure out the interface of Trello and were able to put our Kanban board together. There are a number of examples of the progress of our Trello board within the documentation screenshots folder, however an example of this will be placed below:
+
+![Example of Trellp Board](/Documentation-Screenshots/Trello/Trello%201.png)
+
+### Scrum 
+
+Scrum is an agile framework typically used for the completeion of complex work. It is typically considered the leading agile development methodology. Therefore as a group we saw it best to utilise Scrum during this project. Whilst we could technically integrate scrum into our individual projects for the sole purpose of experience, on an individual level scrum as a development methodology only really works in a group environment, therefore, our group has not had much if any experience utilising scrum. The first major implementation of scrum that the group has taken onboard is the daily standup meeting. Each morning we discuss with each other and the trainer, what we achieved the previous day and what we plan to achieve today. Problems faced or blockages can also be brought up during the daily standup where we can agree as a team on the best course of action.
+
+## ERD (Entity Relationship Diagram)
+
+### This entity relationship diagram was devised using the principles of relational databases and normalisation
+
+![Entity Relationship Diagram](/Documentation-Screenshots/SQL/ERD.png)
+
+### An updated version of the ERD with the inclusion of the cart_item and ticket_type tables. This is to show the progress and development of our groups database:
+
+![Entity Relationship Diagram 2](/Documentation-Screenshots/SQL/ERD%202.png)
+
+## UML Diagram (Unified Modelling Language)
+
+### A UML diagram is a diagram based on the UML (Unified Modeling Language) with the purpose of visually representing a system along with its main actors, roles, actions, artifacts or classes, in order to better understand, alter, maintain, or document information about the system.
+
+
+
+## Risk Assessment 
+
+| Facility/Activity            | Identify the hazards                                    | who/what may be harmed | risk likelihood | Severity of harm  | Overall risk | Existing control measures                                                                                                                             |
+|------------------------------|---------------------------------------------------------|------------------------|-----------------|-------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Technical Risks              | Data leaks                                              | Users                  | 3               | 5                 | 4            | Creating a proxy server to protect the data.                                                                                                          |
+| Technical Risks              | data loss                                               | Users/Admins           | 3               | 5                 | 4            | Frequent Github pushes, good practice with data storage.                                                                                              |
+| Technical Risks              | Infrastructure issues                                   | Admins                 | 4               | 5                 | 4.5          | Frequent manual check-ups for developers to minimise risk of introducing bugs.  Use available QA resources to guide us through the set-up of the app. |
+| Technical Risks              | Tooling dependencies                                    | Admins                 | 3               | 5                 | 4            | Making sure the right tools are used in the right scenarios, and respective tools are to date.                                                        |
+| Technical Risks              | integration challenges(software)                        | Admins                 | 2               | 4                 | 3            | Make sure the integration steps are implemented correctly.                                                                                            |
+| Resource Risk                | Risk of availability                                    | Admins                 | 3               | 3                 | 3            | Hand over proceedures are in place.                                                                                                                   |
+| Resource Risk                | Skill gap                                               | Admins                 | 3               | 3                 | 3            | Make sure the tasks are spread based on individual strengths. If there are any problems, ask for support from the team or trainer.                    |
+| Resource Risk                | Risk of mental/Physical fatigue                         | Admins                 | 3               | 3                 | 3            | Making sure the team gets regular breaks.                                                                                                             |
+| Quality and Testing          | Buggy code                                              | Admins                 | 4               | 2                 | 3            | Setting up a testing phase at the end of every sprint to make sure code is functional.                                                                |
+| Quality and Testing          | Inadequate test coverage                                | Admins                 | 2               | 4                 | 3            | Try and maintain clean and coherent code.                                                                                                             |
+| CI/CD Risks                  | Build failures                                          | Admins                 | 1               | 5                 | 3            | In case of build failure check the logs and sort the issues.                                                                                          |
+| CI/CD Risks                  | Deployment failures                                     | Admins                 | 1               | 5                 | 3            | Testing the app functionality before deployment. or use previous working versions.                                                                    |
+| External Dependencies        | Risk of external services being unavailable or changing | Admins                 | 2               | 2                 | 2            | Checking any external service beforehand. In order to know if it needs to be replaced.                                                                |
+| External Dependencies        | Regulatory requirements                                 | Admins                 | 3               | 3                 | 3            | In case of any requirements not completed by the end of the sprint. The task can be extended into the next sprint.                                    |
+| Scalability and Performance  | Scalability challenges                                  | Admins                 | 2               | 4                 | 3            | Do commits very often to aid in debugging.                                                                                                            |
+| Scalability and Performance  | Performance bottlenecks                                 | User                   | 2               | 2                 | 2            | Follow good coding practices, avoiding repetitions of code.  Also keeping separation of concerns.                                                     |
