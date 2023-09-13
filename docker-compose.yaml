@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  cinema-db:
+  mysql:
     image: wojciechprzybylski/cinema-db:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -19,7 +19,7 @@ services:
   cinema-app:
     image: wojciechprzybylski/cinema-app:latest
     depends_on:
-      - cinema-db
+      - mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
