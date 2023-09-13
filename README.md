@@ -273,6 +273,13 @@ During the third sprint we developed the majority of the back and front end of t
 
 
 
+### Our Screens Wireframe
+
+
+![Our Screens Wireframe](/Documentation-Screenshots/Wireframe%20Designs/Our%20Screens%20Wireframe.png)
+
+
+
 ## UML Diagram (Unified Modelling Language)
 
 
