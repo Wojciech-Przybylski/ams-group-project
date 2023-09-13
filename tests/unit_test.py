@@ -7,34 +7,27 @@ from wtforms import Form, StringField
 import pytest
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+# Define the database engine fixture
+@pytest.fixture(scope='session')
+def db_engine():
+    engine = create_db_engine("postgresql://user:password@localhost/mydatabase")
+    yield engine
+    engine.dispose()
 
-def db_engine(request):
-    """yields a SQLAlchemy engine which is suppressed after the test session"""
-    engine_ = create_db_engine("postgresql://user:password@localhost/mydatabase")
-
-    yield engine_
-
-    engine_.dispose()
-
-
+# Define the session factory fixture
 @pytest.fixture(scope='session')
 def db_session_factory(db_engine):
     return scoped_session(sessionmaker(bind=db_engine))
 
-
-@pytest.fixture(scope='session')
+# Define the database session fixture
+@pytest.fixture
 def db_session(db_session_factory):
-    session_ = db_session_factory()
+    session = db_session_factory()
+    yield session
+    session.rollback()
+    session.close()
 
-    yield session_
-
-    try:
-        session_.rollback()
-        session_.close()
-    except Exception:
-        pass
-
-
+# Define the client fixture
 @pytest.fixture
 def client():
     return app
