@@ -27,9 +27,19 @@ pipeline {
                 }
             }
         }
+        stage('Backup Data') {
+            steps {
+                script {
+                    // Create a backup of the data in cinema-vol volume
+                    sh 'docker run --rm -v cinema-vol:/volume -v $(pwd)/backup:/backup alpine tar -czf /backup/cinema-data-backup.tar.gz -C /volume .'
+                }
+            }
+        }
         stage('Deploy through docker-compose') {
             steps {
                 script {
+                    // Restore data from the backup before starting containers
+                    sh 'docker run --rm -v cinema-vol:/volume -v $(pwd)/backup:/backup alpine tar -xzf /backup/cinema-data-backup.tar.gz -C /volume'
                     sh "docker pull wojciechprzybylski/cinema-db:latest && docker pull wojciechprzybylski/cinema-app:latest && docker pull wojciechprzybylski/mysql-init:latest"
                     sh "docker-compose up -d"
                 }
