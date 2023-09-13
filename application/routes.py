@@ -278,11 +278,31 @@ def payment():
 def confirmation(booking_id):
     booking = Bookings.query.get(booking_id)
     booking_items = BookingsItems.query.filter_by(booking_id=booking_id).all()
-    # get user name
-    user = User.query.get(session['user_id'])
+    # if booking doesn't exist, 404 error
+    if not booking:
+        return render_template('404.html'), 404
+    # get user name from booking
+    user = User.query.get(booking.user_id)
+    name = user.name
     # get movie name
     movie = Movies.query.get(booking.movie_id)
-    return render_template('/confirmation.html', title='Confirmation', booking=booking, booking_items=booking_items, movie_name=movie.title, user_name=user.name)
+    showing = Showings.query.get(booking_items[0].showing_id)
+    # strip date and time from showing_date
+    showing_date = showing.date.strftime("%d/%m/%Y")
+    showing_time = showing.date.strftime("%H:%M")
+
+    # create a list of dictionaries containing the booking items, ticket type, and price
+    booking_items_list = []
+    for item in booking_items:
+        ticket_type = TicketType.query.get(item.ticket_type_id)
+        booking_item = {
+            'ticket_type': ticket_type.ticket_type,
+            'quantity': item.quantity,
+            'price': ticket_type.price,
+            'total_price': ticket_type.price * item.quantity
+        }
+        booking_items_list.append(booking_item)
+    return render_template('/confirmation.html', title='Confirmation', booking=booking, booking_items=booking_items, movie=movie, name=name, booking_items_list=booking_items_list, showing=showing, showing_date=showing_date, showing_time=showing_time)
 
 @app.route('/get_remaining_tickets/<int:showing_id>')
 @cross_origin(origin='*', methods=['GET', 'POST'])
