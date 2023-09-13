@@ -10,5 +10,4 @@ WORKDIR /app
 COPY ./tests/test.sql /docker-entrypoint-initdb.d/
 ENV DB_PASSWORD=${DB_PASSWORD}
 RUN pip3 install -r requirements.txt
-ENTRYPOINT pytest -m "models"
 
