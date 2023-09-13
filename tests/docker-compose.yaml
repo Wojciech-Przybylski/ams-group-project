@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   db:
-      image: mysql:latest
+      image: wojciechprzybylski/pytest:latest
       restart: always
       command: --max_allowed_packet=32505856
       environment:
@@ -10,7 +10,7 @@ services:
           MYSQL_PASSWORD: 'password'
           MYSQL_ROOT_PASSWORD: 'password'
       volumes:
-       - db_data:/var/lib/mysql
+       - db_data:/docker-entrypoint-initdb.d/test.sql
       ports:
        - '3307:3306'
 volumes:
