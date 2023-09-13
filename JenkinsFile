@@ -39,9 +39,9 @@ pipeline {
             steps {
                 script {
                     // Restore data from the backup before starting containers
-                    sh 'docker run --rm -v cinema-vol:/volume -v $(pwd)/backup:/backup alpine tar -xzf /backup/cinema-data-backup.tar.gz -C /volume'
                     sh "docker pull wojciechprzybylski/cinema-db:latest && docker pull wojciechprzybylski/cinema-app:latest && docker pull wojciechprzybylski/mysql-init:latest"
                     sh "docker-compose up -d"
+                    sh 'docker run --rm -v cinema-vol:/volume -v $(pwd)/backup:/backup alpine tar -xzf /backup/cinema-data-backup.tar.gz -C /volume'
                 }
             }
         }
