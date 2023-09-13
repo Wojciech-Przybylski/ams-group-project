@@ -10,6 +10,7 @@ pipeline {
         stage('Run pytest') {
             steps {
                 sh "docker build -t wojciechprzybylski/pytest:latest -f ./Dockerfile-test ."
+                sh "docker run -t wojciechprzybylski/pytest:latest"
             }
         }    
         stage('Backup') {
