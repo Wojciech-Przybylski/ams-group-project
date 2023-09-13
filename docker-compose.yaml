@@ -18,6 +18,8 @@ services:
       - cinema-net
   cinema-app:
     image: wojciechprzybylski/cinema-app:latest
+    depends_on:
+      - cinema-db
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
