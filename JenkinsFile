@@ -11,9 +11,9 @@ pipeline {
             steps {
                 script {
                     // Build Docker images
-                    sh "docker build -t wojciechprzybylski/mysql-init:latest -f ./DockerFile-create ."
+                    sh "docker build -t wojciechprzybylski/mysql-init:latest -f ./db/Dockerfile-create ."
                     sh "docker build -t wojciechprzybylski/cinema-app:latest ."
-                    sh "docker build -t wojciechprzybylski/cinema-db:latest -f ./db/DockerFile ."
+                    sh "docker build -t wojciechprzybylski/cinema-db:latest -f ./db/Dockerfile ."
                 }
             }
         }
