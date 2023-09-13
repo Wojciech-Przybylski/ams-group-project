@@ -8,7 +8,7 @@ pipeline {
 
     stages {
         stage('Run pytest') {
-            bat "pytest mytest.py"
+            sh "pytest mytest.py"
         }    
         stage('Backup') {
             steps {
