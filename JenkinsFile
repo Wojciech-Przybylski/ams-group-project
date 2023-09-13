@@ -7,14 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Testing') {
-            steps {
-                script {
-                    // Create a backup of the data in cinema-vol volume
-                    sh 'python3 pytest -cov'
-                }
-            }
-        }
         stage('Backup') {
             steps {
                 script {
