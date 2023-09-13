@@ -13,5 +13,7 @@ services:
        - db_data:/var/lib/mysql
       ports:
        - '3307:3306'
+      command: ["pytest", "-m", "'models'"]
+
 volumes:
   db_data:
