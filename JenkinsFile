@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Run pytest') {
             steps {
-                sh "python pytest --cov"
+                sh "docker build -t wojciechprzybylski/pytest:latest -f ./Dockerfile-test ."
             }
         }    
         stage('Backup') {
