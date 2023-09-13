@@ -242,16 +242,34 @@ During the third sprint we developed the majority of the back and front end of t
 ![New Releases Page Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/New%20Releases%20Wireframe.png)
 
 
-### Opening Times Wireframe Design 
+### Opening Times Wireframe Design: 
 
 
 ![Opening Times Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/Opening%20Times%20Wireframe.png)
 
 
-### Classifications Wireframe Design 
+### Classifications Wireframe Design: 
 
 
 ![Classifications Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/Classifications%20Wireframe.png)
+
+
+### About Us Wireframe Design:
+
+
+![About Us Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/About%20Us%20Wireframe.png)
+
+
+### Signup Wireframe Design:
+
+
+![Signup Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/Sign%20Up%20Wireframe.png)
+
+
+### Login Wireframe Design:
+
+
+![Login Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/Login%20Wireframe.png)
 
 
 
