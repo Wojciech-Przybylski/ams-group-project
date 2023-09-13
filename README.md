@@ -224,6 +224,37 @@ During the third sprint we developed the majority of the back and front end of t
 ### Wireframe designs are used to plan the layout of a webpage and its various different pages before developing the frontend. This will allow the team to contribute to the design of the website before any coding is done. On top of this, wireframe designs will help the team understand what is required on each page of the website, even if it is not a page that they will be working on.
 
 
+### Home Page Wireframe Design:
+
+
+![Home Page Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/Homepage%20Wireframe.png)
+
+
+### Movies Page Wireframe Design:
+
+
+![Movie Page Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/Movie%20Page%20Wireframe.png)
+
+
+### New Releases Wireframe Design:
+
+
+![New Releases Page Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/New%20Releases%20Wireframe.png)
+
+
+### Opening Times Wireframe Design 
+
+
+![Opening Times Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/Opening%20Times%20Wireframe.png)
+
+
+### Classifications Wireframe Design 
+
+
+![Classifications Wireframe Design](/Documentation-Screenshots/Wireframe%20Designs/Classifications%20Wireframe.png)
+
+
+
 ## UML Diagram (Unified Modelling Language)
 
 
