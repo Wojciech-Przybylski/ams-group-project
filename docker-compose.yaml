@@ -14,7 +14,7 @@ services:
   mysql-init:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-create
     container_name: mysql-init
     volumes:
       - ./create.py:/app/create.py
