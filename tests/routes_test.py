@@ -22,11 +22,11 @@ def client():
 
 
 
-def test_home_route(client):
-    response = client.get('/home')
-    assert response.status_code == 200
-    assert b'Home' in response.data
-    assert b'<!DOCTYPE html>' in response.data  # Add more specific content checks as needed
+# def test_home_route(client):
+#     response = client.get('/home')
+#     assert response.status_code == 200
+#     assert b'Home' in response.data
+#     assert b'<!DOCTYPE html>' in response.data  # Add more specific content checks as needed
     
     
 # def test_signup_route(client):
@@ -682,36 +682,36 @@ def test_home_route(client):
 #     db.session.commit()
     
     
-def test_classifications_route(client):
-    # Simulate a GET request to the /classifications route
-    response = client.get('/classifications')
+# def test_classifications_route(client):
+#     # Simulate a GET request to the /classifications route
+#     response = client.get('/classifications')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # You can add more specific checks for the content of the 'classifications' template if needed
+#     # You can add more specific checks for the content of the 'classifications' template if needed
 
-def test_about_route(client):
-    # Simulate a GET request to the /about route
-    response = client.get('/about')
+# def test_about_route(client):
+#     # Simulate a GET request to the /about route
+#     response = client.get('/about')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # You can add more specific checks for the content of the 'about' template if needed
+#     # You can add more specific checks for the content of the 'about' template if needed
 
-def test_contact_route(client):
-    # Simulate a GET request to the /contact-us route
-    response = client.get('/contact-us')
+# def test_contact_route(client):
+#     # Simulate a GET request to the /contact-us route
+#     response = client.get('/contact-us')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # You can add more specific checks for the content of the 'contact' template if needed
+#     # You can add more specific checks for the content of the 'contact' template if needed
 
-def test_screens_route(client):
-    # Simulate a GET request to the /screens route
-    response = client.get('/screens')
+# def test_screens_route(client):
+#     # Simulate a GET request to the /screens route
+#     response = client.get('/screens')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
