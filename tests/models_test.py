@@ -112,7 +112,7 @@ def test_Movies(client):
     db.session.commit()
 
     # Retrieve the movie from the database
-    retrieved_movie = Movies.query.filter_by(id=1).first()
+    retrieved_movie = Movies.query.filter_by(title='Test Movie').first()
 
     # Assert that the retrieved movie matches the expected values
     assert retrieved_movie.title == "Test Movie"
