@@ -5,6 +5,7 @@ from datetime import datetime
 from wtforms.validators import ValidationError
 from wtforms import Form, StringField
 
+@pytest.fixture
 def client():
     app.config['TESTING'] = True
     client = app.test_client()
@@ -12,26 +13,23 @@ def client():
     with app.app_context():
         db.create_all()
         yield client
-
-    with app.app_context():
-        # Rollback or remove test data
-        db.session.rollback()  # Rollback changes
-        # Or, if you want to remove test data:
-        # db.session.query(User).filter_by(username='test_user').delete()
-        db.session.commit()
-        
         db.session.remove()
+        db.drop_all()
 
-def test_create_user(client):
-    # Arrange: Create a new user
-    new_user = User(name='Test User', password='password123', email='test@example.com', admin=False)
-
-    # Act: Add the user to the database
-    db.session.add(new_user)
+def test_User(client):
+    # Create a user
+    user = User(name="Bob", email="bob@qa.com", password=bcrypt.generate_password_hash("123").decode('utf-8'))  # Decode the hashed password
+    # Add the user to the database
+    db.session.add(user)
     db.session.commit()
 
-    # Assert: Check if the user was added successfully
-    assert User.query.filter_by(name='Test User').first() is not None
+    # Retrieve the user from the database
+    retrieved_user = User.query.filter_by(name='Bob').first()
+
+    # Assert that the retrieved user's name, email, and password match the expected values
+    assert retrieved_user.name == 'Bob'
+    assert retrieved_user.email == 'bob@qa.com'
+    assert bcrypt.check_password_hash(retrieved_user.password, "123") is True  # Use is True to explicitly check for True
 
 def test_PaymentDetails(client):
     # Create a user (for the ForeignKey relationship)
