@@ -291,6 +291,7 @@ During the third sprint we developed the majority of the back and front end of t
 
 ![Coverage Report](/Documentation-Screenshots/Code/Coverage%20report.png)
 
+
 ## Risk Assessment 
 
 
@@ -313,3 +314,7 @@ During the third sprint we developed the majority of the back and front end of t
 | External Dependencies        | Regulatory requirements                                 | Admins                 | 3               | 3                 | 3            | In case of any requirements not completed by the end of the sprint. The task can be extended into the next sprint.                                    |
 | Scalability and Performance  | Scalability challenges                                  | Admins                 | 2               | 4                 | 3            | Do commits very often to aid in debugging.                                                                                                            |
 | Scalability and Performance  | Performance bottlenecks                                 | User                   | 2               | 2                 | 2            | Follow good coding practices, avoiding repetitions of code.  Also keeping separation of concerns.                                                     |
+
+
+
+
