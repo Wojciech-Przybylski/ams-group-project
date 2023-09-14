@@ -7,18 +7,17 @@ services:
     ports:
       - 3306:3306
     volumes:
+      - ./db:/docker-entrypoint-initdb.d
       - cinema-vol:/var/lib/mysql
     networks:
       - cinema-net
-  # mysql-init:
-  #   image: wojciechprzybylski/mysql-init:latest
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-  #   networks:
-  #     - cinema-net
+  mysql-init:
+    image: wojciechprzybylski/mysql-init:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - cinema-net
   cinema-app:
-    depends_on:
-      - mysql
     image: wojciechprzybylski/cinema-app:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
