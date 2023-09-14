@@ -192,7 +192,7 @@ def test_Actors_and_MovieActors(client):
     db.session.commit()
 
     # Retrieve the movie actor association from the database
-    retrieved_movie_actor = MovieActors.query.filter_by(id=1).first()
+    retrieved_movie_actor = MovieActors.query.filter_by(id=36).last()
 
     # Assert that the retrieved association matches the expected values
     assert retrieved_movie_actor.movie_id == movie.id
