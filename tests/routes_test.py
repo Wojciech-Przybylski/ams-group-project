@@ -680,8 +680,8 @@ def client():
 #     db.session.delete(director)
 #     db.session.delete(genre)
 #     db.session.commit()
-    
-    
+#   
+#    
 # def test_classifications_route(client):
 #     # Simulate a GET request to the /classifications route
 #     response = client.get('/classifications')

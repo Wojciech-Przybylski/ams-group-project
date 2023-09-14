@@ -14,8 +14,10 @@ def client():
         db.create_all()
         yield client
         db.session.remove()
-
-
+#
+#
+#
+#
 # def test_User(client):
 #     # Create a user
 #     user = User(name="Bob", email="bob@qa.com", password=bcrypt.generate_password_hash("123").decode('utf-8'))  # Decode the hashed password
