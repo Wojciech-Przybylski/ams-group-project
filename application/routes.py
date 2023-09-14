@@ -364,6 +364,10 @@ def contact():
 def screens():
     return render_template('screens.html', title='Screens')
 
+@app.route('/cinema-services')
+def cinema_services():
+    return render_template('services.html', title='Cinema Services')
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
