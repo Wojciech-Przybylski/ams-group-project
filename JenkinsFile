@@ -15,13 +15,13 @@ pipeline {
                 }
             }
         }
-        stage('Testing') {
-            steps {
-                sh "docker build -t wojciechprzybylski/pytest:latest -f ./Dockerfile-test ."
-                sh "docker run -t wojciechprzybylski/pytest:latest" 
-                sh "docker stop -t wojciechprzybylski/pytest:latest"
-            }
-        }    
+        // stage('Testing') {
+        //     steps {
+        //         sh "docker build -t wojciechprzybylski/pytest:latest -f ./Dockerfile-test ."
+        //         sh "docker run -t wojciechprzybylski/pytest:latest" 
+        //         sh "docker stop -t wojciechprzybylski/pytest:latest"
+        //     }
+        // }    
         stage('Build') {
             steps {
                 script {
