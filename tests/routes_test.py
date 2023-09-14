@@ -16,6 +16,7 @@ def client():
     client = app.test_client()
 
     with app.app_context():
+        db.drop_all()
         db.create_all()
         yield client
         db.session.remove()
@@ -319,6 +320,10 @@ def test_thread_route_authenticated(client):
     new_comment = Comments.query.filter_by(comment_thread_id=thread_id).first()
     assert new_comment is not None
     assert new_comment.comment == 'Test Comment'
+    
+    db.session.delete(sample_user)
+    db.session.commit()
+
  
 
 def test_delete_comment_route(client):
@@ -363,6 +368,7 @@ def test_delete_comment_route(client):
     # Clean up: Delete the sample user, thread, and any other related records
     db.session.delete(sample_user)
     db.session.delete(sample_thread)
+    db.session.delete(sample_comment)
     db.session.commit()
 
 
