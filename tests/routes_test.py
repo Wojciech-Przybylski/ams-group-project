@@ -20,6 +20,8 @@ def client():
         yield client
         db.session.remove()
         db.drop_all()
+        db.create_all()
+
 
 def test_home_route(client):
     response = client.get('/home')
