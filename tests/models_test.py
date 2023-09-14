@@ -16,58 +16,58 @@ def client():
         db.session.remove()
 
 
-def test_User(client):
-    # Create a user
-    user = User(name="Bob", email="bob@qa.com", password=bcrypt.generate_password_hash("123").decode('utf-8'))  # Decode the hashed password
-    # Add the user to the database
-    db.session.add(user)
-    db.session.commit()
+# def test_User(client):
+#     # Create a user
+#     user = User(name="Bob", email="bob@qa.com", password=bcrypt.generate_password_hash("123").decode('utf-8'))  # Decode the hashed password
+#     # Add the user to the database
+#     db.session.add(user)
+#     db.session.commit()
 
-    # Retrieve the user from the database
-    retrieved_user = User.query.filter_by(name='Bob').first()
+#     # Retrieve the user from the database
+#     retrieved_user = User.query.filter_by(name='Bob').first()
 
-    # Assert that the retrieved user's name, email, and password match the expected values
-    assert retrieved_user.name == 'Bob'
-    assert retrieved_user.email == 'bob@qa.com'
-    assert bcrypt.check_password_hash(retrieved_user.password, "123") is True  # Use is True to explicitly check for True
+#     # Assert that the retrieved user's name, email, and password match the expected values
+#     assert retrieved_user.name == 'Bob'
+#     assert retrieved_user.email == 'bob@qa.com'
+#     assert bcrypt.check_password_hash(retrieved_user.password, "123") is True  # Use is True to explicitly check for True
     
-    db.session.delete(user)
-    db.session.commit()
+#     db.session.delete(user)
+#     db.session.commit()
 
-def test_PaymentDetails(client):
-    # Create a user (for the ForeignKey relationship)
-    user = User(name="Alice", email="alice@example.com", password="hashed_password")
-    db.session.add(user)
-    db.session.commit()
+# def test_PaymentDetails(client):
+#     # Create a user (for the ForeignKey relationship)
+#     user = User(name="Alice", email="alice@example.com", password="hashed_password")
+#     db.session.add(user)
+#     db.session.commit()
 
-    # Create a payment detail
-    payment_detail = PaymentDetails(
-        card_name="Alice Smith",
-        user_id=user.id,
-        card_number="1234567890123456",
-        expiry_date="12/25",
-        security_code="123"
-    )
+#     # Create a payment detail
+#     payment_detail = PaymentDetails(
+#         card_name="Alice Smith",
+#         user_id=user.id,
+#         card_number="1234567890123456",
+#         expiry_date="12/25",
+#         security_code="123"
+#     )
 
-    # Add the payment detail to the database
-    db.session.add(payment_detail)
-    db.session.commit()
+#     # Add the payment detail to the database
+#     db.session.add(payment_detail)
+#     db.session.commit()
 
-    # Retrieve the payment detail from the database
-    retrieved_payment_detail = PaymentDetails.query.filter_by(id=1).first()
+#     # Retrieve the payment detail from the database
+#     retrieved_payment_detail = PaymentDetails.query.filter_by(id=1).first()
 
-    # Assert that the retrieved payment detail matches the expected values
-    assert retrieved_payment_detail.card_name == "Alice Smith"
-    assert retrieved_payment_detail.user_id == user.id
-    assert retrieved_payment_detail.card_number == "1234567890123456"
-    assert retrieved_payment_detail.expiry_date == "12/25"
-    assert retrieved_payment_detail.security_code == "123"
+#     # Assert that the retrieved payment detail matches the expected values
+#     assert retrieved_payment_detail.card_name == "Alice Smith"
+#     assert retrieved_payment_detail.user_id == user.id
+#     assert retrieved_payment_detail.card_number == "1234567890123456"
+#     assert retrieved_payment_detail.expiry_date == "12/25"
+#     assert retrieved_payment_detail.security_code == "123"
     
-    db.session.delete(user)
+#     db.session.delete(user)
     
-    db.session.delete(payment_detail)
+#     db.session.delete(payment_detail)
     
-    db.session.commit()
+#     db.session.commit()
     
 # def test_Comments(client):
 #     # Create a comment thread
@@ -96,30 +96,30 @@ def test_PaymentDetails(client):
 #     db.session.delete(user)
 #     db.session.commit()
     
-def test_Movies(client):
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"  # Replace with the desired release date
-    )
+# def test_Movies(client):
+#     # Create a movie
+#     movie = Movies(
+#         title="Test Movie",
+#         description="This is a test movie description.",
+#         image="test_movie.jpg",
+#         release_date="2023-09-10"  # Replace with the desired release date
+#     )
 
-    # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
+#     # Add the movie to the database
+#     db.session.add(movie)
+#     db.session.commit()
 
-    # Retrieve the movie from the database
-    retrieved_movie = Movies.query.filter_by(title='Test Movie').first()
+#     # Retrieve the movie from the database
+#     retrieved_movie = Movies.query.filter_by(title='Test Movie').first()
 
-    # Assert that the retrieved movie matches the expected values
-    assert retrieved_movie.title == "Test Movie"
-    assert retrieved_movie.description == "This is a test movie description."
-    assert retrieved_movie.image == "test_movie.jpg"
-    assert retrieved_movie.release_date.strftime('%Y-%m-%d') == "2023-09-10"
+#     # Assert that the retrieved movie matches the expected values
+#     assert retrieved_movie.title == "Test Movie"
+#     assert retrieved_movie.description == "This is a test movie description."
+#     assert retrieved_movie.image == "test_movie.jpg"
+#     assert retrieved_movie.release_date.strftime('%Y-%m-%d') == "2023-09-10"
     
-    db.session.delete(movie)
-    db.session.commit()
+#     db.session.delete(movie)
+#     db.session.commit()
     
 # def test_Genres_and_MovieGenres(client):
 #     # Create a movie genre

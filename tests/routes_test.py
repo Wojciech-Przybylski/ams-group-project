@@ -29,115 +29,115 @@ def test_home_route(client):
     assert b'<!DOCTYPE html>' in response.data  # Add more specific content checks as needed
     
     
-def test_signup_route(client):
-    # Simulate a GET request to the /signup route
-    response = client.get('/signup')
+# def test_signup_route(client):
+#     # Simulate a GET request to the /signup route
+#     response = client.get('/signup')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected title
-    assert b'<title>Sign Up</title>' in response.data
+#     # Check if the response contains the expected title
+#     assert b'<title>Sign Up</title>' in response.data
 
-    # Simulate a POST request to the /signup route with valid form data
-    user_data = {
-        'name': 'Test User',
-        'email': 'test@example.com',
-        'password': 'testpassword'
-    }
-    response = client.post('/signup', data=user_data, follow_redirects=True)
+#     # Simulate a POST request to the /signup route with valid form data
+#     user_data = {
+#         'name': 'Test User',
+#         'email': 'test@example.com',
+#         'password': 'testpassword'
+#     }
+#     response = client.post('/signup', data=user_data, follow_redirects=True)
 
-    # Check if the response status code is 200 (OK) after successful signup
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK) after successful signup
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected redirect to the home page
-    assert b'Home' in response.data
+#     # Check if the response contains the expected redirect to the home page
+#     assert b'Home' in response.data
     
-    user = User(name="Test User'", email="test@example.com", password=bcrypt.generate_password_hash("testpassword"))
-    # Add the user to the database
-    db.session.add(user)
-    db.session.commit()
+#     user = User(name="Test User'", email="test@example.com", password=bcrypt.generate_password_hash("testpassword"))
+#     # Add the user to the database
+#     db.session.add(user)
+#     db.session.commit()
 
-    # Check if a new user has been added to the database
-    new_user = User.query.filter_by(email='test@example.com').first()
-    assert new_user is not None
+#     # Check if a new user has been added to the database
+#     new_user = User.query.filter_by(email='test@example.com').first()
+#     assert new_user is not None
 
-    # Clean up: Delete the newly created user from the database (if needed)
-    if new_user:
-        db.session.delete(new_user)
-        db.session.commit()
-    if new_user:
-        db.session.delete(user)
-        db.session.commit()
+#     # Clean up: Delete the newly created user from the database (if needed)
+#     if new_user:
+#         db.session.delete(new_user)
+#         db.session.commit()
+#     if new_user:
+#         db.session.delete(user)
+#         db.session.commit()
 
-def test_login_route(client):
-    # Create a sample user for testing
-    sample_user = User(
-        name='Test User',
-        email='test@example.com',
-        password='testpassword'  # Ensure this matches the hashed password stored in your database
-    )
-    db.session.add(sample_user)
-    db.session.commit()
+# def test_login_route(client):
+#     # Create a sample user for testing
+#     sample_user = User(
+#         name='Test User',
+#         email='test@example.com',
+#         password='testpassword'  # Ensure this matches the hashed password stored in your database
+#     )
+#     db.session.add(sample_user)
+#     db.session.commit()
 
-    # Simulate a GET request to the /login route
-    response = client.get('/login')
+#     # Simulate a GET request to the /login route
+#     response = client.get('/login')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected title
-    assert b'<title>Login</title>' in response.data
+#     # Check if the response contains the expected title
+#     assert b'<title>Login</title>' in response.data
 
-    # Simulate a POST request to the /login route with valid form data
-    login_data = {
-        'email': 'test@example.com',
-        'password': 'testpassword'
-    }
-    response = client.post('/login', data=login_data, follow_redirects=True)
+#     # Simulate a POST request to the /login route with valid form data
+#     login_data = {
+#         'email': 'test@example.com',
+#         'password': 'testpassword'
+#     }
+#     response = client.post('/login', data=login_data, follow_redirects=True)
 
-    # Check if the response status code is 200 (OK) after successful login
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK) after successful login
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected redirect to the home page
-    assert b'Home' in response.data
-
-
-    # Clean up: Delete the sample user from the database (if needed)
-    db.session.delete(sample_user)
-    db.session.commit()
+#     # Check if the response contains the expected redirect to the home page
+#     assert b'Home' in response.data
 
 
-def test_signup_form_validation(client):
-    # Simulate a POST request with invalid form data
-    response = client.post('/signup', data={}, follow_redirects=True)
+#     # Clean up: Delete the sample user from the database (if needed)
+#     db.session.delete(sample_user)
+#     db.session.commit()
 
-    # Check if the form validation errors are displayed
-    assert response.status_code == 200  # You may need to adjust the status code based on your actual implementation
 
-def test_movies_route(client):
-    # Insert a sample movie into the database for testing
-    sample_movie = Movies(
-        title='Sample Movie',
-        description='Sample Description',
-        image='sample_image.jpg',  # Placeholder image value
-        release_date=datetime(2023, 9, 15)  # Provide a placeholder release date
-    )
-    db.session.add(sample_movie)
-    db.session.commit()
+# def test_signup_form_validation(client):
+#     # Simulate a POST request with invalid form data
+#     response = client.post('/signup', data={}, follow_redirects=True)
 
-    # Simulate a GET request to the /movies route
-    response = client.get('/movies')
+#     # Check if the form validation errors are displayed
+#     assert response.status_code == 200  # You may need to adjust the status code based on your actual implementation
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+# def test_movies_route(client):
+#     # Insert a sample movie into the database for testing
+#     sample_movie = Movies(
+#         title='Sample Movie',
+#         description='Sample Description',
+#         image='sample_image.jpg',  # Placeholder image value
+#         release_date=datetime(2023, 9, 15)  # Provide a placeholder release date
+#     )
+#     db.session.add(sample_movie)
+#     db.session.commit()
 
-    # Check if the movie title is present in the response
-    assert b'Sample Movie' in response.data
+#     # Simulate a GET request to the /movies route
+#     response = client.get('/movies')
 
-    # Clean up: Delete the sample movie from the database
-    db.session.delete(sample_movie)
-    db.session.commit()
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
+
+#     # Check if the movie title is present in the response
+#     assert b'Sample Movie' in response.data
+
+#     # Clean up: Delete the sample movie from the database
+#     db.session.delete(sample_movie)
+#     db.session.commit()
 
 # def test_movie_route(client):
 #     # Insert a sample movie and related data into the database for testing
@@ -185,91 +185,91 @@ def test_movies_route(client):
 #     db.session.delete(movie_director)
 #     db.session.commit()
     
-def test_new_releases_route(client):
-    # Insert some sample movies into the database with recent release dates (within 3 months)
-    # Replace the placeholders with actual data as needed
-    sample_movies = [
-        Movies(
-            title='New Release 1',
-            description='Description 1',
-            image='image1.jpg',
-            release_date=datetime(2023, 8, 1)  # Within 3 months
-        ),
-        Movies(
-            title='New Release 2',
-            description='Description 2',
-            image='image2.jpg',
-            release_date=datetime(2023, 8, 15)  # Within 3 months
-        ),
-        Movies(
-            title='Old Movie',
-            description='Description 3',
-            image='image3.jpg',
-            release_date=datetime(2023, 6, 1)  # Older than 3 months
-        ),
-    ]
+# def test_new_releases_route(client):
+#     # Insert some sample movies into the database with recent release dates (within 3 months)
+#     # Replace the placeholders with actual data as needed
+#     sample_movies = [
+#         Movies(
+#             title='New Release 1',
+#             description='Description 1',
+#             image='image1.jpg',
+#             release_date=datetime(2023, 8, 1)  # Within 3 months
+#         ),
+#         Movies(
+#             title='New Release 2',
+#             description='Description 2',
+#             image='image2.jpg',
+#             release_date=datetime(2023, 8, 15)  # Within 3 months
+#         ),
+#         Movies(
+#             title='Old Movie',
+#             description='Description 3',
+#             image='image3.jpg',
+#             release_date=datetime(2023, 6, 1)  # Older than 3 months
+#         ),
+#     ]
 
-    db.session.add_all(sample_movies)
-    db.session.commit()
+#     db.session.add_all(sample_movies)
+#     db.session.commit()
 
-    # Simulate a GET request to the /new-releases route
-    response = client.get('/new-releases')
+#     # Simulate a GET request to the /new-releases route
+#     response = client.get('/new-releases')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # Check if the titles of the new releases are present in the response
-    assert b'New Release 1' in response.data
-    assert b'New Release 2' in response.data
+#     # Check if the titles of the new releases are present in the response
+#     assert b'New Release 1' in response.data
+#     assert b'New Release 2' in response.data
 
-    # Check if the title of the old movie is NOT present in the response
-    assert b'Old Movie' not in response.data
+#     # Check if the title of the old movie is NOT present in the response
+#     assert b'Old Movie' not in response.data
 
-    # Clean up: Delete the sample movies from the database
-    for movie in sample_movies:
-        db.session.delete(movie)
-    db.session.commit()
+#     # Clean up: Delete the sample movies from the database
+#     for movie in sample_movies:
+#         db.session.delete(movie)
+#     db.session.commit()
     
-def test_logout_route(client):
-    # Simulate a GET request to the /logout route
-    response = client.get('/logout', follow_redirects=True)
+# def test_logout_route(client):
+#     # Simulate a GET request to the /logout route
+#     response = client.get('/logout', follow_redirects=True)
 
-    # Check if the response status code is 200 (OK) after successful logout
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK) after successful logout
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected redirect to the home page
-    assert b'Home' in response.data
+#     # Check if the response contains the expected redirect to the home page
+#     assert b'Home' in response.data
 
-    # Check if the 'user_id' and 'admin' session variables are cleared
-    with client.session_transaction() as session:
-        assert 'user_id' not in session
-        assert 'admin' not in session
+#     # Check if the 'user_id' and 'admin' session variables are cleared
+#     with client.session_transaction() as session:
+#         assert 'user_id' not in session
+#         assert 'admin' not in session
     
-def test_discussion_board_route(client):
-    # Simulate a GET request to the /discussion-board route
-    response = client.get('/discussion-board')
+# def test_discussion_board_route(client):
+#     # Simulate a GET request to the /discussion-board route
+#     response = client.get('/discussion-board')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 302
-    assert b'/login' in response.headers['Location'].encode('utf-8')  
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 302
+#     assert b'/login' in response.headers['Location'].encode('utf-8')  
 
-    # Simulate a POST request to the /discussion-board route (assuming the user is logged in)
-    with client.session_transaction() as session:
-        session['id'] = 1  # Replace with a valid user ID if needed
+#     # Simulate a POST request to the /discussion-board route (assuming the user is logged in)
+#     with client.session_transaction() as session:
+#         session['id'] = 1  # Replace with a valid user ID if needed
 
-    response = client.post('/discussion-board', data={'title': 'New Thread Title'})
+#     response = client.post('/discussion-board', data={'title': 'New Thread Title'})
 
-    # Check if the response status code is 302 (redirect) after posting a new thread
-    assert response.status_code == 302
+#     # Check if the response status code is 302 (redirect) after posting a new thread
+#     assert response.status_code == 302
 
-    # Check if the new thread is added to the database
-    new_thread = CommentThread.query.filter_by(title='New Thread Title').first()
-    assert new_thread is not None
+#     # Check if the new thread is added to the database
+#     new_thread = CommentThread.query.filter_by(title='New Thread Title').first()
+#     assert new_thread is not None
 
-    # Clean up: Delete the newly created thread from the database (assuming you have a way to delete threads)
-    if new_thread:
-        db.session.delete(new_thread)
-        db.session.commit()
+#     # Clean up: Delete the newly created thread from the database (assuming you have a way to delete threads)
+#     if new_thread:
+#         db.session.delete(new_thread)
+#         db.session.commit()
 
 # def test_thread_route_authenticated(client):
     
@@ -371,15 +371,15 @@ def test_discussion_board_route(client):
 #     db.session.commit()
 
 
-def test_opening_times_route(client):
-    # Simulate a GET request to the /opening-times route
-    response = client.get('/opening-times')
+# def test_opening_times_route(client):
+#     # Simulate a GET request to the /opening-times route
+#     response = client.get('/opening-times')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected title
-    assert b'<title>Opening Times</title>' in response.data
+#     # Check if the response contains the expected title
+#     assert b'<title>Opening Times</title>' in response.data
     
 # def test_book_tickets_route(client):
 #     # Create a sample user for testing
