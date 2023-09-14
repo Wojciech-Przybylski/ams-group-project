@@ -19,7 +19,7 @@ pipeline {
             steps {
                 sh "docker build -t wojciechprzybylski/pytest:latest -f ./tests/Dockerfile-test ."
                 sh "docker run -t wojciechprzybylski/pytest:latest" 
-                sh "docker stop -t wojciechprzybylski/pytest:latest"
+                sh "docker stop wojciechprzybylski/pytest:latest"
             }
         }    
         stage('Build') {
