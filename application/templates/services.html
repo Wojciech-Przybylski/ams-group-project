@@ -1,0 +1,38 @@
+{% extends 'nav.html' %}
+{% block content %}
+<section class="content">
+    
+    <h2>Food and Drinks</h2>
+    <p>Indulge in delicious snacks and treats while enjoying your movie:</p>
+    
+    <div class="product">
+        <img src="{{ url_for('static', filename='images/popcorn.jpeg') }}" alt="Popcorn" height="200px" width="auto">
+        <h3>Popcorn</h3>
+        <p>A cinema classic! Enjoy our freshly popped popcorn.</p>
+        <p><strong>Prices:</strong> Small - £4, Medium - £6, Large - £8</p>
+    </div>
+
+    <div class="product">
+        <img src="{{ url_for('static', filename='images/hotdog.jpeg') }}" alt="Hotdog" height="200px" width="auto">
+        <h3>Hotdog</h3>
+        <p>Try our delicious hotdogs with your choice of toppings.</p>
+        <p><strong>Prices:</strong> Regular - £5, Deluxe - £7</p>
+    </div>
+
+    <div class="product">
+        <img src="{{ url_for('static', filename='images/drink.jpeg') }}" alt="Fizzy Drinks" height="200px" width="auto">
+        <h3>Fizzy Drinks</h3>
+        <p>Quench your thirst with a selection of fizzy drinks.</p>
+        <p><strong>Prices:</strong> Small - £2, Medium - £3, Large - £4</p>
+    </div>
+    
+    <h2>QA Café</h2>
+    <p>Coming soon! Enjoy a delightful dining experience at QA Café, our indoor restaurant.</p>
+    
+    <h2>QA-cade</h2>
+    <p>Visit QA-cade, our indoor arcade, for hours of entertainment and fun!</p>
+    
+    
+</section>
+
+{% endblock %}

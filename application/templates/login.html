@@ -1,28 +1,39 @@
 {% extends 'nav.html' %}
 
 {% block content %}
-    <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form class="form" action="" method="POST">
-                    {{ form.hidden_tag() }}
-                    <div class="mb-3">
-                        {{ form.email.label(class="form-label") }}
-                        {{ form.email(class="form-control") }}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <form class="form" action="" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.password.label(class="form-label") }}
+                    {{ form.password(class="form-control") }}
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button style="margin-bottom: 15px;" type="submit" class="btn btn-primary btn-block">Submit</button>
                     </div>
-                    <div class="mb-3">
-                        {{ form.password.label(class="form-label") }}
-                        {{ form.password(class="form-control") }}
+                    <div class="col">
+                        <a href="/signup" class="btn btn-outline-primary btn-block">No account? Sign up here!</a>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-                {% if message %}
-                <div class="alert alert-danger mt-3">
-                    
-                        {{ message }}
+                </div>
+                
+            </form>
+            {% if message %}
+            <div class="alert alert-danger mt-3">
+                {{ message }}
+
                 {% endif %}
-                </div>                
+                
             </div>
+
         </div>
     </div>
+</div>
 {% endblock %}

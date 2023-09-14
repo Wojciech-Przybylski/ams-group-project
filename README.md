@@ -179,7 +179,7 @@ Scrum is an agile framework typically used for the completeion of complex work. 
 
 ### Sprint 1
 
-During the intiial sprint for this this project we tackled three main tasks. Firstly we set up the first draft of the Trello board, splitting the different tasks into the MVP and website wishlist that were outlined in the project specification, we later added several more tasks to the board and made sure to keep up-to-date with the board, throughout all sprints. At the same time several group members began to design the basic file structure within Visual Studio Code. As we have been taguht best practice for a file structure when designing a website we were all able to utilise our file structures from our idividual projects to conclude what structure would work best in this group scenario. During later sprints we would add extra folders to the file structure from some of the feature branches that were also created later. The final task of our first srpint was the devise the risk assessment for the project this included risks for users and developers. We believed this was important to tackle during the first sprint, so we would have a much more in depth understanding of the risks we were facing during this project and how best to minimize them.
+During the initial sprint for this this project we tackled three main tasks. Firstly we set up the first draft of the Trello board, splitting the different tasks into the MVP and website wishlist that were outlined in the project specification, we later added several more tasks to the board and made sure to keep up-to-date with the board, throughout all sprints. At the same time several group members began to design the basic file structure within Visual Studio Code. As we have been taguht best practice for a file structure when designing a website we were all able to utilise our file structures from our idividual projects to conclude what structure would work best in this group scenario. During later sprints we would add extra folders to the file structure from some of the feature branches that were also created later. The final task of our first srpint was the devise the risk assessment for the project this included risks for users and developers. We believed this was important to tackle during the first sprint, so we would have a much more in depth understanding of the risks we were facing during this project and how best to minimize them.
 
 ### Sprint 2
 
@@ -188,9 +188,6 @@ During the second sprint we began adding the basic content to several of the fil
 ### Sprint 3 
 
 During the third sprint we developed the majority of the back and front end of the code as well as integrating the automated deployment of the app. Our goal for this sprint was to reach the criteria of the MVP so we could focus on testing and the website wishlist. We wanted to reach this goal by the end of the first week of the project. We concluded as a group, that this was the best strategy to make sure that we would have time to go through thorough testing and bug fixes. Furthermore, by reaching this goal we would have more time to style the website up to the standard the specification requires, and beyond. In order to meet this goal, we discussed our strengths and weaknesses in the group and divided the tasks accordingly. On top of this, we concluded that, it would be best during this sprint to start, and keep on top of the write up for this project. Rather than it becoming a much more overwhelming task later down the line. 
-
-### Sprint 4 
-
 
 
 ## ERD (Entity Relationship Diagram)
@@ -286,6 +283,13 @@ During the third sprint we developed the majority of the back and front end of t
 ### A UML diagram is a diagram based on the UML (Unified Modeling Language) with the purpose of visually representing a system along with its main actors, roles, actions, artifacts or classes, in order to better understand, alter, maintain, or document information about the system.
 
 
+## Test Coverage
+
+
+### Coverage Report:
+
+
+![Coverage Report](/Documentation-Screenshots/Code/Coverage%20report.png)
 
 ## Risk Assessment 
 
