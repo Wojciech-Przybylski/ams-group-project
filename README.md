@@ -286,6 +286,13 @@ During the third sprint we developed the majority of the back and front end of t
 ### A UML diagram is a diagram based on the UML (Unified Modeling Language) with the purpose of visually representing a system along with its main actors, roles, actions, artifacts or classes, in order to better understand, alter, maintain, or document information about the system.
 
 
+## Test Coverage
+
+
+### Coverage Report:
+
+
+![Coverage Report](/Documentation-Screenshots/Code/Coverage%20report.png)
 
 ## Risk Assessment 
 
