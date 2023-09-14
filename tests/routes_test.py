@@ -176,6 +176,15 @@ def test_movie_route(client):
     assert b'John Doe' in response.data
     assert b'Jane Smith' in response.data
     
+    db.session.delete(sample_movie)
+    db.session.delete(sample_genre)
+    db.session.delete(sample_director)
+    db.session.delete(sample_actor)
+    db.session.delete(movie_genre)
+    db.session.delete(movie_actor)
+    db.session.delete(movie_director)
+    db.session.commit()
+    
 def test_new_releases_route(client):
     # Insert some sample movies into the database with recent release dates (within 3 months)
     # Replace the placeholders with actual data as needed
@@ -311,6 +320,10 @@ def test_thread_route_authenticated(client):
     assert new_comment is not None
     assert new_comment.comment == 'Test Comment'
     
+    db.session.delete(sample_user)
+    db.session.delete(sample_thread)
+    db.session.commit()
+    
 
 def test_delete_comment_route(client):
     # Create a sample user for testing
@@ -410,6 +423,11 @@ def test_book_tickets_route(client):
 
     # Check if the sample movie title is present in the response
     assert b'Sample Movie' in response.data
+    
+    db.session.delete(sample_user)
+    db.session.delete(sample_movie)
+    db.session.delete(sample_showing)
+    db.session.commit()
 
 def test_payment_route(client):
     # Create a sample user for testing
@@ -454,6 +472,12 @@ def test_payment_route(client):
 
     # Check if the response status code is 200 (OK) since the user is logged in
     assert response.status_code == 200
+    
+    db.session.delete(sample_user)
+    db.session.delete(sample_cart)
+    db.session.delete(sample_movie)
+    db.session.delete(sample_showing)
+    db.session.commit()
 
 
 def test_confirmation_route(client):
@@ -518,6 +542,14 @@ def test_confirmation_route(client):
 
     # Check if the response status code is 200 (OK)
     assert response.status_code == 200
+    
+    db.session.delete(sample_user)
+    db.session.delete(sample_movie)
+    db.session.delete(sample_showing)
+    db.session.delete(sample_booking)
+    db.session.delete(sample_ticket_type)
+    db.session.delete(sample_booking_item)
+    db.session.commit()
 
 
 
@@ -552,6 +584,8 @@ def test_get_remaining_tickets_route(client):
     assert response.data.decode('utf-8') == expected_tickets_count
 
     # Clean up: Delete the sample showing record from the database
+    
+    db.session.delete(movie)
     db.session.delete(showing)
     db.session.commit()
     
@@ -570,6 +604,9 @@ def test_search_redirects_to_results(client):
 
     # Check if the response status code is 302 (redirect)
     assert response.status_code == 302
+    
+    db.session.delete(movie)
+    db.session.commit()
 
 def test_search_results_route(client):
     
@@ -590,6 +627,9 @@ def test_search_results_route(client):
 
     # Check if the response contains the expected search results for 'Test Movie'
     assert b'Test Movie' in response.data
+    
+    db.session.delete(movie)
+    db.session.commit()
     
 def test_search_results_route(client):
     # Simulate a GET request to the /search-results route with a search query
@@ -633,6 +673,13 @@ def test_search_results_route(client):
     assert b'Actor Name' not in response.data
     assert b'Director Name' not in response.data
     assert b'Genre Name' not in response.data
+    
+    db.session.delete(movie)
+    db.session.delete(actor)
+    db.session.delete(director)
+    db.session.delete(genre)
+    db.session.commit()
+    
     
 def test_classifications_route(client):
     # Simulate a GET request to the /classifications route

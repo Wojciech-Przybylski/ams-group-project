@@ -13,9 +13,6 @@ def client():
     with app.app_context():
         db.create_all()
         yield client
-        db.session.remove()
-
-
 
 def test_User(client):
     # Create a user
@@ -31,6 +28,9 @@ def test_User(client):
     assert retrieved_user.name == 'Bob'
     assert retrieved_user.email == 'bob@qa.com'
     assert bcrypt.check_password_hash(retrieved_user.password, "123") is True  # Use is True to explicitly check for True
+    
+    db.session.delete(user)
+    db.session.commit()
 
 def test_PaymentDetails(client):
     # Create a user (for the ForeignKey relationship)
@@ -61,6 +61,9 @@ def test_PaymentDetails(client):
     assert retrieved_payment_detail.expiry_date == "12/25"
     assert retrieved_payment_detail.security_code == "123"
     
+    db.session.delete(payment_detail)
+    db.session.commit()
+    
 def test_Comments(client):
     # Create a comment thread
     comment_thread = CommentThread(title="Movie Discussion Thread")
@@ -85,6 +88,11 @@ def test_Comments(client):
     # Assert that the retrieved comment matches the expected values
     assert retrieved_comment.comment == "This is a comment"
     
+    db.session.delete(comment_thread)
+    db.session.delete(user)
+    db.session.delete(comment)
+    db.session.commit()
+    
 def test_Movies(client):
     # Create a movie
     movie = Movies(
@@ -106,6 +114,9 @@ def test_Movies(client):
     assert retrieved_movie.description == "This is a test movie description."
     assert retrieved_movie.image == "test_movie.jpg"
     assert retrieved_movie.release_date.strftime('%Y-%m-%d') == "2023-09-10"
+    
+    db.session.delete(movie)
+    db.session.commit()
     
 def test_Genres_and_MovieGenres(client):
     # Create a movie genre
@@ -140,6 +151,13 @@ def test_Genres_and_MovieGenres(client):
     # Assert that the retrieved association matches the expected values
     assert retrieved_movie_genre.movie_id == movie.id
     assert retrieved_movie_genre.genre_id == genre.id
+    
+    db.session.delete(genre)
+    db.session.delete(movie)
+    db.session.delete(movie_genre)
+    db.session.commit()
+
+
 
 def test_Actors_and_MovieActors(client):
     # Create an actor
@@ -175,6 +193,11 @@ def test_Actors_and_MovieActors(client):
     assert retrieved_movie_actor.movie_id == movie.id
     assert retrieved_movie_actor.actor_id == actor.id
     
+    db.session.delete(actor)
+    db.session.delete(movie)
+    db.session.delete(movie_actor)
+    db.session.commit()
+    
 def test_Directors_and_MovieDirectors(client):
     # Create a director
     director = Directors(director="Jane Smith")
@@ -208,6 +231,11 @@ def test_Directors_and_MovieDirectors(client):
     # Assert that the retrieved association matches the expected values
     assert retrieved_movie_director.movie_id == movie.id
     assert retrieved_movie_director.director_id == director.id
+    
+    db.session.delete(director)
+    db.session.delete(movie)
+    db.session.delete(movie_director)
+    db.session.commit()
     
 def test_Showings(client):
     # Create a movie
@@ -243,6 +271,10 @@ def test_Showings(client):
     assert isinstance(retrieved_showing.date, datetime)
     assert retrieved_showing.seats_available == 100
     
+    db.session.delete(movie)
+    db.session.delete(showing) 
+    db.session.commit()
+        
 def test_Bookings_and_BookingsItems(client):
     # Create a user
     user = User(name="Alice", email="alice@example.com", password="hashed_password")
@@ -318,6 +350,14 @@ def test_Bookings_and_BookingsItems(client):
     assert retrieved_booking_item.showing_id == showing.id
     assert retrieved_booking_item.ticket_type_id == ticket_type.id
     assert retrieved_booking_item.quantity == 2
+    
+    db.session.delete(user)
+    db.session.delete(movie)
+    db.session.delete(showing)
+    db.session.delete(ticket_type)
+    db.session.delete(booking)
+    db.session.delete(booking_item)
+    db.session.commit()
 
 def test_Cart_empty_cart(client):
     # Create a user
@@ -373,6 +413,17 @@ def test_Cart_empty_cart(client):
 
     # Check that cart items are deleted after emptying
     assert CartItem.query.filter_by(cart_id=cart.id).count() == 0
+    
+    
+    db.session.delete(user)
+    db.session.delete(cart)
+    db.session.delete(movie)
+    db.session.delete(showing)
+    db.session.delete(ticket_type)
+    db.session.delete(cart_item1)
+    db.session.delete(cart_item2)
+    db.session.commit()
+    
 
 def test_comment_view():
     comment = CommentView(id=1, user_name='John', comment='Hello', time='2023-09-08 14:30:00')
