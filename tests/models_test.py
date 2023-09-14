@@ -93,9 +93,7 @@ def test_Comments(client):
     # Assert that the retrieved comment matches the expected values
     assert retrieved_comment.comment == "This is a comment"
     
-    db.session.delete(comment_thread)
     db.session.delete(user)
-    db.session.delete(comment)
     db.session.commit()
     
 def test_Movies(client):
@@ -158,7 +156,6 @@ def test_Genres_and_MovieGenres(client):
     assert retrieved_movie_genre.genre_id == genre.id
     
     db.session.delete(genre)
-    db.session.delete(movie)
     db.session.delete(movie_genre)
     db.session.commit()
 
@@ -173,16 +170,6 @@ def test_Actors_and_MovieActors(client):
     db.session.commit()
 
     # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
-
-    # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
 
     # Create a MovieActors association between the movie and actor
     movie_actor = MovieActors(movie_id=movie.id, actor_id=actor.id)
@@ -199,7 +186,6 @@ def test_Actors_and_MovieActors(client):
     assert retrieved_movie_actor.actor_id == actor.id
     
     db.session.delete(actor)
-    db.session.delete(movie)
     db.session.delete(movie_actor)
     db.session.commit()
     
