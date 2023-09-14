@@ -5,7 +5,6 @@ from datetime import datetime
 from wtforms.validators import ValidationError
 from wtforms import Form, StringField
 
-@pytest.fixture
 def client():
     app.config['TESTING'] = True
     client = app.test_client()
@@ -13,8 +12,15 @@ def client():
     with app.app_context():
         db.create_all()
         yield client
+
+    with app.app_context():
+        # Rollback or remove test data
+        db.session.rollback()  # Rollback changes
+        # Or, if you want to remove test data:
+        # db.session.query(User).filter_by(username='test_user').delete()
+        db.session.commit()
+        
         db.session.remove()
-        db.drop_all()
 
 def test_User(client):
     
