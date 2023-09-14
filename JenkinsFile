@@ -49,7 +49,7 @@ pipeline {
         stage('Clean up') {
             steps {
                 sh '''
-                    docker images -f dangling=true -q | xargs -r docker rmi
+                    docker system prune -af --volumes
                 '''
             }
         }
