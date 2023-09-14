@@ -1,56 +1,89 @@
 {% extends 'nav.html' %}
 {% block content %}
-<img src="{{ url_for('static', filename=movie.image) }}" alt="{{ movie.name }}" class="img-fluid" width="300px">
-<h2>{{ movie.name }}</h2>
-<h3 class="date">{{ movie.release_date }}</h3>
-<h3>Genres:</h3>
-<ul>
-    {% for genre in genre_names %}
-    <li>{{ genre }}</li>
-    {% endfor %}
-</ul>
-<h3>Director:</h3>
-<ul>
-    {% for director in director_names %}
-    <li>{{ director }}</li>
-    {% endfor %}
-</ul>
-<h3>Actors:</h3>
-<ul>
-    {% for actor in actor_names %}
-    <li>{{ actor }}</li>
-{% endfor %}
-</ul>
-<h3>Showings:</h3>
-<table class="table table-dark">
-    <thead>
-        <tr>
-            <th>Screen</th>
-            <th> Date & Time</th>
-            <th>Available Seats</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for screening in showings %}
-        <tr>
-            <td>Screen {{ screening.screen_number }}</td>
-            <td>{{ screening.date }}</td>
-            <td>{{ screening.seats_available }}</td>
-        </tr>
-        {% endfor %}
+<p><strong class="lead">{{ movie.release_date }}</strong></p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename=movie.image) }}" alt="{{ movie.name }}" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h2>{{ movie.name }}</h2>
+            
+            <!-- Genres Card -->
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Genres</h3>
+                    <ul class="list-unstyled">
+                        {% for genre in genre_names %}
+                        <li>{{ genre }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Directors Card -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h3 class="card-title">Directors</h3>
+                    <ul class="list-unstyled">
+                        {% for director in director_names %}
+                        <li>{{ director }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Actors Card -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h3 class="card-title">Actors</h3>
+                    <ul class="list-unstyled">
+                        {% for actor in actor_names %}
+                        <li>{{ actor }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <h3>Showings:</h3>
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th>Screen</th>
+                        <th>Date & Time</th>
+                        <th>Available Seats</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for screening in showings %}
+                    <tr>
+                        <td>Screen {{ screening.screen_number }}</td>
+                        <td>{{ screening.date }}</td>
+                        <td>{{ screening.seats_available }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <a href="{{ url_for('book_tickets', movie_id=movie.id) }}" class="btn btn-primary btn-block">Book Tickets</a>
+        </div>
+    </div>
+</div>
 
-</table>
-<a href="{{ url_for('book_tickets', movie_id=movie.id) }}"><button class="btn btn-primary">Book Tickets</button></a>
-<br><br>
 <script>
-    dates = document.querySelectorAll('h3.date');
-    for (let i = 0; i < dates.length; i++) {
-        let dateText = dates[i].innerText;  // Corrected variable name
-        // remove all but first 4 chars from date
-        dateText = dateText.substring(0, 4);
-        // update date value
-        dates[i].innerText = dateText;  // Corrected variable name
-    }
+    // Update the release date display
+    const dateElements = document.querySelectorAll('.lead');
+    dateElements.forEach(element => {
+        const dateText = element.innerText;
+        const formattedDate = new Date(dateText).toLocaleDateString('en-UK', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+        element.innerText = "Released: " + formattedDate;
+    });
 </script>
-{% endblock %}
 
+{% endblock %}
