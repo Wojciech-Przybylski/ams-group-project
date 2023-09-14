@@ -17,8 +17,6 @@ def client():
 
 
 def test_User(client):
-    db.session.delete(user)
-    db.session.commit()
     # Create a user
     user = User(name="Bob", email="bob@qa.com", password=bcrypt.generate_password_hash("123").decode('utf-8'))  # Decode the hashed password
     # Add the user to the database
