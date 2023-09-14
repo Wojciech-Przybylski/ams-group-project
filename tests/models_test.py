@@ -14,8 +14,7 @@ def client():
         db.create_all()
         yield client
         db.session.remove()
-        db.drop_all()
-        db.create_all()
+
 
 
 def test_User(client):
