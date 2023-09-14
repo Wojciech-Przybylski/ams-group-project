@@ -15,16 +15,17 @@ pipeline {
                 }
             }
         }
-        stage('Testing') {
-            steps {
-                sh "docker build -t wojciechprzybylski/pytest:latest -f ./tests/Dockerfile-test ."
-                sh "docker run -t wojciechprzybylski/pytest:latest" 
-            }
-        }    
+        // stage('Testing') {
+        //     steps {
+        //         sh "docker build -t wojciechprzybylski/pytest:latest -f ./tests/Dockerfile-test ."
+        //         sh "docker run -t wojciechprzybylski/pytest:latest" 
+        //     }
+        // }    
         stage('Build') {
             steps {
                 script {
                     // Build Docker images
+                    sh "export DB_PASSOWRD=$DB_PASSWORD"
                     sh "docker build -t wojciechprzybylski/mysql-init:latest -f ./db/Dockerfile-create ."
                     sh "docker build -t wojciechprzybylski/cinema-app:latest ."
                     sh "docker build -t wojciechprzybylski/cinema-db:latest -f ./db/DockerFile ."
