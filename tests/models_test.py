@@ -50,7 +50,6 @@ def test_PaymentDetails(client):
     )
 
     # Add the payment detail to the database
-    db.session.add(user)
     db.session.add(payment_detail)
     db.session.commit()
 
@@ -64,7 +63,10 @@ def test_PaymentDetails(client):
     assert retrieved_payment_detail.expiry_date == "12/25"
     assert retrieved_payment_detail.security_code == "123"
     
+    db.session.delete(user)
+    
     db.session.delete(payment_detail)
+    
     db.session.commit()
     
 def test_Comments(client):
