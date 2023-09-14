@@ -151,7 +151,7 @@ def test_movie_route(client):
     sample_actor = Actors(actor='John Doe')
     sample_director = Directors(director='Jane Smith')
 
-    db.session.add_all([sample_movie, sample_genre, sample_actor, sample_director])
+    db.session.add_all([sample_genre, sample_actor, sample_director])
     db.session.commit()
 
     movie_genre = MovieGenres(movie_id=sample_movie.id, genre_id=sample_genre.id)
@@ -319,11 +319,7 @@ def test_thread_route_authenticated(client):
     new_comment = Comments.query.filter_by(comment_thread_id=thread_id).first()
     assert new_comment is not None
     assert new_comment.comment == 'Test Comment'
-    
-    db.session.delete(sample_user)
-    db.session.delete(sample_thread)
-    db.session.commit()
-    
+ 
 
 def test_delete_comment_route(client):
     # Create a sample user for testing
