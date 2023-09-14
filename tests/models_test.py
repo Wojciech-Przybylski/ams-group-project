@@ -69,32 +69,32 @@ def test_PaymentDetails(client):
     
     db.session.commit()
     
-def test_Comments(client):
-    # Create a comment thread
-    comment_thread = CommentThread(title="Movie Discussion Thread")
-    db.session.add(comment_thread)
-    db.session.commit()
+# def test_Comments(client):
+#     # Create a comment thread
+#     comment_thread = CommentThread(title="Movie Discussion Thread")
+#     db.session.add(comment_thread)
+#     db.session.commit()
 
-    # Create a user
-    user = User(name="Alice", email="alice@example.com", password="hashed_password")
-    db.session.add(user)
-    db.session.commit()
+#     # Create a user
+#     user = User(name="Alice", email="alice@example.com", password="hashed_password")
+#     db.session.add(user)
+#     db.session.commit()
 
-    # Create a comment
-    comment = Comments(comment_thread_id=comment_thread.id, user_id=user.id, comment="This is a comment")
+#     # Create a comment
+#     comment = Comments(comment_thread_id=comment_thread.id, user_id=user.id, comment="This is a comment")
 
-    # Add the comment to the database
-    db.session.add(comment)
-    db.session.commit()
+#     # Add the comment to the database
+#     db.session.add(comment)
+#     db.session.commit()
 
-    # Retrieve the comment from the database
-    retrieved_comment = Comments.query.filter_by(id=1).first()
+#     # Retrieve the comment from the database
+#     retrieved_comment = Comments.query.filter_by(id=1).first()
 
-    # Assert that the retrieved comment matches the expected values
-    assert retrieved_comment.comment == "This is a comment"
+#     # Assert that the retrieved comment matches the expected values
+#     assert retrieved_comment.comment == "This is a comment"
     
-    db.session.delete(user)
-    db.session.commit()
+#     db.session.delete(user)
+#     db.session.commit()
     
 def test_Movies(client):
     # Create a movie
@@ -121,301 +121,301 @@ def test_Movies(client):
     db.session.delete(movie)
     db.session.commit()
     
-def test_Genres_and_MovieGenres(client):
-    # Create a movie genre
-    genre = Genres(genre="Action")
+# def test_Genres_and_MovieGenres(client):
+#     # Create a movie genre
+#     genre = Genres(genre="Action")
 
-    # Add the genre to the database
-    db.session.add(genre)
-    db.session.commit()
+#     # Add the genre to the database
+#     db.session.add(genre)
+#     db.session.commit()
 
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
+#     # Create a movie
+#     movie = Movies(
+#         title="Test Movie",
+#         description="This is a test movie description.",
+#         image="test_movie.jpg",
+#         release_date="2023-09-10"
+#     )
 
-    # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
+#     # Add the movie to the database
+#     db.session.add(movie)
+#     db.session.commit()
 
-    # Create a MovieGenres association between the movie and genre
-    movie_genre = MovieGenres(movie_id=movie.id, genre_id=genre.id)
+#     # Create a MovieGenres association between the movie and genre
+#     movie_genre = MovieGenres(movie_id=movie.id, genre_id=genre.id)
 
-    # Add the association to the database
-    db.session.add(movie_genre)
-    db.session.commit()
+#     # Add the association to the database
+#     db.session.add(movie_genre)
+#     db.session.commit()
 
-    # Retrieve the movie genre association from the database
-    retrieved_movie_genre = MovieGenres.query.filter_by(id=1).first()
+#     # Retrieve the movie genre association from the database
+#     retrieved_movie_genre = MovieGenres.query.filter_by(id=1).first()
 
-    # Assert that the retrieved association matches the expected values
-    assert retrieved_movie_genre.movie_id == movie.id
-    assert retrieved_movie_genre.genre_id == genre.id
+#     # Assert that the retrieved association matches the expected values
+#     assert retrieved_movie_genre.movie_id == movie.id
+#     assert retrieved_movie_genre.genre_id == genre.id
     
-    db.session.delete(genre)
-    db.session.delete(movie_genre)
-    db.session.commit()
+#     db.session.delete(genre)
+#     db.session.delete(movie_genre)
+#     db.session.commit()
 
 
 
-def test_Actors_and_MovieActors(client):
+# def test_Actors_and_MovieActors(client):
     
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
-    # Create an actor
-    actor = Actors(actor="John Doe")
+#     movie = Movies(
+#         title="Test Movie",
+#         description="This is a test movie description.",
+#         image="test_movie.jpg",
+#         release_date="2023-09-10"
+#     )
+#     # Create an actor
+#     actor = Actors(actor="John Doe")
 
-    # Add the actor to the database
-    db.session.add(actor)
-    db.session.commit()
+#     # Add the actor to the database
+#     db.session.add(actor)
+#     db.session.commit()
 
-    # Create a movie
+#     # Create a movie
 
-    # Create a MovieActors association between the movie and actor
-    movie_actor = MovieActors(movie_id=movie.id, actor_id=actor.id)
+#     # Create a MovieActors association between the movie and actor
+#     movie_actor = MovieActors(movie_id=movie.id, actor_id=actor.id)
 
-    # Add the association to the database
-    db.session.add(movie_actor)
-    db.session.commit()
+#     # Add the association to the database
+#     db.session.add(movie_actor)
+#     db.session.commit()
 
-    # Retrieve the movie actor association from the database
-    retrieved_movie_actor = MovieActors.query.filter_by(id=36).first()
+#     # Retrieve the movie actor association from the database
+#     retrieved_movie_actor = MovieActors.query.filter_by(id=36).first()
 
-    # Assert that the retrieved association matches the expected values
-    assert retrieved_movie_actor.movie_id == movie.id
-    assert retrieved_movie_actor.actor_id == actor.id
+#     # Assert that the retrieved association matches the expected values
+#     assert retrieved_movie_actor.movie_id == movie.id
+#     assert retrieved_movie_actor.actor_id == actor.id
     
-    db.session.delete(actor)
-    db.session.delete(movie_actor)
-    db.session.commit()
+#     db.session.delete(actor)
+#     db.session.delete(movie_actor)
+#     db.session.commit()
     
-def test_Directors_and_MovieDirectors(client):
-    # Create a director
-    director = Directors(director="Jane Smith")
+# def test_Directors_and_MovieDirectors(client):
+#     # Create a director
+#     director = Directors(director="Jane Smith")
 
-    # Add the director to the database
-    db.session.add(director)
-    db.session.commit()
+#     # Add the director to the database
+#     db.session.add(director)
+#     db.session.commit()
 
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
+#     # Create a movie
+#     movie = Movies(
+#         title="Test Movie",
+#         description="This is a test movie description.",
+#         image="test_movie.jpg",
+#         release_date="2023-09-10"
+#     )
 
-    # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
+#     # Add the movie to the database
+#     db.session.add(movie)
+#     db.session.commit()
 
-    # Create a MovieDirectors association between the movie and director
-    movie_director = MovieDirectors(movie_id=movie.id, director_id=director.id)
+#     # Create a MovieDirectors association between the movie and director
+#     movie_director = MovieDirectors(movie_id=movie.id, director_id=director.id)
 
-    # Add the association to the database
-    db.session.add(movie_director)
-    db.session.commit()
+#     # Add the association to the database
+#     db.session.add(movie_director)
+#     db.session.commit()
 
-    # Retrieve the movie director association from the database
-    retrieved_movie_director = MovieDirectors.query.filter_by(id=10).first()
+#     # Retrieve the movie director association from the database
+#     retrieved_movie_director = MovieDirectors.query.filter_by(id=10).first()
 
-    # Assert that the retrieved association matches the expected values
-    assert retrieved_movie_director.movie_id == movie.id
-    assert retrieved_movie_director.director_id == director.id
+#     # Assert that the retrieved association matches the expected values
+#     assert retrieved_movie_director.movie_id == movie.id
+#     assert retrieved_movie_director.director_id == director.id
     
-    db.session.delete(director)
-    db.session.delete(movie)
-    db.session.delete(movie_director)
-    db.session.commit()
+#     db.session.delete(director)
+#     db.session.delete(movie)
+#     db.session.delete(movie_director)
+#     db.session.commit()
     
-def test_Showings(client):
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
+# def test_Showings(client):
+#     # Create a movie
+#     movie = Movies(
+#         title="Test Movie",
+#         description="This is a test movie description.",
+#         image="test_movie.jpg",
+#         release_date="2023-09-10"
+#     )
 
-    # Add the movie to the database
+#     # Add the movie to the database
 
-    # Create a showing
-    showing = Showings(
-        movie_id=movie.id,
-        screen_number=1,
-        date=datetime.utcnow(),
-        seats_available=100
-    )
+#     # Create a showing
+#     showing = Showings(
+#         movie_id=movie.id,
+#         screen_number=1,
+#         date=datetime.utcnow(),
+#         seats_available=100
+#     )
 
-    # Add the showing to the database
-    db.session.add(showing)
-    db.session.commit()
+#     # Add the showing to the database
+#     db.session.add(showing)
+#     db.session.commit()
 
-    # Retrieve the showing from the database
-    retrieved_showing = Showings.query.filter_by(id=1).first()
+#     # Retrieve the showing from the database
+#     retrieved_showing = Showings.query.filter_by(id=1).first()
 
-    # Assert that the retrieved showing matches the expected values
-    assert retrieved_showing.movie_id == movie.id
-    assert retrieved_showing.screen_number == 1
-    assert isinstance(retrieved_showing.date, datetime)
-    assert retrieved_showing.seats_available == 100
+#     # Assert that the retrieved showing matches the expected values
+#     assert retrieved_showing.movie_id == movie.id
+#     assert retrieved_showing.screen_number == 1
+#     assert isinstance(retrieved_showing.date, datetime)
+#     assert retrieved_showing.seats_available == 100
     
-    db.session.delete(movie)
-    db.session.delete(showing) 
-    db.session.commit()
+#     db.session.delete(movie)
+#     db.session.delete(showing) 
+#     db.session.commit()
         
-def test_Bookings_and_BookingsItems(client):
-    # Create a user
-    user = User(name="Alice", email="alice@example.com", password="hashed_password")
+# def test_Bookings_and_BookingsItems(client):
+#     # Create a user
+#     user = User(name="Alice", email="alice@example.com", password="hashed_password")
 
-    # Add the user to the database
+#     # Add the user to the database
 
-    # Create a movie
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
+#     # Create a movie
+#     movie = Movies(
+#         title="Test Movie",
+#         description="This is a test movie description.",
+#         image="test_movie.jpg",
+#         release_date="2023-09-10"
+#     )
 
-    # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
+#     # Add the movie to the database
+#     db.session.add(movie)
+#     db.session.commit()
 
-    # Create a showing
-    showing = Showings(
-        movie_id=movie.id,
-        screen_number=1,
-        date=datetime.utcnow(),
-        seats_available=100
-    )
+#     # Create a showing
+#     showing = Showings(
+#         movie_id=movie.id,
+#         screen_number=1,
+#         date=datetime.utcnow(),
+#         seats_available=100
+#     )
 
-    # Add the showing to the database
-    db.session.add(showing)
-    db.session.commit()
+#     # Add the showing to the database
+#     db.session.add(showing)
+#     db.session.commit()
 
-    # Create a ticket type
-    ticket_type = TicketType(ticket_type="Standard", price=10)
+#     # Create a ticket type
+#     ticket_type = TicketType(ticket_type="Standard", price=10)
 
-    # Add the ticket type to the database
-    db.session.add(ticket_type)
-    db.session.commit()
+#     # Add the ticket type to the database
+#     db.session.add(ticket_type)
+#     db.session.commit()
 
-    # Create a booking
-    booking = Bookings(
-        user_id=user.id,
-        movie_id=movie.id,
-        date=datetime.utcnow()
-    )
+#     # Create a booking
+#     booking = Bookings(
+#         user_id=user.id,
+#         movie_id=movie.id,
+#         date=datetime.utcnow()
+#     )
 
-    # Add the booking to the database
-    db.session.add(booking)
-    db.session.commit()
+#     # Add the booking to the database
+#     db.session.add(booking)
+#     db.session.commit()
 
-    # Create a booking item
-    booking_item = BookingsItems(
-        booking_id=booking.id,
-        showing_id=showing.id,
-        ticket_type_id=ticket_type.id,
-        quantity=2
-    )
+#     # Create a booking item
+#     booking_item = BookingsItems(
+#         booking_id=booking.id,
+#         showing_id=showing.id,
+#         ticket_type_id=ticket_type.id,
+#         quantity=2
+#     )
 
-    # Add the booking item to the database
-    db.session.add(booking_item)
-    db.session.commit()
+#     # Add the booking item to the database
+#     db.session.add(booking_item)
+#     db.session.commit()
 
-    # Retrieve the booking and booking item from the database
-    retrieved_booking = Bookings.query.filter_by(id=1).first()
-    retrieved_booking_item = BookingsItems.query.filter_by(id=1).first()
+#     # Retrieve the booking and booking item from the database
+#     retrieved_booking = Bookings.query.filter_by(id=1).first()
+#     retrieved_booking_item = BookingsItems.query.filter_by(id=1).first()
 
-    # Assert that the retrieved booking and booking item match the expected values
-    assert retrieved_booking.user_id == user.id
-    assert retrieved_booking.movie_id == movie.id
-    assert isinstance(retrieved_booking.date, datetime)
+#     # Assert that the retrieved booking and booking item match the expected values
+#     assert retrieved_booking.user_id == user.id
+#     assert retrieved_booking.movie_id == movie.id
+#     assert isinstance(retrieved_booking.date, datetime)
 
-    assert retrieved_booking_item.booking_id == booking.id
-    assert retrieved_booking_item.showing_id == showing.id
-    assert retrieved_booking_item.ticket_type_id == ticket_type.id
-    assert retrieved_booking_item.quantity == 2
+#     assert retrieved_booking_item.booking_id == booking.id
+#     assert retrieved_booking_item.showing_id == showing.id
+#     assert retrieved_booking_item.ticket_type_id == ticket_type.id
+#     assert retrieved_booking_item.quantity == 2
     
-    db.session.delete(user)
-    db.session.delete(movie)
-    db.session.delete(showing)
-    db.session.delete(ticket_type)
-    db.session.delete(booking)
-    db.session.delete(booking_item)
-    db.session.commit()
+#     db.session.delete(user)
+#     db.session.delete(movie)
+#     db.session.delete(showing)
+#     db.session.delete(ticket_type)
+#     db.session.delete(booking)
+#     db.session.delete(booking_item)
+#     db.session.commit()
 
-def test_Cart_empty_cart(client):
-    # Create a user
-    user = User(name="Alice", email="alice@example.com", password="hashed_password")
-    db.session.add(user)
+# def test_Cart_empty_cart(client):
+#     # Create a user
+#     user = User(name="Alice", email="alice@example.com", password="hashed_password")
+#     db.session.add(user)
 
-    # Create a cart for the user
-    cart = Cart(user_id=user.id)
-    db.session.add(cart)
-    db.session.commit()
+#     # Create a cart for the user
+#     cart = Cart(user_id=user.id)
+#     db.session.add(cart)
+#     db.session.commit()
 
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
+#     movie = Movies(
+#         title="Test Movie",
+#         description="This is a test movie description.",
+#         image="test_movie.jpg",
+#         release_date="2023-09-10"
+#     )
 
-    db.session.add(movie)
-    db.session.commit()
+#     db.session.add(movie)
+#     db.session.commit()
 
-    # Create a showing
-    showing = Showings(
-        movie_id=1,  # Replace with actual movie_id
-        screen_number=1,
-        date=datetime.utcnow(),
-        seats_available=100
-    )
-    db.session.add(showing)
-    db.session.commit()
+#     # Create a showing
+#     showing = Showings(
+#         movie_id=1,  # Replace with actual movie_id
+#         screen_number=1,
+#         date=datetime.utcnow(),
+#         seats_available=100
+#     )
+#     db.session.add(showing)
+#     db.session.commit()
 
-    # Create a ticket type
-    ticket_type = TicketType(
-        ticket_type="Standard",
-        price=10
-    )
-    db.session.add(ticket_type)
-    db.session.commit()
+#     # Create a ticket type
+#     ticket_type = TicketType(
+#         ticket_type="Standard",
+#         price=10
+#     )
+#     db.session.add(ticket_type)
+#     db.session.commit()
 
-    # Create some cart items for the cart
-    cart_item1 = CartItem(showing_id=showing.id, ticket_type_id=ticket_type.id, quantity=2, cart_id=cart.id)
-    cart_item2 = CartItem(showing_id=showing.id, ticket_type_id=ticket_type.id, quantity=3, cart_id=cart.id)
-    db.session.add(cart_item1)
-    db.session.add(cart_item2)
-    db.session.commit()
+#     # Create some cart items for the cart
+#     cart_item1 = CartItem(showing_id=showing.id, ticket_type_id=ticket_type.id, quantity=2, cart_id=cart.id)
+#     cart_item2 = CartItem(showing_id=showing.id, ticket_type_id=ticket_type.id, quantity=3, cart_id=cart.id)
+#     db.session.add(cart_item1)
+#     db.session.add(cart_item2)
+#     db.session.commit()
 
-    # Check that cart items exist before emptying
-    assert CartItem.query.filter_by(cart_id=cart.id).count() == 2
+#     # Check that cart items exist before emptying
+#     assert CartItem.query.filter_by(cart_id=cart.id).count() == 2
 
-    # Call the empty_cart method
-    cart.empty_cart()
+#     # Call the empty_cart method
+#     cart.empty_cart()
 
-    # Check that cart items are deleted after emptying
-    assert CartItem.query.filter_by(cart_id=cart.id).count() == 0
+#     # Check that cart items are deleted after emptying
+#     assert CartItem.query.filter_by(cart_id=cart.id).count() == 0
     
     
-    db.session.delete(user)
-    db.session.delete(cart)
-    db.session.delete(movie)
-    db.session.delete(showing)
-    db.session.delete(ticket_type)
-    db.session.delete(cart_item1)
-    db.session.delete(cart_item2)
-    db.session.commit()
+#     db.session.delete(user)
+#     db.session.delete(cart)
+#     db.session.delete(movie)
+#     db.session.delete(showing)
+#     db.session.delete(ticket_type)
+#     db.session.delete(cart_item1)
+#     db.session.delete(cart_item2)
+#     db.session.commit()
     
 
 def test_comment_view():

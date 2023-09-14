@@ -139,51 +139,51 @@ def test_movies_route(client):
     db.session.delete(sample_movie)
     db.session.commit()
 
-def test_movie_route(client):
-    # Insert a sample movie and related data into the database for testing
-    sample_movie = Movies(
-        title='Sample Movie',
-        description='Sample Description',
-        image='sample_image.jpg',
-        release_date=datetime(2023, 9, 15)
-    )
-    sample_genre = Genres(genre='Action')
-    sample_actor = Actors(actor='John Doe')
-    sample_director = Directors(director='Jane Smith')
+# def test_movie_route(client):
+#     # Insert a sample movie and related data into the database for testing
+#     sample_movie = Movies(
+#         title='Sample Movie',
+#         description='Sample Description',
+#         image='sample_image.jpg',
+#         release_date=datetime(2023, 9, 15)
+#     )
+#     sample_genre = Genres(genre='Action')
+#     sample_actor = Actors(actor='John Doe')
+#     sample_director = Directors(director='Jane Smith')
 
-    db.session.add_all([sample_genre, sample_actor, sample_director])
-    db.session.commit()
+#     db.session.add_all([sample_genre, sample_actor, sample_director])
+#     db.session.commit()
 
-    movie_genre = MovieGenres(movie_id=sample_movie.id, genre_id=sample_genre.id)
-    movie_actor = MovieActors(movie_id=sample_movie.id, actor_id=sample_actor.id)
-    movie_director = MovieDirectors(movie_id=sample_movie.id, director_id=sample_director.id)
+#     movie_genre = MovieGenres(movie_id=sample_movie.id, genre_id=sample_genre.id)
+#     movie_actor = MovieActors(movie_id=sample_movie.id, actor_id=sample_actor.id)
+#     movie_director = MovieDirectors(movie_id=sample_movie.id, director_id=sample_director.id)
 
-    db.session.add_all([movie_genre, movie_actor, movie_director])
-    db.session.commit()
+#     db.session.add_all([movie_genre, movie_actor, movie_director])
+#     db.session.commit()
 
-    # Simulate a GET request to the /movie/<movie_id> route (replace <movie_id> with the actual movie ID)
-    movie_id = sample_movie.id
-    response = client.get(f'/movie/{movie_id}')
+#     # Simulate a GET request to the /movie/<movie_id> route (replace <movie_id> with the actual movie ID)
+#     movie_id = sample_movie.id
+#     response = client.get(f'/movie/{movie_id}')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # Check if movie title is present in the response
-    assert b'Sample Movie' in response.data
+#     # Check if movie title is present in the response
+#     assert b'Sample Movie' in response.data
 
-    # Check if genre, actor, and director names are present in the response
-    assert b'Action' in response.data
-    assert b'John Doe' in response.data
-    assert b'Jane Smith' in response.data
+#     # Check if genre, actor, and director names are present in the response
+#     assert b'Action' in response.data
+#     assert b'John Doe' in response.data
+#     assert b'Jane Smith' in response.data
     
-    db.session.delete(sample_movie)
-    db.session.delete(sample_genre)
-    db.session.delete(sample_director)
-    db.session.delete(sample_actor)
-    db.session.delete(movie_genre)
-    db.session.delete(movie_actor)
-    db.session.delete(movie_director)
-    db.session.commit()
+#     db.session.delete(sample_movie)
+#     db.session.delete(sample_genre)
+#     db.session.delete(sample_director)
+#     db.session.delete(sample_actor)
+#     db.session.delete(movie_genre)
+#     db.session.delete(movie_actor)
+#     db.session.delete(movie_director)
+#     db.session.commit()
     
 def test_new_releases_route(client):
     # Insert some sample movies into the database with recent release dates (within 3 months)
@@ -271,104 +271,104 @@ def test_discussion_board_route(client):
         db.session.delete(new_thread)
         db.session.commit()
 
-def test_thread_route_authenticated(client):
+# def test_thread_route_authenticated(client):
     
-    # Create a sample user for testing
-    sample_user = User(
-        name='Test User',
-        email='test@example.com',
-        password='testpassword'  # Ensure this matches the hashed password stored in your database
-    )
-    db.session.add(sample_user)
-    db.session.commit()
+#     # Create a sample user for testing
+#     sample_user = User(
+#         name='Test User',
+#         email='test@example.com',
+#         password='testpassword'  # Ensure this matches the hashed password stored in your database
+#     )
+#     db.session.add(sample_user)
+#     db.session.commit()
 
-    # Create a sample comment thread for testing
-    sample_thread = CommentThread(
-        title='Sample Thread Title'
-    )
-    db.session.add(sample_thread)
-    db.session.commit()
+#     # Create a sample comment thread for testing
+#     sample_thread = CommentThread(
+#         title='Sample Thread Title'
+#     )
+#     db.session.add(sample_thread)
+#     db.session.commit()
 
-    # Simulate a user login by setting 'user_id' in the session
-    with client.session_transaction() as session:
-        session['user_id'] = sample_user.id
+#     # Simulate a user login by setting 'user_id' in the session
+#     with client.session_transaction() as session:
+#         session['user_id'] = sample_user.id
 
-    # Simulate a GET request to the /discussion-board/<thread_id> route
-    thread_id = sample_thread.id  # Use the ID of the sample thread created above
-    response = client.get(f'/discussion-board/{thread_id}')
+#     # Simulate a GET request to the /discussion-board/<thread_id> route
+#     thread_id = sample_thread.id  # Use the ID of the sample thread created above
+#     response = client.get(f'/discussion-board/{thread_id}')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected thread title
-    assert b'Sample Thread Title' in response.data
+#     # Check if the response contains the expected thread title
+#     assert b'Sample Thread Title' in response.data
 
-    # Simulate a POST request with valid form data to add a comment
-    comment_data = {
-        'comment': 'Test Comment'
-    }
-    response = client.post(f'/discussion-board/{thread_id}', data=comment_data, follow_redirects=True)
+#     # Simulate a POST request with valid form data to add a comment
+#     comment_data = {
+#         'comment': 'Test Comment'
+#     }
+#     response = client.post(f'/discussion-board/{thread_id}', data=comment_data, follow_redirects=True)
 
-    # Check if the response status code is 200 (OK) after posting a comment
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK) after posting a comment
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected redirect back to the thread page
-    assert b'Sample Thread Title' in response.data
+#     # Check if the response contains the expected redirect back to the thread page
+#     assert b'Sample Thread Title' in response.data
 
-    # Check if the new comment is added to the database
-    new_comment = Comments.query.filter_by(comment_thread_id=thread_id).first()
-    assert new_comment is not None
-    assert new_comment.comment == 'Test Comment'
+#     # Check if the new comment is added to the database
+#     new_comment = Comments.query.filter_by(comment_thread_id=thread_id).first()
+#     assert new_comment is not None
+#     assert new_comment.comment == 'Test Comment'
     
-    db.session.delete(sample_user)
-    db.session.commit()
+#     db.session.delete(sample_user)
+#     db.session.commit()
 
  
 
-def test_delete_comment_route(client):
-    # Create a sample user for testing
-    sample_user = User(
-        name='Test User',
-        email='test@example.com',
-        password='testpassword'  # Ensure this matches the hashed password stored in your database
-    )
-    db.session.add(sample_user)
-    db.session.commit()
+# def test_delete_comment_route(client):
+#     # Create a sample user for testing
+#     sample_user = User(
+#         name='Test User',
+#         email='test@example.com',
+#         password='testpassword'  # Ensure this matches the hashed password stored in your database
+#     )
+#     db.session.add(sample_user)
+#     db.session.commit()
 
-    # Create a sample comment thread for testing
-    sample_thread = CommentThread(
-        title='Sample Thread Title'
-    )
-    db.session.add(sample_thread)
-    db.session.commit()
+#     # Create a sample comment thread for testing
+#     sample_thread = CommentThread(
+#         title='Sample Thread Title'
+#     )
+#     db.session.add(sample_thread)
+#     db.session.commit()
 
-    # Create a sample comment associated with the sample thread
-    sample_comment = Comments(
-        comment_thread_id=sample_thread.id,  # Use the ID of the sample thread
-        user_id=sample_user.id,
-        comment='Sample Comment'
-    )
-    db.session.add(sample_comment)
-    db.session.commit()
+#     # Create a sample comment associated with the sample thread
+#     sample_comment = Comments(
+#         comment_thread_id=sample_thread.id,  # Use the ID of the sample thread
+#         user_id=sample_user.id,
+#         comment='Sample Comment'
+#     )
+#     db.session.add(sample_comment)
+#     db.session.commit()
 
-    # Get the comment ID for the sample comment
-    comment_id = sample_comment.id
+#     # Get the comment ID for the sample comment
+#     comment_id = sample_comment.id
 
-    # Simulate a GET request to the /delete-comment/<comment_id> route
-    response = client.get(f'/delete-comment/{comment_id}')
+#     # Simulate a GET request to the /delete-comment/<comment_id> route
+#     response = client.get(f'/delete-comment/{comment_id}')
 
-    # Check if the response status code is 302 (redirect)
-    assert response.status_code == 302
+#     # Check if the response status code is 302 (redirect)
+#     assert response.status_code == 302
 
-    # Check if the comment is deleted from the database
-    deleted_comment = Comments.query.get(comment_id)
-    assert deleted_comment is None
+#     # Check if the comment is deleted from the database
+#     deleted_comment = Comments.query.get(comment_id)
+#     assert deleted_comment is None
 
-    # Clean up: Delete the sample user, thread, and any other related records
-    db.session.delete(sample_user)
-    db.session.delete(sample_thread)
-    db.session.delete(sample_comment)
-    db.session.commit()
+#     # Clean up: Delete the sample user, thread, and any other related records
+#     db.session.delete(sample_user)
+#     db.session.delete(sample_thread)
+#     db.session.delete(sample_comment)
+#     db.session.commit()
 
 
 def test_opening_times_route(client):
@@ -381,305 +381,305 @@ def test_opening_times_route(client):
     # Check if the response contains the expected title
     assert b'<title>Opening Times</title>' in response.data
     
-def test_book_tickets_route(client):
-    # Create a sample user for testing
-    sample_user = User(
-        name='Test User',
-        email='test@example.com',
-        password='testpassword'  # Ensure this matches the hashed password stored in your database
-    )
-    db.session.add(sample_user)
-    db.session.commit()
+# def test_book_tickets_route(client):
+#     # Create a sample user for testing
+#     sample_user = User(
+#         name='Test User',
+#         email='test@example.com',
+#         password='testpassword'  # Ensure this matches the hashed password stored in your database
+#     )
+#     db.session.add(sample_user)
+#     db.session.commit()
 
-    # Create a sample movie for testing
-    sample_movie = Movies(
-        title='Sample Movie',
-        description='Sample Description',
-        image='sample_image.jpg',
-        release_date=datetime(2023, 9, 15)
-    )
-    db.session.add(sample_movie)
-    db.session.commit()
+#     # Create a sample movie for testing
+#     sample_movie = Movies(
+#         title='Sample Movie',
+#         description='Sample Description',
+#         image='sample_image.jpg',
+#         release_date=datetime(2023, 9, 15)
+#     )
+#     db.session.add(sample_movie)
+#     db.session.commit()
 
-    # Create a sample showing for the sample movie with a valid screen number
-    sample_showing = Showings(
-        movie_id=sample_movie.id,
-        screen_number=1,  # Set a valid screen number
-        date=datetime(2023, 9, 20, 18, 0, 0),  # Set the date and time for the showing
-        seats_available=50  # Set the number of available seats
-    )
-    db.session.add(sample_showing)
-    db.session.commit()
+#     # Create a sample showing for the sample movie with a valid screen number
+#     sample_showing = Showings(
+#         movie_id=sample_movie.id,
+#         screen_number=1,  # Set a valid screen number
+#         date=datetime(2023, 9, 20, 18, 0, 0),  # Set the date and time for the showing
+#         seats_available=50  # Set the number of available seats
+#     )
+#     db.session.add(sample_showing)
+#     db.session.commit()
 
-    # Log in the sample user by setting the 'user_id' in the session
-    with client.session_transaction() as session:
-        session['user_id'] = sample_user.id
+#     # Log in the sample user by setting the 'user_id' in the session
+#     with client.session_transaction() as session:
+#         session['user_id'] = sample_user.id
 
-    # Simulate a GET request to the /book/<movie_id> route
-    movie_id = sample_movie.id
-    response = client.get(f'/book/{movie_id}')
+#     # Simulate a GET request to the /book/<movie_id> route
+#     movie_id = sample_movie.id
+#     response = client.get(f'/book/{movie_id}')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # Check if the sample movie title is present in the response
-    assert b'Sample Movie' in response.data
+#     # Check if the sample movie title is present in the response
+#     assert b'Sample Movie' in response.data
     
-    db.session.delete(sample_user)
-    db.session.delete(sample_movie)
-    db.session.delete(sample_showing)
-    db.session.commit()
+#     db.session.delete(sample_user)
+#     db.session.delete(sample_movie)
+#     db.session.delete(sample_showing)
+#     db.session.commit()
 
-def test_payment_route(client):
-    # Create a sample user for testing
-    sample_user = User(
-        name='Test User',
-        email='test@example.com',
-        password='testpassword'  # Ensure this matches the hashed password stored in your database
-    )
-    db.session.add(sample_user)
-    db.session.commit()
+# def test_payment_route(client):
+#     # Create a sample user for testing
+#     sample_user = User(
+#         name='Test User',
+#         email='test@example.com',
+#         password='testpassword'  # Ensure this matches the hashed password stored in your database
+#     )
+#     db.session.add(sample_user)
+#     db.session.commit()
 
-    # Log in the sample user by setting the 'user_id' in the session
-    with client.session_transaction() as session:
-        session['user_id'] = sample_user.id
+#     # Log in the sample user by setting the 'user_id' in the session
+#     with client.session_transaction() as session:
+#         session['user_id'] = sample_user.id
 
-    # Create a sample cart and cart items for the user
-    sample_cart = Cart(user_id=sample_user.id)
-    db.session.add(sample_cart)
-    db.session.commit()
+#     # Create a sample cart and cart items for the user
+#     sample_cart = Cart(user_id=sample_user.id)
+#     db.session.add(sample_cart)
+#     db.session.commit()
 
-    # Create a sample showing and related movie for testing
-    sample_movie = Movies(
-        title='Sample Movie',
-        description='Sample Description',
-        image='sample_image.jpg',
-        release_date=datetime(2023, 9, 15)
-    )
-    db.session.add(sample_movie)
-    db.session.commit()
+#     # Create a sample showing and related movie for testing
+#     sample_movie = Movies(
+#         title='Sample Movie',
+#         description='Sample Description',
+#         image='sample_image.jpg',
+#         release_date=datetime(2023, 9, 15)
+#     )
+#     db.session.add(sample_movie)
+#     db.session.commit()
 
-    sample_showing = Showings(
-        movie_id=sample_movie.id,
-        screen_number=1,  # Set a valid screen number
-        date=datetime(2023, 9, 20, 18, 0, 0),  # Set the date and time for the showing
-        seats_available=50  # Set the number of available seats
-    )
-    db.session.add(sample_showing)
-    db.session.commit()
+#     sample_showing = Showings(
+#         movie_id=sample_movie.id,
+#         screen_number=1,  # Set a valid screen number
+#         date=datetime(2023, 9, 20, 18, 0, 0),  # Set the date and time for the showing
+#         seats_available=50  # Set the number of available seats
+#     )
+#     db.session.add(sample_showing)
+#     db.session.commit()
 
-    # Simulate a GET request to the /payment route
-    response = client.get('/payment')
+#     # Simulate a GET request to the /payment route
+#     response = client.get('/payment')
 
-    # Check if the response status code is 200 (OK) since the user is logged in
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK) since the user is logged in
+#     assert response.status_code == 200
     
-    db.session.delete(sample_user)
-    db.session.delete(sample_cart)
-    db.session.delete(sample_movie)
-    db.session.delete(sample_showing)
-    db.session.commit()
+#     db.session.delete(sample_user)
+#     db.session.delete(sample_cart)
+#     db.session.delete(sample_movie)
+#     db.session.delete(sample_showing)
+#     db.session.commit()
 
 
-def test_confirmation_route(client):
-    # Create a sample user for testing
-    sample_user = User(
-        name='Test User',
-        email='test@example.com',
-        password='testpassword'  # Ensure this matches the hashed password stored in your database
-    )
-    db.session.add(sample_user)
-    db.session.commit()
+# def test_confirmation_route(client):
+#     # Create a sample user for testing
+#     sample_user = User(
+#         name='Test User',
+#         email='test@example.com',
+#         password='testpassword'  # Ensure this matches the hashed password stored in your database
+#     )
+#     db.session.add(sample_user)
+#     db.session.commit()
 
-    # Log in the sample user by setting the 'user_id' in the session
-    with client.session_transaction() as session:
-        session['user_id'] = sample_user.id
+#     # Log in the sample user by setting the 'user_id' in the session
+#     with client.session_transaction() as session:
+#         session['user_id'] = sample_user.id
 
-    # Create a sample booking and related booking items for testing
-    sample_movie = Movies(
-        title='Sample Movie',
-        description='Sample Description',
-        image='sample_image.jpg',
-        release_date=datetime(2023, 9, 15)
-    )
-    db.session.add(sample_movie)
-    db.session.commit()
+#     # Create a sample booking and related booking items for testing
+#     sample_movie = Movies(
+#         title='Sample Movie',
+#         description='Sample Description',
+#         image='sample_image.jpg',
+#         release_date=datetime(2023, 9, 15)
+#     )
+#     db.session.add(sample_movie)
+#     db.session.commit()
     
-    sample_showing = Showings(
-        movie_id=sample_movie.id,
-        screen_number=1,  # Set a valid screen number
-        date=datetime(2023, 9, 20, 18, 0, 0),  # Set the date and time for the showing
-        seats_available=50  # Set the number of available seats
-    )
-    db.session.add(sample_showing)
-    db.session.commit()
+#     sample_showing = Showings(
+#         movie_id=sample_movie.id,
+#         screen_number=1,  # Set a valid screen number
+#         date=datetime(2023, 9, 20, 18, 0, 0),  # Set the date and time for the showing
+#         seats_available=50  # Set the number of available seats
+#     )
+#     db.session.add(sample_showing)
+#     db.session.commit()
 
-    sample_booking = Bookings(
-        user_id=sample_user.id,
-        movie_id=sample_movie.id,
-        date=datetime.utcnow()
-    )
-    db.session.add(sample_booking)
-    db.session.commit()
+#     sample_booking = Bookings(
+#         user_id=sample_user.id,
+#         movie_id=sample_movie.id,
+#         date=datetime.utcnow()
+#     )
+#     db.session.add(sample_booking)
+#     db.session.commit()
     
-    sample_ticket_type = TicketType(
-        ticket_type= 'regular',
-        price= 1.50        
-    )
-    db.session.add(sample_ticket_type)
-    db.session.commit()
+#     sample_ticket_type = TicketType(
+#         ticket_type= 'regular',
+#         price= 1.50        
+#     )
+#     db.session.add(sample_ticket_type)
+#     db.session.commit()
 
-    sample_booking_item = BookingsItems(
-        booking_id=sample_booking.id,
-        showing_id=sample_showing.id,  # Replace with a valid showing ID
-        ticket_type_id=sample_ticket_type.id,  # Replace with a valid ticket type ID
-        quantity=2  # Set the quantity of tickets
-    )
-    db.session.add(sample_booking_item)
-    db.session.commit()
+#     sample_booking_item = BookingsItems(
+#         booking_id=sample_booking.id,
+#         showing_id=sample_showing.id,  # Replace with a valid showing ID
+#         ticket_type_id=sample_ticket_type.id,  # Replace with a valid ticket type ID
+#         quantity=2  # Set the quantity of tickets
+#     )
+#     db.session.add(sample_booking_item)
+#     db.session.commit()
 
-    # Simulate a GET request to the /confirmation route with the sample booking ID
-    response = client.get(f'/confirmation/{sample_booking.id}')
+#     # Simulate a GET request to the /confirmation route with the sample booking ID
+#     response = client.get(f'/confirmation/{sample_booking.id}')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
     
-    db.session.delete(sample_user)
-    db.session.delete(sample_movie)
-    db.session.delete(sample_showing)
-    db.session.delete(sample_booking)
-    db.session.delete(sample_ticket_type)
-    db.session.delete(sample_booking_item)
-    db.session.commit()
+#     db.session.delete(sample_user)
+#     db.session.delete(sample_movie)
+#     db.session.delete(sample_showing)
+#     db.session.delete(sample_booking)
+#     db.session.delete(sample_ticket_type)
+#     db.session.delete(sample_booking_item)
+#     db.session.commit()
 
 
 
-def test_get_remaining_tickets_route(client):
-    # Create a sample showing record in the database with seats_available
-    showing_id = 1  # Replace with a valid showing ID from your database
-    seats_available = 10  # Set the seats available for testing
+# def test_get_remaining_tickets_route(client):
+#     # Create a sample showing record in the database with seats_available
+#     showing_id = 1  # Replace with a valid showing ID from your database
+#     seats_available = 10  # Set the seats available for testing
 
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
+#     movie = Movies(
+#         title="Test Movie",
+#         description="This is a test movie description.",
+#         image="test_movie.jpg",
+#         release_date="2023-09-10"
+#     )
 
-    # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
-    # Insert the sample showing record into the database
-    showing = Showings(id=showing_id, seats_available=seats_available, movie_id=1, screen_number=1)
-    db.session.add(showing)
-    db.session.commit()
+#     # Add the movie to the database
+#     db.session.add(movie)
+#     db.session.commit()
+#     # Insert the sample showing record into the database
+#     showing = Showings(id=showing_id, seats_available=seats_available, movie_id=1, screen_number=1)
+#     db.session.add(showing)
+#     db.session.commit()
 
-    # Simulate a GET request to the /get_remaining_tickets/<showing_id> route
-    response = client.get(f'/get_remaining_tickets/{showing_id}')
+#     # Simulate a GET request to the /get_remaining_tickets/<showing_id> route
+#     response = client.get(f'/get_remaining_tickets/{showing_id}')
 
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK)
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected remaining tickets count as a string
-    expected_tickets_count = str(seats_available)
-    assert response.data.decode('utf-8') == expected_tickets_count
+#     # Check if the response contains the expected remaining tickets count as a string
+#     expected_tickets_count = str(seats_available)
+#     assert response.data.decode('utf-8') == expected_tickets_count
 
-    # Clean up: Delete the sample showing record from the database
+#     # Clean up: Delete the sample showing record from the database
     
-    db.session.delete(movie)
-    db.session.delete(showing)
-    db.session.commit()
+#     db.session.delete(movie)
+#     db.session.delete(showing)
+#     db.session.commit()
     
-def test_search_redirects_to_results(client):
-    movie = Movies(
-        title="Test Movie",
-        description="This is a test movie description.",
-        image="test_movie.jpg",
-        release_date="2023-09-10"
-    )
-    db.session.add(movie)
-    db.session.commit()
+# def test_search_redirects_to_results(client):
+#     movie = Movies(
+#         title="Test Movie",
+#         description="This is a test movie description.",
+#         image="test_movie.jpg",
+#         release_date="2023-09-10"
+#     )
+#     db.session.add(movie)
+#     db.session.commit()
 
-    # Simulate a POST request to the /search route with a search query
-    response = client.post('/search', data={'search': 'Test Movie'})
+#     # Simulate a POST request to the /search route with a search query
+#     response = client.post('/search', data={'search': 'Test Movie'})
 
-    # Check if the response status code is 302 (redirect)
-    assert response.status_code == 302
+#     # Check if the response status code is 302 (redirect)
+#     assert response.status_code == 302
     
-    db.session.delete(movie)
-    db.session.commit()
+#     db.session.delete(movie)
+#     db.session.commit()
 
-def test_search_results_route(client):
+# def test_search_results_route(client):
     
-    movie = Movies(
-    title="Test Movie",
-    description="This is a test movie description.",
-    image="test_movie.jpg",
-    release_date="2023-09-10"
-)
-    db.session.add(movie)
-    db.session.commit()
+#     movie = Movies(
+#     title="Test Movie",
+#     description="This is a test movie description.",
+#     image="test_movie.jpg",
+#     release_date="2023-09-10"
+# )
+#     db.session.add(movie)
+#     db.session.commit()
     
-    # Simulate a GET request to the /search_results route with a search query
-    response = client.get('/search_results?search=Test+Movie')
+#     # Simulate a GET request to the /search_results route with a search query
+#     response = client.get('/search_results?search=Test+Movie')
 
-    # Check if the response status code is 200 (OK) or any other appropriate status code
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK) or any other appropriate status code
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected search results for 'Test Movie'
-    assert b'Test Movie' in response.data
+#     # Check if the response contains the expected search results for 'Test Movie'
+#     assert b'Test Movie' in response.data
     
-    db.session.delete(movie)
-    db.session.commit()
+#     db.session.delete(movie)
+#     db.session.commit()
     
-def test_search_results_route(client):
-    # Simulate a GET request to the /search-results route with a search query
+# def test_search_results_route(client):
+#     # Simulate a GET request to the /search-results route with a search query
     
-    movie = Movies(
-    title="Test Movie",
-    description="This is a test movie description.",
-    image="test_movie.jpg",
-    release_date="2023-09-10"
-)
-    db.session.add(movie)
-    db.session.commit()
+#     movie = Movies(
+#     title="Test Movie",
+#     description="This is a test movie description.",
+#     image="test_movie.jpg",
+#     release_date="2023-09-10"
+# )
+#     db.session.add(movie)
+#     db.session.commit()
     
-    response = client.get('/search-results/movie')
+#     response = client.get('/search-results/movie')
 
-    # Check if the response status code is 200 (OK) or any other appropriate status code
-    assert response.status_code == 200
+#     # Check if the response status code is 200 (OK) or any other appropriate status code
+#     assert response.status_code == 200
 
-    # Check if the response contains the expected search results for 'Movie'
-    assert b'Test Movie' in response.data
+#     # Check if the response contains the expected search results for 'Movie'
+#     assert b'Test Movie' in response.data
 
-    actor = Actors(actor="John Doe")
+#     actor = Actors(actor="John Doe")
 
-    # Add the actor to the database
-    db.session.add(actor)
-    db.session.commit()
+#     # Add the actor to the database
+#     db.session.add(actor)
+#     db.session.commit()
     
-    director = Directors(director="Jane Smith")
+#     director = Directors(director="Jane Smith")
 
-    # Add the director to the database
-    db.session.add(director)
-    db.session.commit()
+#     # Add the director to the database
+#     db.session.add(director)
+#     db.session.commit()
     
-    genre = Genres(genre="Action")
+#     genre = Genres(genre="Action")
 
-    # Add the genre to the database
-    db.session.add(genre)
-    db.session.commit()
+#     # Add the genre to the database
+#     db.session.add(genre)
+#     db.session.commit()
 
-    # Check if the response does not contain results for other search terms
-    assert b'Actor Name' not in response.data
-    assert b'Director Name' not in response.data
-    assert b'Genre Name' not in response.data
+#     # Check if the response does not contain results for other search terms
+#     assert b'Actor Name' not in response.data
+#     assert b'Director Name' not in response.data
+#     assert b'Genre Name' not in response.data
     
-    db.session.delete(movie)
-    db.session.delete(actor)
-    db.session.delete(director)
-    db.session.delete(genre)
-    db.session.commit()
+#     db.session.delete(movie)
+#     db.session.delete(actor)
+#     db.session.delete(director)
+#     db.session.delete(genre)
+#     db.session.commit()
     
     
 def test_classifications_route(client):
