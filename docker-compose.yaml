@@ -3,7 +3,7 @@ services:
   mysql:
     image: wojciechprzybylski/cinema-db:latest
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      DB_PASSWORD: ${DB_PASSWORD}
     ports:
       - 3306:3306
     volumes:
@@ -13,7 +13,7 @@ services:
   mysql-init:
     image: wojciechprzybylski/mysql-init:latest
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      DB_PASSWORD: ${DB_PASSWORD}
     networks:
       - cinema-net
   cinema-app:
@@ -21,7 +21,7 @@ services:
       - mysql
     image: wojciechprzybylski/cinema-app:latest
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      DB_PASSWORD: ${DB_PASSWORD}
     networks:
       - cinema-net
     ports:
