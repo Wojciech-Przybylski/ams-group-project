@@ -13,6 +13,8 @@ def client():
     with app.app_context():
         db.create_all()
         yield client
+        db.session.remove()
+
 
 def test_User(client):
     # Create a user
