@@ -162,6 +162,13 @@ def test_Genres_and_MovieGenres(client):
 
 
 def test_Actors_and_MovieActors(client):
+    
+    movie = Movies(
+        title="Test Movie",
+        description="This is a test movie description.",
+        image="test_movie.jpg",
+        release_date="2023-09-10"
+    )
     # Create an actor
     actor = Actors(actor="John Doe")
 
@@ -217,7 +224,7 @@ def test_Directors_and_MovieDirectors(client):
     db.session.commit()
 
     # Retrieve the movie director association from the database
-    retrieved_movie_director = MovieDirectors.query.filter_by(id=1).first()
+    retrieved_movie_director = MovieDirectors.query.filter_by(id=10).first()
 
     # Assert that the retrieved association matches the expected values
     assert retrieved_movie_director.movie_id == movie.id
@@ -238,8 +245,6 @@ def test_Showings(client):
     )
 
     # Add the movie to the database
-    db.session.add(movie)
-    db.session.commit()
 
     # Create a showing
     showing = Showings(
@@ -271,8 +276,6 @@ def test_Bookings_and_BookingsItems(client):
     user = User(name="Alice", email="alice@example.com", password="hashed_password")
 
     # Add the user to the database
-    db.session.add(user)
-    db.session.commit()
 
     # Create a movie
     movie = Movies(
@@ -354,7 +357,6 @@ def test_Cart_empty_cart(client):
     # Create a user
     user = User(name="Alice", email="alice@example.com", password="hashed_password")
     db.session.add(user)
-    db.session.commit()
 
     # Create a cart for the user
     cart = Cart(user_id=user.id)
