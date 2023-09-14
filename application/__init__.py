@@ -8,8 +8,10 @@ from sqlalchemy import create_engine
 
 app = Flask(__name__)
 
+db_password = getenv('DB_PASSWORD')
+
 # app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.sqlite"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@172.17.0.1:3306/cinema'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://root:{db_password}@172.17.0.1:3306/cinema'
 
 def create_db_engine(db_url):
     engine = create_engine(db_url)
