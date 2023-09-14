@@ -17,9 +17,6 @@ def create_db_engine(db_url):
     engine = create_engine(db_url)
     return engine
 
-db_engine = create_db_engine("postgresql://user:password@localhost/test")
-
-
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
 
