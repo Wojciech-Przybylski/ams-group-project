@@ -38,10 +38,10 @@ def test_User(db_session, client):
     # Create a user
     user = User(name="bob", email="bob@qa.com", password=bcrypt.generate_password_hash("234"))
     # Add the user to the database
-    db.session.add(user)
-    db.session.commit()
+    # db.session.add(user)
+    # db.session.commit()
     # Retrieve the user from the database
-    retrieved_user = User.query.filter_by(name='bob').first()
+    retrieved_user = db_session.query(User).filter_by(name='bob').first()
     # Assert that the retrieved user's name matches the expected value
     assert retrieved_user.name == 'bob'
     assert retrieved_user.email == 'bob@qa.com'
@@ -51,8 +51,8 @@ def test_User(db_session, client):
 def test_PaymentDetails(db_session, client):
     # Create a user (for the ForeignKey relationship)
     user = User(name="Alice", email="alice@example.com", password="hashed_password")
-    db.session.add(user)
-    db.session.commit()
+    # db.session.add(user)
+    # db.session.commit()
 
     # Create a payment detail
     payment_detail = PaymentDetails(
@@ -64,11 +64,11 @@ def test_PaymentDetails(db_session, client):
     )
 
     # Add the payment detail to the database
-    db.session.add(payment_detail)
-    db.session.commit()
+    # db.session.add(payment_detail)
+    # db.session.commit()
 
     # Retrieve the payment detail from the database
-    retrieved_payment_detail = PaymentDetails.query.filter_by(id=1).first()
+    retrieved_payment_detail = db_session.query(payment_detail).filter_by(card_name='Alice Smith').first()
 
     # Assert that the retrieved payment detail matches the expected values
     assert retrieved_payment_detail.card_name == "Alice Smith"
@@ -81,8 +81,8 @@ def test_PaymentDetails(db_session, client):
 def test_Comments(db_session, client):
     # Create a comment thread
     comment_thread = CommentThread(title="Movie Discussion Thread")
-    db.session.add(comment_thread)
-    db.session.commit()
+    # db.session.add(comment_thread)
+    # db.session.commit()
 
     # Create a user
     user = User(name="Alice", email="alice@example.com", password="hashed_password")
@@ -97,7 +97,7 @@ def test_Comments(db_session, client):
     db.session.commit()
 
     # Retrieve the comment from the database
-    retrieved_comment = Comments.query.filter_by(id=1).first()
+    retrieved_comment = db_session.query(Comments).filter_by(id=1).first()
 
     # Assert that the retrieved comment matches the expected values
     assert retrieved_comment.comment == "This is a comment"
