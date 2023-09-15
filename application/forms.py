@@ -41,7 +41,7 @@ class PaymentForm(FlaskForm):
     card_name = StringField('Cardholder Name', validators=[DataRequired(), Length(min=2, max=30), BannedChars()])
     card_number = StringField('Card Number', validators=[DataRequired(), Length(min=16, max=16), BannedChars(), Regexp('^[0-9]*$', message='Card number must be numeric.')])
     expiry_date = StringField('Expiry Date', validators=[DataRequired(), Length(min=5, max=7), BannedChars(), Regexp(r'^(0[1-9]|1[0-2])\/(0[0-9]|1[0-9]|2[0-9]|3[0-9])$', message='Expiry date must be in format MM/YY.')])
-    security_code = StringField('Security Code', validators=[DataRequired(), Length(min=3, max=4), BannedChars(), Regexp('^[0-9]*$', message='Security code must be numeric.')])
+    security_code = StringField('Security Code', validators=[DataRequired(), Length(min=3, max=3), BannedChars(), Regexp('^[0-9]*$', message='Security code must be numeric.')])
     submit = SubmitField('Pay')
 
 class SearchForm(FlaskForm):
