@@ -137,6 +137,95 @@ python3 app.py
 - Page header and footer, available on all pages.
 - A custom logo for QA Cinemas.
 
+
+
+## User Stories
+
+
+### Home Page:
+
+
+- As a visitor, I want to see an aesthetically pleasing and accessible home page.
+- As a visitor, I want to quickly understand the purpose of QA Cinemas as a brand when I visit the home page.
+- As a visitor, I want the home page to be the default starting point for navigating the entire site.
+- As a visitor, I want to easily navigate to other sections of the website from the home page.
+
+ 
+### Login Page:
+
+
+- As a user, I want to sign up and log into my account.
+- As a user, I want to access the login page from the home page and ideally from any other page.
+- As a user, I want the login option to be accessible from the top right-hand corner of all pages.
+- As a user, I want to be able to log in with my username and password or sign up with my email and password.
+- As a user, I want password security requirements, including special characters, upper- and lower-case letters, and numbers.
+
+ 
+### Listings Gallery:
+
+
+- As a visitor, I want to access a gallery of movie posters for current movies.
+- As a visitor, I want to see at least four movie images with details like title, actors, director, and showing times.
+- As a visitor, I want easy navigation to individual pages for each movie poster.
+
+ 
+### Opening Times:
+
+
+- As a visitor, I want to find information about the opening times of the cinema.
+- As a visitor, I want this information to be accessible through the site's navigation.
+
+ 
+### New Releases Gallery:
+
+
+- As a visitor, I want to access a gallery of movie posters for forthcoming movies.
+- As a visitor, I want to see at least four new release movie images with details like title, actors, director, and showing times.
+
+ 
+### Classifications:
+
+
+- As a visitor, I want to access a page that explains film classifications and their icons.
+- As a visitor, I want to understand the rules and conditions for each classification.
+- As a visitor, I want the option to explore additional external resources on this topic.
+
+
+### Screens:
+
+
+- As a visitor, I want to view images of seating plans and décor for both standard and deluxe screens.
+
+
+### Ticket Bookings:
+
+
+- As a customer, I want to book tickets with details like movie title, screening date and time, number of seats, booker's name, and ticket type (Adult or Child).
+- As a customer, I want a dedicated page for paying for my booked tickets, including cardholder's name, card number, expiry date, and security code.
+
+ 
+### Cinema Services:
+
+
+- As a visitor, I want information on food, drinks, and amenities offered by the cinema.
+- As a visitor, I want to see basic prices for items like popcorn, hotdogs, and fizzy drinks.
+- As a visitor, I want information about the upcoming QA Café and QA-cade.
+
+ 
+### Discussion Board:
+
+
+- As a user, I want to participate in movie-related discussions and share my cinema experiences.
+- As a user, I want to post comments and expect that inappropriate content is moderated.
+
+ 
+### General Design:
+
+
+- As a visitor, I don't want a white background on any of the site's pages.
+- As a visitor, I want the site navigation to be uniform and present on all pages.
+
+
 ## Problems Faced
 
 ### 05/09/2023
@@ -314,6 +403,11 @@ During the third sprint we developed the majority of the back and front end of t
 | External Dependencies        | Regulatory requirements                                 | Admins                 | 3               | 3                 | 3            | In case of any requirements not completed by the end of the sprint. The task can be extended into the next sprint.                                    |
 | Scalability and Performance  | Scalability challenges                                  | Admins                 | 2               | 4                 | 3            | Do commits very often to aid in debugging.                                                                                                            |
 | Scalability and Performance  | Performance bottlenecks                                 | User                   | 2               | 2                 | 2            | Follow good coding practices, avoiding repetitions of code.  Also keeping separation of concerns.                                                     |
+
+
+
+
+
 
 
 
