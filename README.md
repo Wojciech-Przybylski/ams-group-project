@@ -41,7 +41,7 @@ The previous consultants also mentioned the need of DevOps within the infrastruc
 On top of this criteria screenshots will be added in a separate folder throughout the project to show development over time. These screenshots will be separated into, SQL, Code, Trello, Website and Github. This is to display the different aspects of development. On top of this instructions for istalling the application will be included in this README document as per the mark scheme.
 
 
-## Installation
+## Installation Instructions
 
 These are the basic installations statements needed to connect to the group repoistory and to successfully launch the webpage. 
 This is assuming that all members of the group have been invited as contributors to the Github repoistory. 
@@ -256,30 +256,42 @@ python3 app.py
 
 ## Development Methodology 
 
+
 ### Kanban Board 
+
 
 For this project our group used a Kanban board via Trello to more easily display and communicate our user stories and specification. Making this Kanban board was one of the first tasks that we undertook. In a group scenario this helped us easily distribute and prioritise different tasks. Each group member has made sure to keep up to date with the Trello board, by showing tasks as complete, adding comments or images to the individual tasks or user stories. There were some minor difficulties initially with the Kanban board. For this project the specification stated that we had to use Trello rather than Jira, none of the group members had used Trello before. However we quickly managed to figure out the interface of Trello and were able to put our Kanban board together. There are a number of examples of the progress of our Trello board within the documentation screenshots folder, however an example of this will be placed below:
 
+
 ![Example of Trellp Board](/Documentation-Screenshots/Trello/Trello%201.png)
+
 
 ### Scrum 
 
+
 Scrum is an agile framework typically used for the completeion of complex work. It is typically considered the leading agile development methodology. Therefore as a group we saw it best to utilise Scrum during this project. Whilst we could technically integrate scrum into our individual projects for the sole purpose of experience, on an individual level scrum as a development methodology only really works in a group environment, therefore, our group has not had much if any experience utilising scrum. The first major implementation of scrum that the group has taken onboard is the daily standup meeting. Each morning we discuss with each other and the trainer, what we achieved the previous day and what we plan to achieve today. Problems faced or blockages can also be brought up during the daily standup where we can agree as a team on the best course of action.
+
 
 ### Sprint 1
 
+
 During the initial sprint for this this project we tackled three main tasks. Firstly we set up the first draft of the Trello board, splitting the different tasks into the MVP and website wishlist that were outlined in the project specification, we later added several more tasks to the board and made sure to keep up-to-date with the board, throughout all sprints. At the same time several group members began to design the basic file structure within Visual Studio Code. As we have been taguht best practice for a file structure when designing a website we were all able to utilise our file structures from our idividual projects to conclude what structure would work best in this group scenario. During later sprints we would add extra folders to the file structure from some of the feature branches that were also created later. The final task of our first srpint was the devise the risk assessment for the project this included risks for users and developers. We believed this was important to tackle during the first sprint, so we would have a much more in depth understanding of the risks we were facing during this project and how best to minimize them.
+
 
 ### Sprint 2
 
+
 During the second sprint we began adding the basic content to several of the files that were previously added when creating the file structure. This included: app.py, create.py, requirements.txt, routes.py, models.py, __init__.py as well as adding the basic content to numerous html files that were to be worked on later. After this the group split in to three groups, two people were going to work on generating the first iteration of the database as well as working on other aspects of the backend, another group of two were beginning to work on the HTML files, starting with the homepage, and finally the final member of the group was to work on installing jenkins and setting up the necessary AWS instances. At several points during this sprint the group reconvened to discuss progress or any problems that they had ran into.
 
+
 ### Sprint 3 
+
 
 During the third sprint we developed the majority of the back and front end of the code as well as integrating the automated deployment of the app. Our goal for this sprint was to reach the criteria of the MVP so we could focus on testing and the website wishlist. We wanted to reach this goal by the end of the first week of the project. We concluded as a group, that this was the best strategy to make sure that we would have time to go through thorough testing and bug fixes. Furthermore, by reaching this goal we would have more time to style the website up to the standard the specification requires, and beyond. In order to meet this goal, we discussed our strengths and weaknesses in the group and divided the tasks accordingly. On top of this, we concluded that, it would be best during this sprint to start, and keep on top of the write up for this project. Rather than it becoming a much more overwhelming task later down the line. 
 
 
 ## ERD (Entity Relationship Diagram)
+
 
 ### This entity relationship diagram was devised using the principles of relational databases and normalisation
 
@@ -373,6 +385,13 @@ During the third sprint we developed the majority of the back and front end of t
 
 
 ## Test Coverage
+
+
+### In order to run the tests that we generated and receive a coverage report like the one below we ran the following code:
+
+```bash
+pytest --cov-report html 
+```
 
 
 ### Coverage Report:
